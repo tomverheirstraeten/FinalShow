@@ -1,1 +1,7 @@
-<p>timetable works!</p>
+<h2>Timetable</h2>
+<ul>
+    <li *ngFor='let event of timetable'><h3>{{event["name"]}}</h3>
+
+        <p>{{displayTime(event["time"]) }}: {{event["desc"]}}</p>
+    </li>
+</ul>
