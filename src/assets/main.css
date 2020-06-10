@@ -1,12 +1,43 @@
-/*this css is available throughout the entire website */
+/*this css is available throughout the entire website (I tried to make this file SCSS but that wouldn't work here) */
+
+
+/* colors:
+red = #FF6B6B
+blue = #4FCDC4
+yellow = #F9D48A
+black = #000
+white = #fff
+*/
 
 * {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0px;
     padding: 0px;
     text-decoration: none;
+    color: #000;
+    font-weight: 300;
 }
 
 ul {
     list-style: none;
+}
+
+a {
+    color: #4FCDC4
+}
+
+a:visited {
+    color: #FF6B6B;
+}
+
+a:hover{
+    color: #F9D48A;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+h2, h3, h4, h5, h6 {
+    font-weight: 500;
 }
