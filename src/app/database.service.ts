@@ -28,9 +28,9 @@ export class DatabaseService {
       projectId: credentials.projectId
     });
     this.db = firebase.firestore();
-   }
+  }
 
-   getTimetable() {
+  getTimetable() {
     this.data = new Array();
     this.db.collection('timetable').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -38,5 +38,37 @@ export class DatabaseService {
       });
     });
     return this.data;
-   }
+  }
+
+  getEventByName(name: string) {
+    this.data = new Array();
+    this.db.collection('timetable').where('name', '==', name).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.data.push(doc.data());
+      });
+    });
+    return this.data;
+  }
+
+  displayTime(time){
+    let date = new Date(time.seconds * 1000);
+    let hours = date.getHours();
+    let hourString: string;
+    if(hours < 10) {
+      hourString = '0' + hours.toString();
+    } else {
+      hourString = hours.toString();
+    }
+
+    let minutes = date.getMinutes();
+    let minuteString: string;
+    if(minutes < 10) {
+      minuteString = '0' + minutes.toString();
+    } else {
+      minuteString = minutes.toString();
+    }
+
+    return hourString + ':' + minuteString;
+
+  }
 }

@@ -9,6 +9,7 @@ import { TimetableComponent } from './timetable/timetable.component';
 import { LoginComponent } from './login/login.component';
 import { NetworkComponent } from './network/network.component';
 import { FaqComponent } from './faq/faq.component';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FaqComponent } from './faq/faq.component';
     TimetableComponent,
     LoginComponent,
     NetworkComponent,
-    FaqComponent
+    FaqComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

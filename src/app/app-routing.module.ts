@@ -7,6 +7,7 @@ import { TimetableComponent } from './timetable/timetable.component';
 import { LoginComponent } from './login/login.component';
 import { FaqComponent } from './faq/faq.component';
 import { NetworkComponent } from './network/network.component';
+import { EventComponent } from './event/event.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'timetable', component: TimetableComponent},
   {path: 'login', component: LoginComponent},
   {path: 'network', component: NetworkComponent},
-  {path: 'faq', component: FaqComponent}
+  {path: 'faq', component: FaqComponent},
+  {path: 'timetable/:event', component: EventComponent}
 ];
 
 @NgModule({
