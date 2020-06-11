@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+// @use "sass:map";
+
+// $colors: (
+//     "red" : #FF6B6B,
+//     "blue" : #4FCDC4,
+//     "yellow" : #F9D48A,
+//     "black" : #000,
+//     "white" : #fff
+// );
+$red : #FF6B6B;
+$blue : #4FCDC4;
+$yellow : #F9D48A;
+$black : #000;
+$white : #fff;
+
+
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    color: #000;
+    font-weight: 300;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: $blue
+}
+
+a:visited {
+    color: $red
+}
+
+a:hover{
+    color: $yellow;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+h2, h3, h4, h5, h6 {
+    font-weight: 500;
+}
