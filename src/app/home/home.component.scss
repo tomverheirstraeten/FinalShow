@@ -48,11 +48,11 @@ h2 {
 
      overflow-y: scroll;
      white-space: nowrap;
-     scroll-snap-type: x mandatory;
+     scroll-snap-type: x proximity;
 
       .room {
           display: inline-block;
-          width: 100vw;
+          width: 80vw;
           scroll-snap-align: center;
 
           img {
