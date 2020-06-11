@@ -1,3 +1,5 @@
+@import '~src/styles.scss';
+
 h1 {
   padding: 20px;
   margin: auto;
@@ -9,7 +11,7 @@ h2 {
 }
 
 #mobile {
-  background-color: #7FC6CB;
+  background-color: $blue;
   width: 100vw;
   min-height: 100vh;
   background-attachment: fixed;
@@ -58,20 +60,6 @@ h2 {
               display: block;
           }
       }
-  }
-
-  .button {
-    background-color: #FF6B6B;
-    border: none;
-    border-left: 4px solid white;
-    color: white;
-    padding: 10px 20px;
-    display: inline-block;
-    font-weight: 500;
-    z-index: 1;
-    text-align: center;
-    box-shadow: 4px 4px 0px #7FC6CB, 5px 5px 0px white;
-    margin-top: 20px;
   }
 
   #campus {
