@@ -1,20 +1,26 @@
-<h1>Welkom op de final show website!</h1>
-  <img src="assets/images/titlewhite.png" alt="Final Show 2020" id="titleCard">
-
-  <ul>
+  <!-- <ul>
     <li><a routerLink='/login'>Log in</a></li>
     <li><a routerLink='/livestream'>Livestream</a></li>
     <li><a routerLink='/timetable'>Timetable</a></li>
     <li><a routerLink='/faq'>FAQ</a></li>
     <li><a routerLink='/network'>Netwerk</a></li>  
-  </ul>
+  </ul> -->
+  <div id="mobile">
+    <a href="#campus" id="mobileSplashScreen" class="fullscreen"><img src="assets/images/titlecard.png"
+        alt="Final Show 2020" id="titleCard">
+    </a>
 
-  
+    <div id="campus" class="fullscreen">
+      <img src="assets/images/campusV3.png" alt="campus kaai">
+      <a class="button" href="#rooms">Betreed Campus Kaai</a>
+    </div>
 
-  <div class="rooms">
-    <button (click)="nextRoom(true)"><</button>
-    <button (click)="nextRoom(false)">></button>
-  <h2>{{currentName}}</h2>
-  <img [src]="currentImage" [alt]="currentName">
-  <a [routerLink]="currentLink">Enter room</a>
+    <div id="rooms" class="fullscreen">
+
+      <div class="room" *ngFor='let room of roomNumbers'>
+        <h2>{{nameList[room]}}</h2>
+        <img [src]="'assets/images/' + imageList[room]" [alt]="nameList[room]">
+        <a [routerLink]="linkList[room]" class="button">Betreed kamer</a>
+      </div>
+    </div>
   </div>

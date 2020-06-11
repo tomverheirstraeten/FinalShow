@@ -1,22 +1,85 @@
 h1 {
-    padding: 20px;
-    margin: auto;
-    text-align: center;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
 }
 
 h2 {
+  text-align: center;
+}
+
+#mobile {
+  background-color: #7FC6CB;
+  width: 100vw;
+  min-height: 100vh;
+  background-attachment: fixed;
+  scroll-snap-type: y mandatory;
+  overflow-y: hidden;
+
+
+  #mobileSplashScreen {
+    margin-bottom: 50vh;
+
+    #titleCard {
+        width: 90vw;
+        display: block;
+        margin: auto;
+      }
+  }
+
+  .fullscreen {
+    height: 100vh;
+    padding: 50% 0%;
+    width: 100vw;
+    display: block;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     text-align: center;
-}
+  }
 
-#titleCard {
-    margin-left: 40vw;
-}
 
-.rooms {
-    width: 200px;
-    margin: auto;
-}
+  #rooms {
+      img {
+          margin: auto;
+      }
 
-.rooms button:nth-of-type(2) {
-    float: right;
+     overflow-y: scroll;
+     white-space: nowrap;
+     scroll-snap-type: x mandatory;
+
+      .room {
+          display: inline-block;
+          width: 100vw;
+          scroll-snap-align: center;
+
+          img {
+              height: 200px;
+              display: block;
+          }
+      }
+  }
+
+  .button {
+    background-color: #FF6B6B;
+    border: none;
+    border-left: 4px solid white;
+    color: white;
+    padding: 10px 20px;
+    display: inline-block;
+    font-weight: 500;
+    z-index: 1;
+    text-align: center;
+    box-shadow: 4px 4px 0px #7FC6CB, 5px 5px 0px white;
+    margin-top: 20px;
+  }
+
+  #campus {
+    overflow: hidden;
+
+    img {
+      margin-left: -25vw;
+    }
+
+  }
 }

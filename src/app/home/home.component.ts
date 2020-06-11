@@ -9,20 +9,22 @@ export class HomeComponent implements OnInit {
 
   currentRoom = 0;
 
-  linkList = ['/livestream', '/faq', '/network'];
-  nameList = ['Livestream', 'Help Center', 'Netwerk'];
+  roomNumbers = [0,1,2,3];
+  linkList = ['/livestream', '/faq', '/network', '/timetable'];
+  nameList = ['Livestream', 'Help Center', 'Netwerk', 'timetable'];
+  imageList = ['medialab.png', 'fablab.png', 'room0.png', 'room1.png']
 
-  currentLink = '/livestream';
-  currentName = 'Livestream';
-  currentImage = 'assets/images/room0.png';
+  currentLink = this.linkList[0];
+  currentName = this.nameList[0];
+  currentImage = 'assets/images/' + this.imageList[0];
 
   constructor() { }
 
   nextRoom(next: boolean) {
     if (next) { // this just makes sure the arrows move the rooms in a different direction
-      this.currentRoom = (this.currentRoom - 1) % 3;
+      this.currentRoom = (this.currentRoom - 1) % 4;
     } else {
-      this.currentRoom = (this.currentRoom + 1) % 3;
+      this.currentRoom = (this.currentRoom + 1) % 4;
     }
 
 
@@ -33,7 +35,7 @@ export class HomeComponent implements OnInit {
     }
     this.currentLink = this.linkList[roomNumber];
     this.currentName = this.nameList[roomNumber];
-    this.currentImage = 'assets/images/room' + roomNumber + '.png';
+    this.currentImage = 'assets/images/' + this.imageList[roomNumber];
 
   }
 
