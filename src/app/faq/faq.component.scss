@@ -1,4 +1,8 @@
 @import '~src/styles.scss';
+.question-text {
+    font-weight: bold;
+    font-size: 15pt;
+}
 
 .pagina {
     width: 100vw;
@@ -29,6 +33,4 @@
             }
         }
     }
-
-    
 }
