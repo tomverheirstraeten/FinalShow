@@ -18,7 +18,7 @@
     <div id="rooms" class="fullscreen">
 
       <div class="room" *ngFor='let room of roomNumbers'>
-        <h2>{{nameList[room]}}</h2>
+        <h2 class="page-title">{{nameList[room]}}</h2>
         <img [src]="'assets/images/' + imageList[room]" [alt]="nameList[room]">
         <a [routerLink]="linkList[room]" class="button">Betreed kamer</a>
       </div>
