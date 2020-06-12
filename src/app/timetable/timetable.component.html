@@ -4,7 +4,7 @@
         <li *ngFor='let event of timetable' class="timetable-list-item">
             <span class="time-text">{{displayTime(event["time"]) }}</span>
             <div class="event-div">
-                <h3 class="title">{{event["name"]}}</h3>
+                <a [routerLink]="'/timetable/' + event['name']"><h3 class="title">{{event["name"]}}</h3> </a>
                 <p class="info-text">{{event["desc"]}}</p>
             </div>
         </li>
