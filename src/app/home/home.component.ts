@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   currentLink = this.linkList[0];
   currentName = this.nameList[0];
   currentImage = 'assets/images/' + this.imageList[0];
-
+hiddenSplash: boolean = false;
   constructor() { }
 
   nextRoom(next: boolean) {
@@ -41,6 +41,22 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+this.scrollBottom();
   }
+
+
+
+  private scrollBottom() {
+
+    const chatElem = document.getElementById('mobile');
+    console.log(chatElem.scrollHeight);
+    if (chatElem) {
+      setTimeout(() => this.hiddenSplash = !this.hiddenSplash, 1000);
+    }
+
+    // setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
+  }
+
+
 
 }
