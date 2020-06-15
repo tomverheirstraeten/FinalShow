@@ -3,24 +3,20 @@
     <li><a routerLink='/livestream'>Livestream</a></li>
     <li><a routerLink='/timetable'>Timetable</a></li>
     <li><a routerLink='/faq'>FAQ</a></li>
-    <li><a routerLink='/network'>Netwerk</a></li>  
+    <li><a routerLink='/network'>Netwerk</a></li>
   </ul> -->
   <div id="mobile">
-    <a href="#campus" id="mobileSplashScreen" class="fullscreen"><img src="assets/images/titlecard.png"
-        alt="Final Show 2020" id="titleCard">
-    </a>
+    <div class="splash">
+  <a href="#campus" id="mobileSplashScreen"><img src="assets/images/titlecard.png"
+      alt="Final Show 2020" id="titleCard">
+  </a>
+    </div>
 
-    <div id="campus" class="fullscreen">
+
+    <div id="campus">
+            <a class="button" [routerLink]="['/rooms']" routerLinkActive="router-link-active" >Enter Campus Kaai</a>
       <img src="assets/images/campusV3.png" alt="campus kaai">
-      <a class="button" href="#rooms">Betreed Campus Kaai</a>
+
     </div>
 
-    <div id="rooms" class="fullscreen">
-
-      <div class="room" *ngFor='let room of roomNumbers'>
-        <h2 class="page-title">{{nameList[room]}}</h2>
-        <img [src]="'assets/images/' + imageList[room]" [alt]="nameList[room]">
-        <a [routerLink]="linkList[room]" class="button">Betreed kamer</a>
-      </div>
-    </div>
   </div>

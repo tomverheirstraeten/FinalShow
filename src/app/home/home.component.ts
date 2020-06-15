@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+
   currentRoom = 0;
 
   roomNumbers = [0,1,2,3];
