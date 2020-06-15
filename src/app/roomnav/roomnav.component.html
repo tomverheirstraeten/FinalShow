@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="slidercontainer">
+  <div id="rooms" [ngStyle]="{'width': 100*(rooms.length) + '%'}">
+
+    <div class="room" *ngFor="let room of rooms; let i=index">
+      <h2 class="page-title">{{room.name}}</h2>
+      <img [src]="'assets/images/' + room.image" [alt]="room.name">
+      <a [routerLink]="room.link" class="button">Betreed kamer</a>
+    </div>
+  </div>
+</div>
