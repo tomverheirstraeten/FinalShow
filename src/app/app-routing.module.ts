@@ -8,9 +8,11 @@ import { LoginComponent } from './login/login.component';
 import { FaqComponent } from './faq/faq.component';
 import { NetworkComponent } from './network/network.component';
 import { EventComponent } from './event/event.component';
+import { RoomnavComponent } from './roomnav/roomnav.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'rooms', component: RoomnavComponent},
   {path: 'livestream', component: LivestreamComponent},
   {path: 'timetable', component: TimetableComponent},
   {path: 'login', component: LoginComponent},
