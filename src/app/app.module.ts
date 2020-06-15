@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { NetworkComponent } from './network/network.component';
 import { FaqComponent } from './faq/faq.component';
 import { EventComponent } from './event/event.component';
+import { HeaderComponent } from './header/header.component';
+import { RoomnavComponent } from './roomnav/roomnav.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { EventComponent } from './event/event.component';
     LoginComponent,
     NetworkComponent,
     FaqComponent,
-    EventComponent
+    EventComponent,
+    HeaderComponent,
+    RoomnavComponent
   ],
   imports: [
     BrowserModule,
