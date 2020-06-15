@@ -12,6 +12,7 @@ import { FaqComponent } from './faq/faq.component';
 import { EventComponent } from './event/event.component';
 import { HeaderComponent } from './header/header.component';
 import { RoomnavComponent } from './roomnav/roomnav.component';
+import { LivechatComponent } from './livechat/livechat.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RoomnavComponent } from './roomnav/roomnav.component';
     FaqComponent,
     EventComponent,
     HeaderComponent,
-    RoomnavComponent
+    RoomnavComponent,
+    LivechatComponent
   ],
   imports: [
     BrowserModule,

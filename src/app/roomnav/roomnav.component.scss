@@ -2,6 +2,7 @@
     width: 100%;
     overflow: scroll;
     scroll-snap-type: x mandatory;
+    background: linear-gradient(-35deg, white 75%, rgba(0, 212, 255, 0.6))
   }
 
   #rooms {
@@ -21,10 +22,12 @@
       justify-content: space-between;
       align-items: center;
       flex-direction: column;
-      h2{
+
+      h2 {
         text-transform: uppercase;
       }
-      img{
+
+      img {
         width: 70%;
       }
     }
