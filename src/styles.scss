@@ -7,6 +7,10 @@
 //     "black" : #000,
 //     "white" : #fff
 // );
+@use './app/css/var';
+@use './app/css/base';
+
+
 $red : #FF6B6B;
 $blue : #7FC6CB;
 $yellow : #F9D48A;

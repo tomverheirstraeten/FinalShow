@@ -1,96 +1,93 @@
-.login-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-span.or {
-  margin: 0em 0;
-  margin-bottom: 2em;
-  display: block;
-}
+#login {
+  width: 100%;
 
-#LoginForm {
-  width: 500px;
-  text-align: left;
+  .login-wrapper {
+    margin-top: 100px;
 
 
-  .input-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
-    text-align: left;
-    label {
-      margin-bottom: 0.5em;
+    h2 {
+      text-align: left;
+      margin: 1em 0;
+      font-size: 20px;
     }
 
-    input {
-      padding: 1em;
-      border-radius: 0px;
-      border: none;
-      border-bottom: 1px solid grey;
+    p {
+      text-align: left;
+      margin: 1em 0;
+      line-height: 18px;
+      margin-bottom: 2em;
+      font-size: 13px;
     }
-
   }
 
 
+  #LoginForm {
+    text-align: left;
 
+    .input-form {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
+
+      label {
+        text-align: left;
+        margin-bottom: 1em;
+        font-size: 0.7em;
+      }
+
+      input {
+        padding: 1em;
+        border-radius: 0px;
+        border: 1px solid #DBDBDB;
+
+        &:focus {
+          border-color: #F9D48A;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, .16);
+        }
+      }
+
+    }
+
+
+  }
 }
 
 button {
-  background: #e96443;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #904e95, #e96443);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #904e95, #e96443);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 28px;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 17px;
-  width: 200px;
-  padding: 12px 31px;
-  text-decoration: none;
-  border: none;
-  margin: 1em 0;
-}
-
-
-
-.google-btn {
-  width: 40%;
-  min-width:200px;
-
-  height: 42px;
+  width: 100%;
+  min-width: 200px;
+  padding: 1em 2em;
+  text-align: center !important;
   background-color: #fcfcfc;
   border-radius: 2px;
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.18);
   cursor: pointer;
   cursor: hand;
   align-self: center;
-  user-select: none;
   transition: all 400ms ease 0s;
-  display: flex;
+  border: none;
+}
+
+button.active{
+  border: 1px solid #F9D48A;
+}
+button.google-btn{
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .google-btn .google-icon-wrapper {
-  position: absolute;
-  margin-top: 1px;
-  margin-left: 1px;
-  width: 40px;
-  height: 40px;
   border-radius: 2px;
+  margin-right: 1em;
   user-select: none
 }
+
 .google-btn .google-icon-svg {
-  position: absolute;
-  margin-top: 11px;
-  margin-left: 11px;
   width: 18px;
   height: 18px;
   user-select: none
 }
+
 .google-btn .btn-text {
   float: right;
   margin: 11px 14px 40px 40px;
@@ -100,13 +97,25 @@ button {
   font-family: Roboto;
   user-select: none
 }
-.google-btn:hover {
+
+.button:hover {
   box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
   user-select: none
 }
-.google-btn:active {
+
+.button:active {
   box-shadow: 0 1px 1px #757575;
   background: #F8F8F8;
   color: #fff;
   user-select: none
+}
+
+
+
+
+
+
+// Users
+:host-context(.rooms) .users {
+  // flex-direction: row;
 }

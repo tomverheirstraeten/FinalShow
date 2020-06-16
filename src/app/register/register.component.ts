@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit, OnChanges{
   user;
   registerEmailForm;
   registerGoogleForm;
+  GoogleHidden = true;
   constructor(public auth: AuthService,
     public userService: UsersService,
     private formBuilder: FormBuilder,
@@ -78,5 +79,9 @@ export class RegisterComponent implements OnInit, OnChanges{
       this.goToHome();
     }
 
+  }
+
+  ToggleForm(){
+    this.GoogleHidden = !this.GoogleHidden;
   }
 }

@@ -1,5 +1,5 @@
 <div class='users'>
-  <div *ngFor="let user of allUserData " id="user" (click)='checkIfConversation(user.uid, user.displayName)'>
+  <div *ngFor="let user of allUserData " id="user" (click)='checkIfConversation(user.uid)'>
     <div class="user">
       <div *ngIf="user.status == 'online'" class="dot green"></div>
       <div *ngIf="user.status == 'offline'" class="dot grey"></div>

@@ -14,15 +14,19 @@
   <!-- <input placeholder="Username" type='text' #username>
  <button class="button" (click)="auth.AnonymousSignIn(username.value)">Login with Username</button>
   <span class="txt-light">or</span> -->
-  <article class="container" id="register">
+  <app-header></app-header>
+  <section id="RegisterForm">
+
+
+  <article class="container register-wrapper">
     <h2>Registreren</h2>
 
 
-    <article class="flex row space-between">
+    <article>
 
 
-      <section class="register-email">
-        <form class="flex column" [formGroup]="registerEmailForm"
+      <section class="register-email"[hidden] = GoogleHidden >
+        <form [formGroup]="registerEmailForm"
           (ngSubmit)="EmailPasswordRegister(registerEmailForm.value)">
           <div class="input-form">
             <label for="Name">Name*</label>
@@ -41,7 +45,6 @@
             <input placeholder="Website" type='text' #website formControlName="website">
           </div>
           <div class="input-form">
-            <div class="custom-select">
               <label for="Website">Functie*</label>
               <select #functie formControlName="functie" required>
                 <option value="student">Student</option>
@@ -50,19 +53,26 @@
                 <option value="ouders">Ouder</option>
                 <option value="bezoeker">Bezoeker</option>
               </select>
-            </div>
           </div>
           <div class="input-form">
             <label for="Bio">Bio</label>
             <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
-            <button class="submit">Register</button>
+            <button class="submit active">REGISTREER</button>
+             <button class="google-btn" (click)="ToggleForm()">
+               <div class="google-icon-wrapper">
+                 <img class="google-icon-svg"
+                   src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+               </div>
+               REGISTREER MET GOOGLE
+             </button>
+
           </div>
         </form>
       </section>
 
-      <span class="txt-light or">or</span>
+      <!-- <span class="txt-light or">or</span> -->
 
-      <section class="google">
+      <section class="google" [hidden]=!GoogleHidden>
         <form class="flex column" [formGroup]="registerGoogleForm"
           (ngSubmit)="GoogleRegister(registerGoogleForm.value)">
           <div class="input-form">
@@ -85,16 +95,18 @@
             <label for="Bio">Bio</label>
             <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
           </div>
-          <button class="google-btn submit" type="submit">
+          <button class="google-btn" (click)="auth.googleSignIn()">
             <div class="google-icon-wrapper">
               <img class="google-icon-svg"
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
             </div>
-            <p class="btn-text"><b>Sign up with Google</b></p>
+            LOG IN MET GOOGLE
           </button>
         </form>
+         <button class="submit" (click)=ToggleForm()>REGISTREER MET EMAIL</button>
       </section>
     </article>
-    <p>Al geen account?</p>
-    <button [routerLink]="['/']" type="button">Login</button>
+    <p>Al een account?</p>
+    <button [routerLink]="['/login']" type="button" class="txt-light">LOGIN</button>
   </article>
+  </section>
