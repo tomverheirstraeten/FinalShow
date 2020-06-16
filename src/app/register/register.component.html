@@ -1,0 +1,100 @@
+<!-- <div  >
+  <div class="logout" (click)="auth.signOut()">
+    logout
+  <div class="cross">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+  </div>
+</div> -->
+
+  <!-- {{ goToHome() }} -->
+<!-- </div> -->
+
+
+  <!-- <input placeholder="Username" type='text' #username>
+ <button class="button" (click)="auth.AnonymousSignIn(username.value)">Login with Username</button>
+  <span class="txt-light">or</span> -->
+  <article class="container" id="register">
+    <h2>Registreren</h2>
+
+
+    <article class="flex row space-between">
+
+
+      <section class="register-email">
+        <form class="flex column" [formGroup]="registerEmailForm"
+          (ngSubmit)="EmailPasswordRegister(registerEmailForm.value)">
+          <div class="input-form">
+            <label for="Name">Name*</label>
+            <input placeholder="Name" type='text' #name formControlName="name" required>
+          </div>
+          <div class="input-form">
+            <label for="Email">Email*</label>
+            <input placeholder="Email" type='email' #email formControlName="email" required>
+          </div>
+          <div class="input-form">
+            <label for="Password">Password*</label>
+            <input placeholder="Password" type='password' #password formControlName="password" required>
+          </div>
+          <div class="input-form">
+            <label for="Website">Website</label>
+            <input placeholder="Website" type='text' #website formControlName="website">
+          </div>
+          <div class="input-form">
+            <div class="custom-select">
+              <label for="Website">Functie*</label>
+              <select #functie formControlName="functie" required>
+                <option value="student">Student</option>
+                <option value="bedrijf">Bedrijf</option>
+                <option value="leerkracht">Leerkracht</option>
+                <option value="ouders">Ouder</option>
+                <option value="bezoeker">Bezoeker</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-form">
+            <label for="Bio">Bio</label>
+            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
+            <button class="submit">Register</button>
+          </div>
+        </form>
+      </section>
+
+      <span class="txt-light or">or</span>
+
+      <section class="google">
+        <form class="flex column" [formGroup]="registerGoogleForm"
+          (ngSubmit)="GoogleRegister(registerGoogleForm.value)">
+          <div class="input-form">
+            <label for="Website">Website</label>
+            <input placeholder="Website" type='text' #website formControlName="website">
+          </div>
+          <div class="input-form">
+            <div class="custom-select">
+              <label for="Website">Functie*</label>
+              <select #functie formControlName="functie" required>
+                <option value="student">Student</option>
+                <option value="bedrijf">Bedrijf</option>
+                <option value="leerkracht">Leerkracht</option>
+                <option value="ouders">Ouder</option>
+                <option value="bezoeker">Bezoeker</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-form">
+            <label for="Bio">Bio</label>
+            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
+          </div>
+          <button class="google-btn submit" type="submit">
+            <div class="google-icon-wrapper">
+              <img class="google-icon-svg"
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+            </div>
+            <p class="btn-text"><b>Sign up with Google</b></p>
+          </button>
+        </form>
+      </section>
+    </article>
+    <p>Al geen account?</p>
+    <button [routerLink]="['/']" type="button">Login</button>
+  </article>

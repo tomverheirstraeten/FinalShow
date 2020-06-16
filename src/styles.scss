@@ -99,3 +99,51 @@ h2, h3, h4, h5, h6 {
     font-weight: lighter;
     font-size: 13pt;
 }
+
+
+
+// Andres css
+.flex {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.space-between {
+  justify-content: space-between;
+}.flex-start {
+  justify-content: flex-start;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+.txt-right{
+  text-align: right;
+}
+.align-center {
+  align-items: center;
+}
+.container {
+  text-align: center;
+  width:90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.txt-light{
+  color: rgb(167, 167, 167);
+  margin-top: 0.5em;
+}
+.w-50{
+  width: 50%;
+}
+.w-33{
+  width: 33%;
+}

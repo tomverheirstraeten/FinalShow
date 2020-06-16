@@ -1,63 +1,47 @@
-.login-container{
+#register{
+  width: 800px;
+  text-align: left;
+.input-form{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 1em;
+  label{
+    margin-bottom: 0.5em;
+  }
+  input{
+    padding: 1em;
+    border-radius: 0px;
+    border: none;
+border-bottom: 1px solid grey;
+  }
+  button {
+    background: #e96443;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #904e95, #e96443);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #904e95, #e96443);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 28px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    width: 200px;
+    padding: 12px 31px;
+    text-decoration: none;
+    border: none;
+    margin: 1em 0;
+  }
+
 }
-span.or {
+span.or{
   margin: 0em 0;
   margin-bottom: 2em;
   display: block;
+  display: flex;
+  align-self: center;
 }
-
-#LoginForm {
-  width: 500px;
-  text-align: left;
-
-
-  .input-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
-    text-align: left;
-    label {
-      margin-bottom: 0.5em;
-    }
-
-    input {
-      padding: 1em;
-      border-radius: 0px;
-      border: none;
-      border-bottom: 1px solid grey;
-    }
-
-  }
-
-
-
-}
-
-button {
-  background: #e96443;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #904e95, #e96443);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #904e95, #e96443);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 28px;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 17px;
-  width: 200px;
-  padding: 12px 31px;
-  text-decoration: none;
-  border: none;
-  margin: 1em 0;
-}
-
-
-
 .google-btn {
   width: 40%;
   min-width:200px;
@@ -109,4 +93,11 @@ button {
   background: #F8F8F8;
   color: #fff;
   user-select: none
+}
+.google{
+  background-color: grey;
+  padding: 2em;
+  border-radius: 5px;
+}
+
 }
