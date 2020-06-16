@@ -12,13 +12,16 @@
     </div>
 
   </div>
-  <div class="conversation" *ngFor="let chats of myChats" [routerLink]="['/chats', chats.id]">
-    <img [src]="'assets/man.svg'" alt="">
-    {{ chats.displayName }}
+  <div class="conv-rooms">
+ <div class="conversation" *ngFor="let chats of myChats" [routerLink]="['/chats', chats.id]">
+   <img [src]="'assets/man.svg'" alt="">
+   {{ chats.displayName }}
 
-    <p *ngIf="chats.messages.length" class="last-message">
-      {{ chats.messages[chats.messages.length - 1].content }}
-    </p>
+   <p *ngIf="chats.messages.length" class="last-message">
+     {{ chats.messages[chats.messages.length - 1].content }}
+   </p>
+ </div>
   </div>
+
 </div>
 </div>

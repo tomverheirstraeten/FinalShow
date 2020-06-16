@@ -27,4 +27,12 @@ input{
     }
 
   }
+  .conv-rooms{
+    background: red;
+    .conversation{
+      background: green;
+      padding: 0.5em;
+      text-align: left;
+    }
+  }
 }
