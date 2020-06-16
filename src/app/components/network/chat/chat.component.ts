@@ -1,10 +1,12 @@
 import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener } from '@angular/core';
-import { ChatService } from '../services/chat.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
-import { UsersService } from '../services/users.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
+
 
 @Component({
   selector: 'app-chat',

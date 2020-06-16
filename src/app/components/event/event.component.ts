@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatabaseService } from '../database.service';
+import { DatabaseService } from 'src/app/database.service';
+
 
 @Component({
   selector: 'app-event',

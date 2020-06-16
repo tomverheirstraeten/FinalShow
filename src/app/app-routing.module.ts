@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { LivestreamComponent } from './livestream/livestream.component';
-import { TimetableComponent } from './timetable/timetable.component';
-import { LoginComponent } from './login/login.component';
-import { FaqComponent } from './faq/faq.component';
-import { NetworkComponent } from './network/network.component';
-import { EventComponent } from './event/event.component';
-import { RoomnavComponent } from './roomnav/roomnav.component';
-import { RegisterComponent } from './register/register.component';
+
 import { AuthGuard } from './services/auth.guard';
-import { ChatComponent } from './chat/chat.component';
+
+import { HomeComponent } from './components/home/home.component';
+import { RoomnavComponent } from './components/roomnav/roomnav.component';
+import { LivestreamComponent } from './components/livestream/livestream/livestream.component';
+import { TimetableComponent } from './components/timetable/timetable.component';
+import { LoginComponent } from './components/network/login/login.component';
+import { RegisterComponent } from './components/network/register/register.component';
+import { NetworkComponent } from './components/network/network/network.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { EventComponent } from './components/event/event.component';
+import { ChatComponent } from './components/network/chat/chat.component';
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent},

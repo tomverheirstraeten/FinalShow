@@ -3,21 +3,15 @@ import {
   OnInit,
   OnChanges
 } from '@angular/core';
-import {
-  AuthService
-} from '../services/auth.service';
-import {
-  ChatService
-} from '../services/chat.service';
-import {
-  UsersService
-} from '../services/users.service';
+
 import {
   FormBuilder
 } from '@angular/forms';
 import {
   Router
 } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-register',

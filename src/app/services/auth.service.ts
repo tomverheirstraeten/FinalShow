@@ -159,6 +159,7 @@ return this.afAuth.authState.pipe(
       website: formVal.website,
       function: formVal.functie,
       bio: formVal.bio,
+      admin: false
     };
 
     return userRef.set(data, {
@@ -217,6 +218,7 @@ return this.afAuth.authState.pipe(
       function: formVal.functie,
       website: formVal.website,
       bio: formVal.bio,
+      admin: false
     };
 
     return userRef.set(data, {

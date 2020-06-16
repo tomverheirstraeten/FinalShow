@@ -5,25 +5,26 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LivestreamComponent } from './livestream/livestream.component';
-import { TimetableComponent } from './timetable/timetable.component';
-import { LoginComponent } from './login/login.component';
-import { NetworkComponent } from './network/network.component';
-import { FaqComponent } from './faq/faq.component';
-import { EventComponent } from './event/event.component';
-import { HeaderComponent } from './header/header.component';
-import { RoomnavComponent } from './roomnav/roomnav.component';
-import { LivechatComponent } from './livechat/livechat.component';
+
 import { environment } from 'src/environments/environment';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RegisterComponent } from './register/register.component';
-import { UsersComponent } from './users/users.component';
+import { NetworkComponent } from './components/network/network/network.component';
+import { HomeComponent } from './components/home/home.component';
+import { LivestreamComponent } from './components/livestream/livestream/livestream.component';
+import { TimetableComponent } from './components/timetable/timetable.component';
+import { LoginComponent } from './components/network/login/login.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { EventComponent } from './components/event/event.component';
+import { HeaderComponent } from './components/header/header.component';
+import { RoomnavComponent } from './components/roomnav/roomnav.component';
+import { LivechatComponent } from './components/livestream/livechat/livechat.component';
+import { RegisterComponent } from './components/network/register/register.component';
+import { UsersComponent } from './components/network/users/users.component';
+import { ChatComponent } from './components/network/chat/chat.component';
+import { RoomsComponent } from './components/network/rooms/rooms.component';
+import { RoomComponent } from './components/network/room/room.component';
 
-import { ChatComponent } from './chat/chat.component';
-import { RoomsComponent } from './rooms/rooms.component';
-import { RoomComponent } from './room/room.component';
 @NgModule({
    declarations: [
       AppComponent,

@@ -1,11 +1,12 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { ChatService } from '../services/chat.service';
-import { UsersService } from '../services/users.service';
+
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs'
 import { first, take } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-users',
