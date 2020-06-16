@@ -48,8 +48,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
   getAllChats() {
     this.cs.getAllChats().subscribe((chats) => {
       this.allChats = chats;
-
-
     });
   }
   submit(chatId) {

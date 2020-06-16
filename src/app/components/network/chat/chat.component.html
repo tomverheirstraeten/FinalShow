@@ -1,18 +1,21 @@
+<app-header class="yellow" back='true'></app-header>
+
+
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
 
-    <div class="top">
+    <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
-    </div>
+    </div> -->
 
     <article class="wrapper flex row flex-start">
-      <section class="left users flex row w-30">
+      <!-- <section class="left users flex row w-30">
         <aside>
           <app-users class="rooms"></app-users>
         </aside>
-      </section>
+      </section> -->
 
-      <article class="flex column  w-50">
+      <article class="flex column container">
         <div #chatBox class="chat right " id="chat">
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
             <!-- My MESSAGE -->
@@ -53,11 +56,11 @@
         </div>
 
 
-        <div class="form">
+        <div class="form messagebar">
           <section class="textBar flex row">
             <input class="input" [(ngModel)]="newMsg" maxlength="100" placeholder="Typ een chatbericht..."
               (keydown.enter)="submit(chat.id)">
-            <button (click)="submit(chat.id)" class="button is-info" [disabled]="!newMsg">Send</button>
+            <button (click)="submit(chat.id)" class="" [disabled]="!newMsg"><img src="assets/images/send.png"></button>
           </section>
         </div>
       </article>

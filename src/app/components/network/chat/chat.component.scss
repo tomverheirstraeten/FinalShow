@@ -2,13 +2,13 @@
   height: 100vh;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .chat {
   padding: 10px;
   width: 100%;
   color: #222222;
-  background-color: rgb(238, 238, 238);
   border-radius: 5px;
   overflow: scroll;
   height: 50vh;
@@ -98,14 +98,18 @@
   }
 }
 
-.form {
-  width: 100%;
+.form.messagebar {
+  width: 90%;
   display: flex;
   background: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  bottom: 1em;
 
   .textBar {
     margin-top: 1em;
     width: 100%;
+    margin: auto;
+
 
     input {
       width: 100%;
@@ -114,25 +118,8 @@
       border: none;
       font-size: 14px;
       background: rgb(238, 238, 238);
-      padding: 0 1em;
-    }
-
-    button {
-      background: #e96443;
-      /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #904e95, #e96443);
-      /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #904e95, #e96443);
-      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      border-radius: 28px;
-      display: inline-block;
-      cursor: pointer;
-      color: #ffffff;
-      font-family: Arial;
-      font-size: 17px;
-      padding: 12px 31px;
-      text-decoration: none;
-      border: none;
+      padding: 1em 1em;
+      box-shadow: 0px 3px 2px 0px #7b7b7b4d;
     }
   }
 }

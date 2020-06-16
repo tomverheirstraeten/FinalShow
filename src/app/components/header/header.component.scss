@@ -53,3 +53,9 @@
     background: black;
   }
 }
+
+
+// header
+:host-context(.yellow) .header {
+  background: #F9D48A;
+}
