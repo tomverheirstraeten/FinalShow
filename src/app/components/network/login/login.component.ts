@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { RoomsService } from 'src/app/services/rooms.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit, OnChanges {
   loginEmailForm;
   user;
-  constructor(public auth: AuthService, private formBuilder: FormBuilder, public route: Router) {
+  constructor(public auth: AuthService, private formBuilder: FormBuilder, public route: Router, public rooms: RoomsService) {
     this.loginEmailForm = this.formBuilder.group({
       email: '',
       password: '',
