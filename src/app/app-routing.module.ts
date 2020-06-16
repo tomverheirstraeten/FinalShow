@@ -14,10 +14,12 @@ import { NetworkComponent } from './components/network/network/network.component
 import { FaqComponent } from './components/faq/faq.component';
 import { EventComponent } from './components/event/event.component';
 import { ChatComponent } from './components/network/chat/chat.component';
+import { RoomComponent } from './components/network/room/room.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  { path: 'room/:id', component: RoomComponent },
   {path: 'rooms', component: RoomnavComponent},
   {path: 'livestream', component: LivestreamComponent},
   {path: 'timetable', component: TimetableComponent},
