@@ -5,8 +5,8 @@
       <div class="usercontainer">
         <div class="user">
           <div class="profile">
-            <img [src]="user.photoURL || 'assets/man.svg'  " alt="" width="50px">
-            <p>{{ user.displayName }}</p>
+            <img [src]="user?.photoURL || 'assets/man.svg'  " alt="" width="50px">
+            <p>{{ user?.displayName }}</p>
           </div>
           <div class="logout" (click)="auth.signOut()">
             <p>logout</p>

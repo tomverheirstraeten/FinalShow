@@ -48,6 +48,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   getAllChats() {
     this.cs.getAllChats().subscribe((chats) => {
       this.allChats = chats;
+      this.scrollBottom();
     });
   }
   submit(chatId) {
@@ -58,19 +59,26 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.newMsg = '';
     this.scrollBottom();
   }
-
+  submitHand(chatId) {
+    if (!this.newMsg) {
+      return alert('you need to enter something');
+    }
+    this.cs.sendMessage(chatId, this.newMsg);
+    this.newMsg = '';
+    this.scrollBottom();
+  }
   trackByCreated(i, msg) {
     return msg.createdAt;
   }
 
   private scrollBottom() {
 
-    const chatElem = document.getElementById("chat");
+    // const chatElem = document.getElementById("chat");
 
-    if (chatElem) {
-      setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
-    }
+    // if (chatElem) {
+    //   setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
+    // }
 
-    // setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
+    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
   }
 }
