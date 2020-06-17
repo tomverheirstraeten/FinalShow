@@ -1,0 +1,89 @@
+img {
+  width: 50px;
+}
+
+.users {
+  border-radius: 5px;
+  // background: rgba(0,0,0,0.1);
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 1em;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #72bcd4;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  p {
+    margin-left: 1em;
+  }
+
+  #user {
+    cursor: pointer;
+    margin: 0.5em;
+    padding: 1em 2em;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
+    }
+
+    .user {
+      display: flex;
+
+      .dot {
+        background-color: red;
+        width: 7px;
+        height: 7px;
+        position: absolute;
+        border-radius: 50%;
+
+      }
+
+      .green {
+        background-color: green;
+      }
+
+      .grey {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .orange {
+        background-color: orange;
+      }
+    }
+  }
+}
+
+.chat {
+  img {
+    width: 20px;
+  }
+}
+
+
+
+
+// Users
+:host-context(.rooms) .users {
+  // flex-direction: row;
+}

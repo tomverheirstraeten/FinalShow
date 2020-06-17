@@ -1,0 +1,15 @@
+<div class='users'>
+  <div *ngFor="let user of allUserData " id="user" (click)='checkIfConversation(user.uid)'>
+    <div class="user">
+      <div *ngIf="user.status == 'online'" class="dot green"></div>
+      <div *ngIf="user.status == 'offline'" class="dot grey"></div>
+      <div *ngIf="user.status == 'away'" class="dot orange"></div>
+      <img [src]="user.photoURL || 'assets/man.svg' " alt="">
+      <p>{{ user.displayName }}</p>
+    </div>
+    <div class="chat">
+      <img src="assets/icons8-sms-48.png" alt="">
+    </div>
+
+  </div>
+</div>

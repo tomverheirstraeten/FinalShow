@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as  THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { PointLight, AmbientLight, HemisphereLight, SpotLight, MeshBasicMaterial, MeshStandardMaterial } from 'three';
+import { HemisphereLight, SpotLight } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  selector: 'desktop-landing',
+  templateUrl: './desktoplanding.component.html',
+  styleUrls: ['./desktoplanding.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class DesktopLandingComponent implements OnInit {
   gltfLoader = new GLTFLoader();
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
@@ -37,7 +38,7 @@ export class LandingComponent implements OnInit {
 
 
   @ViewChild('render') el: ElementRef;
-  constructor() {
+  constructor(private router: Router,) {
     this.scene = new THREE.Scene();
   }
 
@@ -71,8 +72,13 @@ export class LandingComponent implements OnInit {
       this.aspect = this.el.nativeElement.clientWidth / this.el.nativeElement.clientHeight;
       // tslint:disable-next-line: max-line-length
       this.camera = new THREE.OrthographicCamera(this.frustumSize * this.aspect / - 2, this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, -10, 20);
+      //! daylight
+      // const light1 = new HemisphereLight(0xF9D48A, 0x000088, 6);
+      //! eveninglight
+      const light1 = new HemisphereLight(0xf77f00, 0xd62828, 6);
+      //! nightlight
+      // const light1 = new HemisphereLight(0x03045e, 0x023e8a, 6);
 
-      const light1 = new HemisphereLight(0xF9D48A, 0x000088, 6);
       this.spotlight = new SpotLight(0xFFF2A6, 4);
       this.spotlight.castShadow = true;
       this.spotlight.shadow.bias = -0.0001;
@@ -87,7 +93,14 @@ export class LandingComponent implements OnInit {
       // this.controls = new OrbitControls(this.camera, this.renderer.domElement)
 
 
-      this.scene.background = new THREE.Color(0xa7eef4);
+
+      //! daylight
+      // this.scene.background = new THREE.Color(0xa7eef4);
+      //! eveninglight
+      this.scene.background = new THREE.Color(0xfcbf49);
+      //! nightlight
+      // this.scene.background = new THREE.Color(0x14213d);
+
       this.camera.position.set(-1.2978571918256083, 1.149703013863166, 1.0747605168331336);
       this.camera.rotation.x = -0.6516285699737149;
       this.camera.rotation.y = 0.6820342591363547;
@@ -98,6 +111,7 @@ export class LandingComponent implements OnInit {
       this.renderer.shadowMap.enabled = true;
       document.addEventListener('resize', this.onWindowResize, false);
       this.renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, true);
+      this.renderer.domElement.addEventListener('click', this.onDocumentMouseClick, true);
 
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -120,7 +134,7 @@ export class LandingComponent implements OnInit {
         speech.visible = false;
       }
       this.mixer = new THREE.AnimationMixer(this.scene);
-      console.log(this.animations);
+      // console.log(this.animations);
       setInterval(this.randomCar, 3000);
       this.mixer.clipAction(this.animations[0]).setLoop(THREE.LoopRepeat, 1);
       this.mixer.clipAction(this.animations[1]).setLoop(THREE.LoopRepeat, 1);
@@ -133,6 +147,7 @@ export class LandingComponent implements OnInit {
       this.mixer.clipAction(this.animations[8]).play();
       this.mixer.clipAction(this.animations[9]).play();
       this.mixer.clipAction(this.animations[10]).setLoop(THREE.LoopRepeat, 1);
+      this.mixer.clipAction(this.animations[11]).setLoop(THREE.LoopRepeat, 1);
       setInterval(this.animatePlane, 30000);
       // CALL ANIMATION FUNCTION
       this.animate();
@@ -153,8 +168,12 @@ export class LandingComponent implements OnInit {
       this.mixer.clipAction(this.animations[6]).play();
       this.mixer.clipAction(this.animations[6]).reset();
     }
+    else if (this.carint === 4) {
+      this.mixer.clipAction(this.animations[11]).play();
+      this.mixer.clipAction(this.animations[11]).reset();
+    }
     this.carint += 1;
-    if (this.carint > 3) {
+    if (this.carint > 4) {
       this.carint = 0;
     }
 
@@ -168,6 +187,25 @@ export class LandingComponent implements OnInit {
   onDocumentMouseMove = (event) => {
     this.mouse.x = (event.clientX / this.el.nativeElement.clientWidth) * 2 - 1;
     this.mouse.y = - (event.clientY / this.el.nativeElement.clientHeight) * 2 + 1;
+  }
+  onDocumentMouseClick = (event) => {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+    // checkrooms
+    if (intersects.length > 0) {
+      if (intersects[0].object.parent.name === 'medialab') {
+        this.router.navigate(["/livestream"])
+
+      } else if (intersects[0].object.parent.name === 'fablab') {
+        this.router.navigate(["/timetable"])
+
+      } else if (intersects[0].object.parent.name === 'conversationroom') {
+
+      } else {
+
+      }
+
+    }
   }
   // RESIZE DOCUMENT EVENTLISTENER
   onWindowResize = () => {

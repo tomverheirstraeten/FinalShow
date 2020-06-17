@@ -1,0 +1,27 @@
+<div class="container">
+
+
+<div class="conversations">
+  <div class="search">
+    <div class="searchinput">
+<input type="search" name="" id="">
+    </div>
+
+    <div class="searchbutton">
+<img src="assets/images/search.png" alt="">
+    </div>
+
+  </div>
+  <div class="conv-rooms">
+ <div class="conversation" *ngFor="let chats of myChats" [routerLink]="['/chats', chats.id]">
+   <img [src]="'assets/man.svg'" alt="">
+   {{ chats.displayName }}
+
+   <p *ngIf="chats.messages.length" class="last-message">
+     {{ chats.messages[chats.messages.length - 1].content }}
+   </p>
+ </div>
+  </div>
+
+</div>
+</div>

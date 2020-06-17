@@ -1,0 +1,36 @@
+@import '~src/styles.scss';
+.wrapper {
+    padding: 7%;
+}
+
+.page-title{
+    text-align: right;
+    margin-bottom: 10%;
+}
+
+.timetable-list-item{
+    margin-bottom: 5%;
+    display: flex;
+}
+
+.event-div{
+    border: 1px solid $red;
+    padding: 6%;
+    padding-right: 30%;
+}
+
+.info-text {
+    font-weight: lighter;
+    font-size: 13pt;
+    line-height: 23px;
+}
+
+.time-text {
+    width: 20%;
+    margin-top: auto;
+    margin-bottom: auto;
+    -webkit-transform: rotate(-90deg);
+    font-weight: normal;
+    font-size: 16pt;
+    
+}

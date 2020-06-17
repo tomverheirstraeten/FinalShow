@@ -1,0 +1,23 @@
+#canvas {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+h2 {
+  position: absolute;
+  z-index: 3;
+  font-size: 5em;
+  top: 30%;
+  left: 10%;
+  color: #4FCDC4;
+  text-shadow: 2px 2px #f98a8a;
+
+}
+
+h2 span {
+  line-height: 1em;
+}

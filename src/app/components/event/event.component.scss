@@ -1,0 +1,38 @@
+.pagina {
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .pagetitle {
+        text-align: right;
+    }
+
+    h2.pagetitle {
+        margin-top: -40px;
+    }
+
+    h1 {
+        margin-top: 30px;
+    }
+
+    #eventImage {
+        transform: translateX(-20px);
+        width: 70vw;
+        margin-top: 20px;
+    }
+
+    #time {
+        font-size: 20pt;
+        font-weight: 700;
+        position: absolute;
+        left: 70vw;
+        top: 25vh;
+        transform: rotateZ(90deg);
+    }
+
+    p {
+        margin-bottom: 20px;
+    }
+
+}

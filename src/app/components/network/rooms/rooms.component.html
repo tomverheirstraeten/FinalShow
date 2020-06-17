@@ -1,0 +1,7 @@
+<div class="roomscontainer">
+  <div class="rooms">
+  <div *ngFor="let room of allRooms" class="room" [routerLink]="['/room/', room.id]">{{room.roomName}}</div>
+  </div>
+  <!-- <button  class="button is-info" (click)="roomService.create()" >Create room</button> -->
+  </div>
+

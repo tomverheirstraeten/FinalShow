@@ -1,0 +1,336 @@
+@use 'var';
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+  font-size: var.$font-size-root;
+}
+
+*,
+*::before,
+*::after,
+input[type="search"] {
+  box-sizing: inherit;
+}
+
+body {
+  font-size: var.$font-size-base;
+  font-family: var.$font-stack;
+  line-height: var.$line-height-base;
+}
+
+body,
+html {
+  height: 100;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.txt-right {
+  text-align: right !important;
+}
+
+.scroll {
+  position: fixed;
+  left: 49%;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+
+  div {
+    height: 50px;
+    width: 2px;
+    background: var.$pink;
+    margin: 5px;
+
+    &:nth-child(1) {
+      height: 20px;
+    }
+  }
+}
+
+.m-1 {
+  margin: 1em;
+}
+
+.m-2 {
+  margin: 2em;
+}
+.m-x {
+  margin:0 1em;
+}
+.m-y {
+  margin:1em 0 ;
+}
+.p-1 {
+  padding: 1em;
+}
+
+.p-2 {
+  padding: 2em;
+}
+.p-x {
+  padding:0 1em;
+}
+.p-y {
+  padding:1em 0 ;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-lbl {
+  border: none;
+  padding: 0.5em 10px;
+  border-bottom: 1px solid var.$pink;
+
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.wd-33 {
+  display: flex;
+  width: 33%;
+  overflow: hidden;
+}
+.wd-100 {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.justify-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+.space-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
+}
+.border-bottom {
+  border-bottom: 1px solid var.$lightgrey;
+  width: 100%;
+  padding: 1em 0;
+}
+
+.pink {
+  color: var.$pink;
+}
+
+.grey {
+  color: var.$grey;
+}
+
+.bold {
+  font-weight: 900;
+}
+
+.light {
+  font-weight: 200;
+}
+
+.small {
+  font-size: 13px;
+}
+
+.big {
+  font-size: 23px;
+}
+
+.center {
+  text-align: center;
+}
+
+h4.bottom-shadow {
+  font-size: 120px;
+  position: fixed;
+  color: #2d2d2da3;
+  z-index: 21;
+  bottom: 0;
+  left: 0;
+  margin-left: 5%;
+  width: 90%;
+  text-align: left;
+  line-height: 40px;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.flex{
+  display: flex;
+}
+
+
+.btn {
+  background: transparent linear-gradient(90deg, #009FFF 0%, #EC2F4B 50%) 0% 0% no-repeat padding-box;
+  padding: 0.5em 0;
+  opacity: 1;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  padding: 3px 3px;
+
+  &:hover {
+    background-position: right center;
+    color: #fff;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 160px;
+    // margin: 0.5em 0;
+    height: 40px;
+    background: var.$dark;
+    text-transform: capitalize;
+  }
+}
+
+.progress {
+  position: fixed;
+  top: 116px;
+  width: 100%;
+  transition: 0.5s ease-in-out;
+  height: 6px;
+  border-radius: 0 5px 5px 0;
+  background: var.$gradient;
+}
+.red{
+  color: var.$red;
+}
+main {
+  padding-top: 140px;
+  position: relative;
+  min-height: 100vh;
+  z-index: 0;
+  background: var.$dark;
+}
+
+
+blockquote,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
+  margin: 0;
+}
+
+button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+iframe {
+  border: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+//
+// Remove `list-style` bullets of nav lists.
+//
+
+nav ul {
+  list-style: none;
+}
+
+//
+// Make images responsive.
+//
+
+img {
+  max-width: 100%;
+}
+
+[tabindex="-1"]:focus {
+  outline: none !important;
+}
+
+//
+// Remove delay from tapping on clickable elements.
+//
+a {
+  color: white;
+}
+
+a,
+area,
+button,
+input,
+label,
+select,
+textarea,
+[tabindex] {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  text-decoration: none;
+  outline: none !important;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+  .progress {
+    width: 100% !important;
+    transition: 0.5s ease-in-out;
+  }
+
+}
+
+

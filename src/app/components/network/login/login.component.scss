@@ -1,0 +1,117 @@
+#login {
+  width: 100%;
+
+  .login-wrapper {
+    margin-top: 100px;
+
+
+    h2 {
+      text-align: left;
+      margin: 1em 0;
+      font-size: 20px;
+    }
+
+    p {
+      text-align: left;
+      margin: 1em 0;
+      line-height: 18px;
+      margin-bottom: 2em;
+      font-size: 13px;
+    }
+  }
+
+
+  #LoginForm {
+    text-align: left;
+
+    .input-form {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
+
+      label {
+        text-align: left;
+        margin-bottom: 1em;
+        font-size: 0.7em;
+      }
+
+      input {
+        padding: 1em;
+        border-radius: 0px;
+        border: 1px solid #DBDBDB;
+
+        &:focus {
+          border-color: #F9D48A;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, .16);
+        }
+      }
+
+    }
+
+
+  }
+}
+
+button {
+  width: 100%;
+  min-width: 200px;
+  padding: 1em 2em;
+  text-align: center !important;
+  background-color: #fcfcfc;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  cursor: hand;
+  align-self: center;
+  transition: all 400ms ease 0s;
+  border: none;
+}
+
+button.active{
+  border: 1px solid #F9D48A;
+}
+button.google-btn{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.google-btn .google-icon-wrapper {
+  border-radius: 2px;
+  margin-right: 1em;
+  user-select: none
+}
+
+.google-btn .google-icon-svg {
+  width: 18px;
+  height: 18px;
+  user-select: none
+}
+
+.google-btn .btn-text {
+  float: right;
+  margin: 11px 14px 40px 40px;
+  color: #757575;
+  font-size: 14px;
+  letter-spacing: .2px;
+  font-family: Roboto;
+  user-select: none
+}
+
+.button:hover {
+  box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+  user-select: none
+}
+
+.button:active {
+  box-shadow: 0 1px 1px #757575;
+  background: #F8F8F8;
+  color: #fff;
+  user-select: none
+}
+
+
+
+
+
+
