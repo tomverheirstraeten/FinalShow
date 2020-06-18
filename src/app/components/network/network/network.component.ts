@@ -192,7 +192,7 @@ export class NetworkComponent implements OnInit {
       console.log(action);
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
-      if((sketch.frameCount % this.roomDelay) == 0){
+      if ((sketch.frameCount % this.roomDelay) == 0) {
         this.gotoRoom(action);
       }
     }
@@ -200,7 +200,7 @@ export class NetworkComponent implements OnInit {
 
   gotoRoom(room) {
     let roomName;
-    switch(room) {
+    switch (room) {
       case 'Motion Cluster':
         roomName = 'Motion';
         break;
@@ -218,7 +218,7 @@ export class NetworkComponent implements OnInit {
       for (const kamer of this.allRooms) {
         if (kamer.roomName === roomName) {
           // console.log(roomName);
-          if (kamer.id !== undefined){
+          if (kamer.id !== undefined) {
             window.location.href = '/room/' + kamer.id;
           }
         }
