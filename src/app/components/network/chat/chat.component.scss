@@ -1,17 +1,18 @@
 .wrapper {
-  height: 100vh;
+
   display: flex;
   align-items: center;
-  width: 100%;
+  margin-top: 100px;
 }
 
 .chat {
-  padding: 10px;
   width: 100%;
   color: #222222;
   border-radius: 5px;
-  overflow: scroll;
-  height: 50vh;
+  // overflow: scroll;
+  // height: 100vh;
+  padding-bottom: 80px;
+  // max-height: calc(100vh - 200px);
 }
 
 .message-content.right {
@@ -27,36 +28,52 @@
   order: 2;
   text-align: left;
 
-  padding: 10px;
+  padding: 10px 0px;
   font-size: 0.8em;
   animation-delay: 0ms;
   animation-duration: 600ms;
   border-radius: 5px;
+.deleted{
+  p{
+    background:transparent !important;
+    font-style: italic;
+    font-size: 11px;
+    color: grey;
+    text-align: right;
+  }
+}
+.hand{
+  p{
+    background:transparent !important;
 
-  padding: 2em;
+    font-size: 25px;
+    text-align: left;
+  }
+}
 
   .right {
     width: 100%;
-    align-items: flex-end;
-
+    align-items: flex-start;
+&.hand p{
+    text-align: right;
+}
     article {
       display: flex;
 
       p {
-        border-top-right-radius: 0px;
-        background: #e96443;
-        /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #904e95, #e96443);
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #904e95, #e96443);
-      }
+        background: #F9D48A;
     }
   }
+  }
+
+
 
   .left {
     width: 100%;
     align-items: flex-start;
-
+    &.deleted p {
+      text-align: left;
+    }
     article {
       display: flex;
 
@@ -70,17 +87,20 @@
     color: rgb(199, 199, 199);
     font-weight: lighter;
     font-size: 11px;
-
+    width: 100%;
+    display: block;
+    text-align: left;
   }
 
   p {
 
-    color: white;
+    color: #141313;
     font-size: 15px;
-    border-radius: 25px;
-    padding: 0.5em 1em;
+    padding: 1em 1em;
     margin: 0.3em 0;
-    background-color: #222222;
+    min-width: 200px;
+    background-color:#F0F0F0;
+    text-align: left;
   }
 
   .user {
@@ -100,10 +120,12 @@
 
 .form.messagebar {
   width: 90%;
+  max-width: 1200px;
   display: flex;
-  background: rgba(255, 255, 255, 0.8);
-  position: absolute;
-  bottom: 1em;
+  background: rgba(255, 255, 255, 1);
+  position: fixed;
+  bottom: 0em;
+  padding-bottom: 1em;
 
   .textBar {
     margin-top: 1em;
@@ -121,6 +143,14 @@
       padding: 1em 1em;
       box-shadow: 0px 3px 2px 0px #7b7b7b4d;
     }
+    .send{
+      cursor: pointer;
+    }
+  }
+  .clap{
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 0.5em;
   }
 }
 
@@ -135,7 +165,19 @@
 }
 
 
-
+.delete{
+  width: 25px;
+  // background: rgb(193, 193, 193);
+  // color: white !important;
+  height: 25px;
+  color: rgba(255, 0, 0, 0.687) !important;
+  box-shadow: none;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5em;
+}
 
 .users {
   position: relative;

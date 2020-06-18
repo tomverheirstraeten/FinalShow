@@ -18,6 +18,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   chat$: Observable<any>;
   newMsg: string;
   allChats: any[] = [];
+  source: Observable<any>;
+  chatId;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -30,9 +32,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     this.getAllChats();
-    const chatId = this.route.snapshot.paramMap.get('id');
-    const source = this.cs.get(chatId);
-    this.chat$ = this.cs.joinUsers(source); // .pipe(tap(v => this.scrollBottom(v)));
+    this.chatId = this.route.snapshot.paramMap.get('id');
+    const source = this.cs.get(this.chatId);
+    this.chat$ = this.cs.joinUsers(source);
+     // .pipe(tap(v => this.scrollBottom(v)));
+    this.setMessagesToSeen();
   }
 
   @HostListener('load', ['$event']) onPageLoad(event: Event) {
@@ -41,13 +45,17 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
 
 
-
+setMessagesToSeen() {
+console.log(this.chatId);
+}
 
 
 
   getAllChats() {
     this.cs.getAllChats().subscribe((chats) => {
       this.allChats = chats;
+      this.scrollBottom();
+      // console.log(this.allChats);
     });
   }
   submit(chatId) {
@@ -58,19 +66,26 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.newMsg = '';
     this.scrollBottom();
   }
+  submitHand(chatId) {
 
+
+
+    this.cs.sendMessageHand(chatId);
+    this.newMsg = '';
+    this.scrollBottom();
+  }
   trackByCreated(i, msg) {
     return msg.createdAt;
   }
 
   private scrollBottom() {
 
-    const chatElem = document.getElementById("chat");
+    // const chatElem = document.getElementById("chat");
 
-    if (chatElem) {
-      setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
-    }
+    // if (chatElem) {
+    //   setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
+    // }
 
-    // setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
+    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 200);
   }
 }

@@ -72,7 +72,8 @@ export class RoomsService {
     const data = {
       uid,
       content,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      deleted: false
     };
 
     if (uid) {

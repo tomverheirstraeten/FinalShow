@@ -82,10 +82,10 @@ export class ChatService {
       messages: []
     };
 
-     if(uid === uid2){
+    if(uid === uid2){
       // return false;
     } else {
-    const docRef = await this.afs.collection("chats").add(data);
+    const docRef = await this.afs.collection('chats').add(data);
     return this.router.navigate(['chats', docRef.id]);
     }
   }
@@ -99,7 +99,28 @@ export class ChatService {
     const data = {
       uid,
       content,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      deleted: false,
+      seen: false
+    };
+
+    if (uid) {
+      const ref = this.afs.collection('chats').doc(chatId);
+      return ref.update({
+        messages: firestore.FieldValue.arrayUnion(data)
+      });
+    }
+  }
+
+  async sendMessageHand(chatId) {
+    const { uid } = await this.auth.getUser();
+    const data = {
+      uid,
+      content: '',
+      createdAt: Date.now(),
+      deleted: false,
+      hand: true,
+      seen: false
     };
 
     if (uid) {
@@ -114,13 +135,64 @@ export class ChatService {
     const { uid } = await this.auth.getUser();
 
     const ref = this.afs.collection('chats').doc(chat.id);
-    console.log(msg);
+
     if (chat.uid === uid || msg.uid === uid) {
       // Allowed to delete
       delete msg.user;
       return ref.update({
         messages: firestore.FieldValue.arrayRemove(msg)
       });
+    }
+  }
+
+
+  async updateMessage(chat, msg, i) {
+    const { uid } = await this.auth.getUser();
+    const ref = this.afs.collection('chats').doc(chat.id);
+    if (chat.uid === uid || msg.uid === uid) {
+// console.log(msg, chat)
+
+      // Allowed to delete
+      // delete msg.user;
+      // console.log(ref.get());
+      let allMessages;
+      this.get(chat.id).subscribe(res => {
+        allMessages = res['messages'],
+        allMessages[i].originalContent =    allMessages[i].content;
+        allMessages[i].content = 'Dit bericht werd verwijderd';
+        allMessages[i].deleted = true;
+
+          return ref.update({
+        messages: allMessages
+      });
+      });
+
+
+
+    }
+  }
+
+  async updateMessageSeen(chat, msg, i) {
+    const { uid } = await this.auth.getUser();
+    const ref = this.afs.collection('chats').doc(chat.id);
+    if (chat.uid === uid || msg.uid === uid) {
+      // console.log(msg, chat)
+
+      // Allowed to delete
+      // delete msg.user;
+      // console.log(ref.get());
+      let allMessages;
+      this.get(chat.id).subscribe(res => {
+        allMessages = res['messages'],
+          allMessages[i].originalContent = allMessages[i].content;
+          allMessages[i].seen = true;
+        return ref.update({
+          messages: allMessages
+        });
+      });
+
+
+
     }
   }
 
