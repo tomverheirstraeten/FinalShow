@@ -121,11 +121,6 @@ h2, h3, h4, h5, h6 {
 .align-center {
   align-items: center;
 }
-.container {
-  width:90%;
-  max-width: 1200px;
-  margin: auto;
-}
 
 .txt-light{
   color: rgb(167, 167, 167);
@@ -138,4 +133,29 @@ h2, h3, h4, h5, h6 {
 }
 .w-33{
   width: 33%;
+}
+
+@media only screen and (max-width: 768px) {
+.container {
+  text-align: center;
+  width:90%;
+  max-width: 1200px;
+  margin: auto;
+}
+}
+
+// desktop specific css
+
+@media only screen and (min-width: 768px) {
+  body{
+    overflow-x: hidden;
+  }
+  .container-grid{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 5% repeat(10, 7.89%) 5%;
+    grid-template-rows: 60px 60px 20px auto auto auto 60px;
+    column-gap: 1%;
+    row-gap: 0;
+  }
 }
