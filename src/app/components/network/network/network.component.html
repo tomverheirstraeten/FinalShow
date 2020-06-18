@@ -1,44 +1,9 @@
 <app-header class="yellow"></app-header>
-<div (click) = 'closeSearch()'>
-<div class="container">
-  <!-- <div class="contacts">
-    <div class="leftside">
-      <div class="usercontainer">
-        <div class="user">
-          <div class="profile">
-            <img [src]="user?.photoURL || 'assets/man.svg'  " alt="" width="50px">
-            <p>{{ user?.displayName }}</p>
-          </div>
-          <div class="logout" (click)="auth.signOut()">
-            <p>logout</p>
-            <div class="cross">
-              <div class="bar1"></div>
-              <div class="bar2"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="userscontainer"> -->
-<!-- <ul>
-    <li *ngFor="let chat of userChats$ | async">
-      <a [routerLink]="'rooms/' + chat.id">{{ chat.id }} - {{ chat.messages.length }} Messages </a>
-    </li>
-  </ul> -->
-<!-- <app-users></app-users> -->
-      <!-- </div>
-    </div> -->
-      <!-- <app-rooms></app-rooms> -->
-      <div class="container conversations">
-   <app-conversations (close)= closer></app-conversations>
-      </div>
+<div (click)='closeSearch()'>
+  <div class="container">
+    <div class="container conversations">
+      <app-conversations (close)=closer></app-conversations>
+    </div>
+    <h1>{{user?.name}}</h1>
 
-  <!-- </div> -->
-
-
-
-
-</div>
-
-  <!-- <ng-template #credentials>
-    {{goToLogin()}}
-  </ng-template> -->
+  </div>
