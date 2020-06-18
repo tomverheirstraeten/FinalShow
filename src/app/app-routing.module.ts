@@ -16,6 +16,12 @@ import { EventComponent } from './components/event/event.component';
 import { ChatComponent } from './components/network/chat/chat.component';
 import { RoomComponent } from './components/network/room/room.component';
 import { DesktopLandingComponent } from './components/desktoplanding/desktoplanding.component';
+import { AdminhomeComponent } from './components/admin/adminhome/adminhome.component';
+import { AdmintimetableComponent } from './components/admin/admintimetable/admintimetable.component';
+import { AdminroomsComponent } from './components/admin/adminrooms/adminrooms.component';
+import { AdminusersComponent } from './components/admin/adminusers/adminusers.component';
+import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
+import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 
 
 const routes: Routes = [
@@ -31,6 +37,12 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'timetable/:event', component: EventComponent },
   { path: 'chats/:id', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminhomeComponent },
+  { path: 'admin/timetable', component: AdmintimetableComponent },
+  { path: 'admin/chat', component: AdminroomsComponent },
+  { path: 'admin/chat/:id', component: AdminroomComponent },
+  { path: 'admin/users', component: AdminusersComponent },
+  { path: 'admin/notifications', component: AdminnotificationsComponent }
   // { path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard] },
   // { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuard] },
 ];

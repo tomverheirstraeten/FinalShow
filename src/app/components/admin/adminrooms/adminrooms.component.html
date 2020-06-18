@@ -1,0 +1,14 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5" id="wrapper">
+  <h6>Room overview</h6>
+  <div class="card-deck mt-5">
+    <div *ngFor="let room of allRooms" class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{room['roomName']}}</h5>
+        <hr>
+        <a [routerLink]="'/admin/chat/' + room['id']"><button class="btn btn-outline-primary">Enter room</button></a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5">
+  <div class="col message-wrapper">
+      <label >Message</label>
+      <textarea id="message" #message class="form-control" rows="7"></textarea>
+  </div>
+  <div class="col mt-5">
+      <label >Visible in rooms</label>
+  </div>
+
+  <div class="col">
+  <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input class="rooms-visible" value="live stream" type="checkbox" aria-label="Checkbox for following text input">
+        </div>
+      </div>
+      <label class="form-control">Live stream</label>
+    </div>
+  </div>
+
+  <div class="col">
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input class="rooms-visible" value="chatrooms" type="checkbox" aria-label="Checkbox for following text input">
+            </div>
+          </div>
+          <label class="form-control">Chatrooms</label>
+      </div>
+  </div>
+
+  <div class="col">
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input class="rooms-visible" value="expo" type="checkbox" aria-label="Checkbox for following text input">
+            </div>
+          </div>
+          <label class="form-control">Expo</label>
+      </div>
+  </div>
+
+  <div class="col">
+      <div class="input-group mb-5">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input class="rooms-visible" value="faq" type="checkbox" aria-label="Checkbox for following text input">
+            </div>
+          </div>
+          <label class="form-control">FAQ</label>
+      </div>
+  </div>
+
+  <div class="col">
+      <label >Is this a permanent message?</label>
+  </div>
+
+  <div class="col">
+  <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input #permanent id="permanent" type="checkbox" aria-label="Checkbox for following text input">
+        </div>
+      </div>
+      <label class="form-control">Permanent</label>
+    </div>
+  </div>
+
+
+  <div class="col mt-5">
+  <label>Color code</label>
+  </div>
+  <div class="col input-group mb-5">
+  <select #colorCode id="colorCode-selector" class="custom-select">
+      <option value="green">Green</option>
+      <option value="yellow">Yellow</option>
+      <option value="red">Red</option>
+  </select>
+  <div class="input-group-append">
+      <button (click)="sendNotification(message.value, colorCode.value, permanent.checked)" (click)="message.value = ''" (click)="permanent.checked = false" id="send" class="btn btn-outline-primary" type="submit">Send</button>
+    </div>
+
+  </div>
+  </div>

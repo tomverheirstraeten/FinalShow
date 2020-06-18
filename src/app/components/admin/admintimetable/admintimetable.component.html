@@ -1,0 +1,51 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5" id="wrapper">
+  <h6 class="mt-5">Add a timeslot</h6>
+
+  <div class="row mb-5">
+    <div class="col-2">
+      <input type="time" class="form-control" name="time" id="time">
+    </div>
+    <div class="col-3">
+      <input type="text" class="form-control" placeholder="Name" name="name" id="name">
+    </div>
+    <div class="col-5">
+      <input type="text" class="form-control" placeholder="Description" name="desc" id="desc">
+    </div>
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="clickAdd()">Add timeslot</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <h6>Time</h6>
+    </div>
+    <div class="col-3">
+      <h6>Name</h6>
+    </div>
+    <div class="col-5">
+      <h6>Description</h6>
+    </div>
+  </div>
+
+  <div *ngFor='let event of timetable' class="row">
+    <div class="col-2 align-center">
+      <input type="time" value="{{displayTime(event['time'])}}" class="form-control {{event['id']}}">
+    </div>
+    <div class="col-3">
+      <textarea class="form-control">{{event['name']}}</textarea>
+    </div>
+    <div class="col-5">
+      <textarea class="form-control">{{event['desc']}}</textarea>
+    </div>
+    <div class="col-1 align-center">
+      <button class="btn btn-outline-primary" (click)="clickUpdate(event['id'])">Update</button>
+    </div>
+    <div class="col-1 align-center">
+      <button class="btn btn-outline-danger" (click)="clickRemove(event['name'], event['id'])">Delete</button>
+    </div>
+    <hr style="width: 100%;">
+  </div>
+</div>
