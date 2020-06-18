@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnChanges {
+  @Input() data;
   allRooms;
   status: any = [];
 

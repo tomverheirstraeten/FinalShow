@@ -19,6 +19,7 @@ user;
   myChats: any = [];
   allRooms: any = [];
   displayNameOtherUser: String = '';
+  closer: boolean = true;
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router) {
 
   }
@@ -53,5 +54,9 @@ async checkIfUser(){
 
   goToLogin() {
     this.route.navigate(['/login']);
+  }
+  closeSearch(){
+    this.closer = false;
+    console.log('close');
   }
 }

@@ -3,10 +3,6 @@ img {
 }
 
 .users {
-  border-radius: 5px;
-  // background: rgba(0,0,0,0.1);
-  height: calc(100vh - 100px);
-  overflow-y: scroll;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -36,9 +32,6 @@ img {
 
   #user {
     cursor: pointer;
-    margin: 0.5em;
-    padding: 1em 2em;
-    background: rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,14 +42,13 @@ img {
 
     .user {
       display: flex;
-
+padding: 0.7em;
       .dot {
         background-color: red;
         width: 7px;
         height: 7px;
         position: absolute;
         border-radius: 50%;
-
       }
 
       .green {

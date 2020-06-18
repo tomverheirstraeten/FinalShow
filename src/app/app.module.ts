@@ -25,6 +25,7 @@ import { ChatComponent } from './components/network/chat/chat.component';
 import { RoomsComponent } from './components/network/rooms/rooms.component';
 import { RoomComponent } from './components/network/room/room.component';
 import { ConversationsComponent } from './components/network/conversations/conversations.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
    declarations: [
@@ -44,7 +45,8 @@ import { ConversationsComponent } from './components/network/conversations/conve
       ChatComponent,
       RoomsComponent,
       RoomComponent,
-      ConversationsComponent
+      ConversationsComponent,
+      NotificationComponent
    ],
    imports: [
       BrowserModule,
