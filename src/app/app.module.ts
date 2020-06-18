@@ -26,6 +26,7 @@ import { RoomsComponent } from './components/network/rooms/rooms.component';
 import { RoomComponent } from './components/network/room/room.component';
 import { ConversationsComponent } from './components/network/conversations/conversations.component';
 import { DesktopLandingComponent } from './components/desktoplanding/desktoplanding.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
    declarations: [
@@ -46,7 +47,8 @@ import { DesktopLandingComponent } from './components/desktoplanding/desktopland
       RoomsComponent,
       RoomComponent,
       ConversationsComponent,
-      DesktopLandingComponent
+      DesktopLandingComponent,
+      NotificationComponent
    ],
    imports: [
       BrowserModule,

@@ -115,9 +115,9 @@
 
         <div class="form messagebar">
           <section class="textBar flex row emoji-picker-container">
-            <a class="flex align-center clap" (click)="submitHand(chat.id)">👏</a>
-            <input class="input form-control" [(ngModel)]="newMsg" maxlength="100" placeholder="Typ een chatbericht..."
-              (keydown.enter)="submit(chat.id)" data-emojiable="true">
+            <a class="flex align-center clap" (click)="submitHand(chat)">👏</a>
+            <input class="input form-control"  [(ngModel)]="newMsg" maxlength="100" placeholder="Typ een chatbericht..."
+              (keydown.enter)="submit(chat.id)" data-emojiable="true" (focus)='updateMessageSeen(chat)'>
             <button (click)="submit(chat.id)" class="send" [disabled]="!newMsg"><img
                 src="assets/images/send.png"></button>
           </section>
