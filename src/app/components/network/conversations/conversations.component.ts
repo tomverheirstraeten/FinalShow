@@ -1,9 +1,28 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { ChatService } from 'src/app/services/chat.service';
-import { UsersService } from 'src/app/services/users.service';
-import { first } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  Input
+} from '@angular/core';
+import {
+  AuthService
+} from 'src/app/services/auth.service';
+import {
+  ChatService
+} from 'src/app/services/chat.service';
+import {
+  UsersService
+} from 'src/app/services/users.service';
+import {
+  first
+} from 'rxjs/operators';
 import * as _ from 'lodash';
+import {
+  Router
+} from '@angular/router'
+import {
+  LoginComponent
+} from '../login/login.component';
 @Component({
   selector: 'app-conversations',
   templateUrl: './conversations.component.html',
@@ -18,39 +37,56 @@ export class ConversationsComponent implements OnInit {
   myChats;
   filteredUsers = [];
   filteredChats = [];
+  seen;
   searchInput: string;
   allUsers: unknown[];
   status: any[] = [];
-  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService) {
+  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
 
-   }
+  }
 
   ngOnInit() {
-  this.getmyChats();
-  this.getUsers();
-  console.log(this.closer);
+    this.getmyChats();
+    this.getUsers();
+    console.log(this.closer);
+  }
+  updateMessageSeen(chatid) {
+    this.cs.updateMessageSeenConversation(chatid);
   }
 
-async getmyChats() {
-
-  const user = await this.auth.getUser();
-  if (user) {
-    const userId = user.uid;
-    await this.cs.getAllChats().subscribe((res) => {
-      const chats = [];
-      for (const chat of res) {
-        if (chat['uid'] === userId || chat['uid2'] === userId) {
-          // chats.push(chat);
-          this.getOtherUserName(chat, chats, userId);
+  async getmyChats() {
+    const user = await this.auth.getUser();
+    if (user) {
+      const userId = user.uid;
+      await this.cs.getAllChats().subscribe((res) => {
+        const chats = [];
+        for (const chat of res) {
+          if (chat['uid'] === userId || chat['uid2'] === userId) {
+            // chats.push(chat);
+            this.getOtherUserName(chat, chats, userId);
+          }
         }
-      }
-
-    });
+      });
+    }
   }
 
-}
+
+  async checkIfSeen(chat) {
+    let checkIfSeen;
+    console.log(chat.messages);
+    for (const message of chat['messages']) {
+      if (message.uid !== this.auth.userId && !message.seen) {
+        console.log(message)
+        checkIfSeen = true;
+      }
+    }
+    return checkIfSeen;
+    // return false;
+  }
+
+
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(res => {
+    this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
@@ -58,7 +94,18 @@ async getmyChats() {
             this.functionOtherUser = user['function'];
             chat.displayName = this.displayNameOtherUser;
             chat.function = this.functionOtherUser;
-            chats.push(chat);
+
+
+            await this.checkIfSeen(chat).then(res => {
+              // console.log(res);
+              if (res) {
+                console.log('seen ' + res);
+              }
+              chat.seen = res;
+              chats.push(chat);
+            });
+
+
 
           }
         } else {
@@ -67,31 +114,34 @@ async getmyChats() {
             this.functionOtherUser = user['function'];
             chat.displayName = this.displayNameOtherUser;
             chat.function = this.functionOtherUser;
-            chats.push(chat);
+
+            await this.checkIfSeen(chat).then(res => {
+              if (res) {
+                console.log('seen ' + res);
+              }
+              chat.seen = res;
+              chats.push(chat);
+            });
+
           }
         }
         this.myChats = chats;
         this.filteredChats = chats;
-        // console.log(this.allData);
+        console.log(this.filteredChats);
+
       }
     });
   }
 
 
-  search(event:any){
+  search(event: any) {
     let value = event.target.value;
     let newArrayUsers = [];
     let newArrayChats = [];
-    // let newArray = _.filter(this.allUsers, _.matches(value));
-    // var test = _.filter(this.allUsers, function (item) {
-    //   return _.some(item.displayName, function (tag) {
-    //     return tag;
-    //     return _.startsWith(tag, value);
-    //   });
-    // });
+
     this.allUsers.forEach(user => {
       let displayName = user['displayName'].toLowerCase();
-      if(displayName.includes(value.toLowerCase())){
+      if (displayName.includes(value.toLowerCase())) {
         newArrayUsers.push(user);
       }
     });
@@ -101,17 +151,13 @@ async getmyChats() {
         newArrayChats.push(chat);
       }
     });
-    // var test = this.allUsers.filter(function (item) {
-    //   return item['displayName'].some(function (tag) {
-    //     return 0 === tag.indexOf(value);
-    //   });
-    // });
-    // console.log(newArrayUsers,newArrayChats);
+
     this.filteredChats = newArrayChats;
     this.filteredUsers = newArrayUsers;
-    // let [...array] = _.uniq(this.allData);
-    // console.log(array)
+    this.checkIfSeen(this.filteredChats);
   }
+
+
 
   getUsers() {
     this.userService.getUsers().subscribe(res => {
@@ -121,13 +167,13 @@ async getmyChats() {
     });
   }
 
-  toggleConversation(){
+  toggleConversation() {
     console.log(this.closer)
     this.closer = !this.closer;
   }
-closeConversation(){
-  this.closer = true;
-}
+  closeConversation() {
+    this.closer = true;
+  }
 
   checkStatus() {
     this.userService.getUsersStatus().subscribe(res => {
@@ -148,4 +194,8 @@ closeConversation(){
     });
   }
 
+  goToChat(chat) {
+    this.updateMessageSeen(chat.id);
+    return this.router.navigate([`chats/${chat.id}`]);
+  }
 }

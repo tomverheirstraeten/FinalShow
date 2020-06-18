@@ -36,18 +36,18 @@ export class ChatComponent implements OnInit, AfterViewInit {
     const source = this.cs.get(this.chatId);
     this.chat$ = this.cs.joinUsers(source);
      // .pipe(tap(v => this.scrollBottom(v)));
-    this.setMessagesToSeen();
+
   }
 
   @HostListener('load', ['$event']) onPageLoad(event: Event) {
     this.scrollBottom();
   }
+  updateMessageSeen(chat){
+    this.cs.updateMessageSeen(chat);
+  }
 
 
 
-setMessagesToSeen() {
-console.log(this.chatId);
-}
 
 
 
@@ -66,11 +66,12 @@ console.log(this.chatId);
     this.newMsg = '';
     this.scrollBottom();
   }
-  submitHand(chatId) {
+  submitHand(chat) {
 
 
 
-    this.cs.sendMessageHand(chatId);
+    this.cs.sendMessageHand(chat.id);
+    // this.updateMessageSeen(chat);
     this.newMsg = '';
     this.scrollBottom();
   }

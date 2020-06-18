@@ -14,7 +14,7 @@
   </div>
   <div class="conv-rooms" *ngIf="!closer">
     <h1>Vorige Gesprekken</h1>
- <div class="conversation" *ngFor="let chats of filteredChats" [routerLink]="['/chats', chats.id]">
+ <div class="conversation" *ngFor="let chats of filteredChats" (click)='goToChat(chats)'>
   <div *ngIf="chats.messages.length">
  <img [src]="'assets/man.svg'" alt="">
  <div class="namestatus">
@@ -23,8 +23,12 @@
      {{ chats.function | titlecase }}
    </p>
   </div>
+    <span *ngIf="chats.seen" class="last-message"></span>
 
-  <!-- <p *ngIf="!chats.messages[chats.messages.length - 1].seen" class="last-message">
+
+
+<!--
+  <p *ngIf="!chats.messages[chats.messages.length - 1].seen" class="last-message">
     {{ chats.messages[chats.messages.length - 1].seen }}
   </p> -->
 

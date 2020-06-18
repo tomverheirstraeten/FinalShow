@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-
-  constructor(private afs: AngularFirestore) { }
+allNotifications = [];
+notificationsLiveStream: Observable<any>[] = [];
+  constructor(private afs: AngularFirestore) {
+   }
 
   getNotifiation() {
     return this.afs.collection<any>('notifications')
@@ -21,6 +24,5 @@ export class NotificationService {
           });
         })
       );
-
   }
 }

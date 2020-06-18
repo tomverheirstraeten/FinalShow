@@ -1,3 +1,6 @@
-<p>
-  notification works!
-</p>
+<div *ngIf="notif !== undefined || notif !== ''">
+<p class='{{notif.color}}'>{{notif.message}}</p>
+<p *ngIf="notif.permanent === true"  class='{{notif.color}} permanent'>{{notif.message}}Permanent</p>
+</div>
+
+

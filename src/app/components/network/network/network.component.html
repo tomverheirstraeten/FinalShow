@@ -9,12 +9,7 @@
             <img [src]="user?.photoURL || 'assets/man.svg'  " alt="" width="50px">
             <p>{{ user?.displayName }}</p>
           </div>
-          <div class="logout" (click)="auth.signOut()">
-            <p>logout</p>
-            <div class="cross">
-              <div class="bar1"></div>
-              <div class="bar2"></div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -28,6 +23,12 @@
       <!-- </div>
     </div> -->
       <!-- <app-rooms></app-rooms> -->
+       <!-- <div class="logout" (click)="auth.signOut()">
+         <p>logout</p>
+         <div class="cross">
+           <div class="bar1"></div>
+           <div class="bar2"></div>
+         </div> -->
       <div class="container conversations">
    <app-conversations (close)= closer></app-conversations>
       </div>
