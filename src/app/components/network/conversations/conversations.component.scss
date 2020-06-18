@@ -39,12 +39,11 @@ input{
       font-size: small;
       font-weight: 300;
     }
-    .conversation{
+    .conversation div{
       background: white;
       padding: 0.7em;
       text-align: left;
       display: flex;
-      align-items: center;
       margin: 0.5em 0 1em;
       img{
         width: 40px;
@@ -60,6 +59,13 @@ input{
           font-weight: 500;
         }
       }
+    }
+    .last-message{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: solid 1px black;
+      background: yellow;
     }
 
   }

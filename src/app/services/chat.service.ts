@@ -100,7 +100,27 @@ export class ChatService {
       uid,
       content,
       createdAt: Date.now(),
-      deleted: false
+      deleted: false,
+      seen: false
+    };
+
+    if (uid) {
+      const ref = this.afs.collection('chats').doc(chatId);
+      return ref.update({
+        messages: firestore.FieldValue.arrayUnion(data)
+      });
+    }
+  }
+
+  async sendMessageHand(chatId) {
+    const { uid } = await this.auth.getUser();
+    const data = {
+      uid,
+      content: '',
+      createdAt: Date.now(),
+      deleted: false,
+      hand: true,
+      seen: false
     };
 
     if (uid) {
@@ -145,6 +165,30 @@ export class ChatService {
           return ref.update({
         messages: allMessages
       });
+      });
+
+
+
+    }
+  }
+
+  async updateMessageSeen(chat, msg, i) {
+    const { uid } = await this.auth.getUser();
+    const ref = this.afs.collection('chats').doc(chat.id);
+    if (chat.uid === uid || msg.uid === uid) {
+      // console.log(msg, chat)
+
+      // Allowed to delete
+      // delete msg.user;
+      // console.log(ref.get());
+      let allMessages;
+      this.get(chat.id).subscribe(res => {
+        allMessages = res['messages'],
+          allMessages[i].originalContent = allMessages[i].content;
+          allMessages[i].seen = true;
+        return ref.update({
+          messages: allMessages
+        });
       });
 
 

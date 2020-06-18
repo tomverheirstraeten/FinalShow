@@ -1,6 +1,7 @@
 <app-header class="yellow"></app-header>
+<div (click) = 'closeSearch()'>
 <div class="container">
-  <div class="contacts">
+  <!-- <div class="contacts">
     <div class="leftside">
       <div class="usercontainer">
         <div class="user">
@@ -17,26 +18,26 @@
           </div>
         </div>
       </div>
-      <div class="userscontainer">
-<ul>
+      <div class="userscontainer"> -->
+<!-- <ul>
     <li *ngFor="let chat of userChats$ | async">
       <a [routerLink]="'rooms/' + chat.id">{{ chat.id }} - {{ chat.messages.length }} Messages </a>
     </li>
-  </ul>
-<app-users></app-users>
-      </div>
-    </div>
-      <app-rooms></app-rooms>
+  </ul> -->
+<!-- <app-users></app-users> -->
+      <!-- </div>
+    </div> -->
+      <!-- <app-rooms></app-rooms> -->
       <div class="container conversations">
-   <app-conversations></app-conversations>
+   <app-conversations (close)= closer></app-conversations>
       </div>
 
-  </div>
+  <!-- </div> -->
 
 
 
 
-
+</div>
 
   <!-- <ng-template #credentials>
     {{goToLogin()}}

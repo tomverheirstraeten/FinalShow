@@ -42,11 +42,21 @@
     text-align: right;
   }
 }
+.hand{
+  p{
+    background:transparent !important;
+
+    font-size: 25px;
+    text-align: left;
+  }
+}
 
   .right {
     width: 100%;
     align-items: flex-start;
-
+&.hand p{
+    text-align: right;
+}
     article {
       display: flex;
 
@@ -112,9 +122,10 @@
   width: 90%;
   max-width: 1200px;
   display: flex;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
   position: fixed;
-  bottom: 1em;
+  bottom: 0em;
+  padding-bottom: 1em;
 
   .textBar {
     margin-top: 1em;
@@ -138,6 +149,7 @@
   }
   .clap{
     font-size: 25px;
+    cursor: pointer;
     margin-right: 0.5em;
   }
 }
@@ -155,10 +167,12 @@
 
 .delete{
   width: 25px;
-  background: rgb(193, 193, 193);
+  // background: rgb(193, 193, 193);
   // color: white !important;
   height: 25px;
-  font-size: 22px;
+  color: rgba(255, 0, 0, 0.687) !important;
+  box-shadow: none;
+  font-size: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
