@@ -1,13 +1,24 @@
 <app-adminheader></app-adminheader>
 
 <div class="container mt-5 mb-5" id="wrapper">
-  <h6>Room overview</h6>
+  <h6>Add a room</h6>
+  <div class="row">
+    <div class="col-10">
+      <input type="text" placeholder="Name" id="name" class="form-control">
+    </div>
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="createRoom()">Add room</button>
+    </div>
+  </div>
+
   <div class="card-deck mt-5">
-    <div *ngFor="let room of allRooms" class="card">
+    <div *ngFor="let room of allRooms" class="card mb-4" style="min-width: 20%;">
       <div class="card-body">
         <h5 class="card-title">{{room['roomName']}}</h5>
+        <h6 class="card-subtitle text-muted">{{room['messages'].length}} messages</h6>
         <hr>
         <a [routerLink]="'/admin/chat/' + room['id']"><button class="btn btn-outline-primary">Enter room</button></a>
+        <button class="btn btn-outline-danger ml-2" (click)="deleteRoom(room['id'], room['roomName'])">Delete</button>
       </div>
     </div>
   </div>
