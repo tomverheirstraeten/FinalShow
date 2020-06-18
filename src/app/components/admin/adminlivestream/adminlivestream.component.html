@@ -1,0 +1,13 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5">
+  <h6>Current url: {{currentUrl}}</h6>
+  <div class="row mt-4">
+    <div class="col-10">
+      <input type="text" class="form-control" placeholder="New url" id="url">
+    </div>
+    <div class="col-2">
+      <button class="btn btn-outline-primary" (click)="updateUrl()">Update</button>
+    </div>
+  </div>
+</div>

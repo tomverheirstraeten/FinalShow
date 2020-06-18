@@ -34,6 +34,7 @@ import { AdminroomsComponent } from './components/admin/adminrooms/adminrooms.co
 import { AdminusersComponent } from './components/admin/adminusers/adminusers.component';
 import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
+import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
 
 @NgModule({
    declarations: [
@@ -62,7 +63,8 @@ import { AdminnotificationsComponent } from './components/admin/adminnotificatio
       AdminroomsComponent,
       AdminusersComponent,
       AdminroomComponent,
-      AdminnotificationsComponent
+      AdminnotificationsComponent,
+      AdminlivestreamComponent
    ],
    imports: [
       BrowserModule,

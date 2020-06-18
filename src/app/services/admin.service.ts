@@ -132,6 +132,20 @@ export class AdminService {
       );
   }
 
+  createRoom(name){
+    const collection = this.afs.collection('rooms');
+    collection.add({
+      roomName: name,
+      messages: new Array(),
+      createdAt: Date.now()
+    });
+  }
+
+  deleteRoom(chatId){
+    const collection = this.afs.collection('rooms');
+    collection.doc(chatId).delete();
+  }
+
   getUsers(messages){
     let newArray = messages;
     newArray.forEach(message => {
@@ -149,6 +163,27 @@ export class AdminService {
       rooms: selectedRooms,
       permanent: permanentMessage
     });
+  }
+
+  getStreamUrl(){
+    return this.afs
+    .collection<any>('stream')
+    .doc('0')
+    .snapshotChanges()
+    .pipe(
+      map(doc => {
+        return { id: doc.payload.id, ...doc.payload.data() as object};
+      })
+    );
+  }
+
+  updateStreamUrl(url){
+    return this.afs
+    .collection<any>('stream')
+    .doc('0')
+    .update({
+      url: url
+    })
   }
 
 }
