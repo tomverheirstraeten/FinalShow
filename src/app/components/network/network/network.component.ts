@@ -36,6 +36,8 @@ export class NetworkComponent implements OnInit {
   speed = 30;
   database;
 
+  roomDelay = 50; // the amount of frames you have to wait to enter a room
+
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router, public interactionService: InteractionService, public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
   }
@@ -190,12 +192,13 @@ export class NetworkComponent implements OnInit {
       console.log(action);
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
-      this.gotoRoom(action);
+      if((sketch.frameCount % this.roomDelay) == 0){
+        this.gotoRoom(action);
+      }
     }
   }
 
   gotoRoom(room) {
-    let roomId;
     let roomName;
     switch(room) {
       case 'Motion Cluster':
@@ -212,10 +215,10 @@ export class NetworkComponent implements OnInit {
     this.roomsService.getRooms().subscribe((rooms) => {
       this.allRooms = rooms;
       // console.log(this.allRooms);
-      for (let kamer of this.allRooms) {
-        if(kamer.roomName == roomName) {
+      for (const kamer of this.allRooms) {
+        if (kamer.roomName === roomName) {
           // console.log(roomName);
-          if(kamer.id != undefined){
+          if (kamer.id !== undefined){
             window.location.href = '/room/' + kamer.id;
           }
         }
