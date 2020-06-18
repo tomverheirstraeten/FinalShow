@@ -52,13 +52,13 @@ a {
     color: $blue
 }
 
-a:visited {
-    color: $red
-}
+// a:visited {
+//     color: $red
+// }
 
-a:hover{
-    color: $yellow;
-}
+// a:hover{
+//     color: $yellow;
+// }
 
 h1 {
     font-weight: 700;
@@ -71,24 +71,24 @@ h2, h3, h4, h5, h6 {
 .page-title {
   display: inline-table;
     font-weight: bold;
-    font-size: 32pt;
+    font-size: 32px;
     margin-bottom: 5%;
 }
 
 .title {
     font-weight: 300;
-    font-size: 16pt;
+    font-size: 16px;
     line-height: 40px;
 }
 
 .subtititle {
     font-weight: normal;
-    font-size: 16pt;
+    font-size: 16px;
 }
 
 .text {
     font-weight: lighter;
-    font-size: 13pt;
+    font-size: 13px;
 }
 
 

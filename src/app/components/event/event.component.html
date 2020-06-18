@@ -1,13 +1,13 @@
 <div *ngFor='let event of data' class="pagina">
-  <a href="/"><img src="assets/images/door.png" alt="exit"></a>
-  <h2 class="pagetitle">Final show</h2>
-  <h3 class="pagetitle">Programma</h3>
-
-  <img [src]="event['img']" [alt]="event['name']" id='eventImage'>
-  <h1 class="page-title">{{event['name']}}</h1>
-  <p>{{event['desc']}}</p>
-
-  <h2 class="subtititle">credits:</h2>
-
+  <app-header></app-header>
+  <div class="red-square">
+    <img [src]="event['img']" [alt]="event['name']" id='eventImage'>
+    <img id="eventIcon">
+  </div>
+  <div class="tekst-event">
+    <h1 class="subtititle">{{event['name']}}</h1>
+    <p>{{event['desc']}}</p>
+    <h2 class="subtititle">credits:</h2>
+  </div>
   <p id="time" class="subtititle">{{service.displayTime(event['time'])}}</p>
 </div>
