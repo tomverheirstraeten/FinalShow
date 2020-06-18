@@ -12,6 +12,10 @@ export const environment = {
     storageBucket: 'finalshow.appspot.com',
     messagingSenderId: '853852160934',
     appId: '1:853852160934:web:fc998d0dc3e790c0270567'
+  },
+  credentials: {
+    username: 'admin',
+    password: 'ehbfinalshowadminpanel'
   }
 };
 

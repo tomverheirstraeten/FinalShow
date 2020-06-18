@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import { AngularFireDatabase } from "@angular/fire/database";
-import * as firebase from 'firebase/app'
+import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
 
 import{ tap, map, switchMap, first} from 'rxjs/operators';
