@@ -1,54 +1,25 @@
 .container{
-  .head{
-    display: flex;
-    height: 50px;
-    align-items: center;
-    width: 99.5vw;
-    justify-content: flex-start;
-    font-weight: bold;
-    box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
-    margin-left: -5%;
-  .status{
-    justify-content: space-evenly;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-        p {
-          font-weight: 400;
-        }
-    .state{
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #FF6B6B;
-      margin: auto 0;
-    }
-  }
-  .event{
-    p{
-      margin-left: 2em;
-      font-weight: 400;
-    }
-
-
-  }
-}
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 .body{
   height: 100%;
   width: 100%;
   .messages{
-height: 80%;
+height: 90%;
 width: 100%;
   }
   .userinput{
-    position: absolute;
-    bottom: 0;
+    //position: absolute;
+    //bottom: 0;
     display: flex;
-    justify-content: space-around;
+    //justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     height: 10%;
-    width: 90%;
+    //width: 90%;
     .send,.clap{
        display: flex;
        align-items: center;
@@ -56,8 +27,8 @@ width: 100%;
         height: 100%;
     }
     .message{
-          display: flex;
-          align-items: center;
+        display: flex;
+        align-items: center;
         height: 100%;
 
       input {
@@ -72,4 +43,17 @@ width: 100%;
 
   }
 }
+}
+@media only screen and (max-width: 768px) {
+  .userinput{
+    position: absolute;
+    bottom: 0;
+    //justify-content: space-around;
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .userinput{
+  }
 }
