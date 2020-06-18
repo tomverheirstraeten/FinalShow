@@ -25,6 +25,13 @@ import { ChatComponent } from './components/network/chat/chat.component';
 import { RoomsComponent } from './components/network/rooms/rooms.component';
 import { RoomComponent } from './components/network/room/room.component';
 import { ConversationsComponent } from './components/network/conversations/conversations.component';
+import { AdminhomeComponent } from './components/admin/adminhome/adminhome.component';
+import { AdminheaderComponent } from './components/admin/adminheader/adminheader.component';
+import { AdmintimetableComponent } from './components/admin/admintimetable/admintimetable.component';
+import { AdminroomsComponent } from './components/admin/adminrooms/adminrooms.component';
+import { AdminusersComponent } from './components/admin/adminusers/adminusers.component';
+import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
+import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 
 @NgModule({
    declarations: [
@@ -44,7 +51,14 @@ import { ConversationsComponent } from './components/network/conversations/conve
       ChatComponent,
       RoomsComponent,
       RoomComponent,
-      ConversationsComponent
+      ConversationsComponent,
+      AdminhomeComponent,
+      AdminheaderComponent,
+      AdmintimetableComponent,
+      AdminroomsComponent,
+      AdminusersComponent,
+      AdminroomComponent,
+      AdminnotificationsComponent
    ],
    imports: [
       BrowserModule,
