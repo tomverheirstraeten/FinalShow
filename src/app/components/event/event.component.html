@@ -2,11 +2,12 @@
     <app-header></app-header>
     <div class="red-square">
     <img [src]="event['img']" [alt]="event['name']" id='eventImage'>
+    <img id="eventIcon">
     </div>
-    <h1 class="page-title">{{event['name']}}</h1>
+    <div class="tekst-event">
+    <h1 class="subtititle">{{event['name']}}</h1>
     <p>{{event['desc']}}</p>
-
     <h2 class="subtititle">credits:</h2>
-
+    </div>
     <p id="time" class="subtititle">{{service.displayTime(event['time'])}}</p>
 </div>
