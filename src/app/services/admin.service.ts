@@ -154,15 +154,36 @@ export class AdminService {
     return newArray;
   }
 
-  sendNotification(messageText, colorCode, selectedRooms, permanentMessage){
+  sendNotification(messageText, colorCode, selectedRooms, permanentMessage, iconString){
     const collection = this.afs.collection('notifications');
     collection.add({
       created_at: new Date(),
       message: messageText,
       color: colorCode,
       rooms: selectedRooms,
-      permanent: permanentMessage
+      permanent: permanentMessage,
+      icon: iconString
     });
+  }
+
+  deleteNotification(id){
+    const collection = this.afs.collection('notifications');
+    collection.doc(id).delete();
+  }
+
+  getPermanentNotifications(){
+    return this.afs.collection<any>('notifications', ref => ref
+      .where('permanent', '==', true))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data: Object = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
   }
 
   getStreamUrl(){

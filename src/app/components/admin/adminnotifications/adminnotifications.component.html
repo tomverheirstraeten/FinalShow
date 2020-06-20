@@ -5,6 +5,17 @@
       <label >Message</label>
       <textarea id="message" #message class="form-control" rows="7"></textarea>
   </div>
+
+  <div class="col icon-wrapper mt-5">
+    <label >Icon</label>
+    <select class="form-control" #icon id="icon">
+      <option selected value="">None</option>
+      <option value="assets/icons/clock.png">Clock</option>
+      <option value="assets/icons/award.png">Award</option>
+      <option value="assets/icons/chat.png">Chat</option>
+    </select>
+  </div>
+
   <div class="col mt-5">
       <label >Visible in rooms</label>
   </div>
@@ -54,7 +65,7 @@
   </div>
 
   <div class="col">
-      <label >Is this a permanent message?</label>
+      <label >Is this a permanent message? (remove all other permanent notifications first)</label>
   </div>
 
   <div class="col">
@@ -79,8 +90,47 @@
       <option value="red">Red</option>
   </select>
   <div class="input-group-append">
-      <button (click)="sendNotification(message.value, colorCode.value, permanent.checked)" (click)="message.value = ''" (click)="permanent.checked = false" id="send" class="btn btn-outline-primary" type="submit">Send</button>
+      <button (click)="sendNotification(message.value, colorCode.value, permanent.checked, icon.value)" (click)="message.value = ''" (click)="permanent.checked = false" id="send" class="btn btn-outline-primary" type="submit">Send</button>
     </div>
 
   </div>
+
+  <div *ngIf="permaNotif.length > 0">
+    <hr>
+
+    <h5>Permanent notifications</h5>
+    <div class="row mt-5">
+      <div class="col-1">
+        <h6>Time</h6>
+      </div>
+      <div class="col-1">
+        <h6>Color</h6>
+      </div>
+      <div class="col-5">
+        <h6>Message</h6>
+      </div>
+      <div class="col-1">
+        <h6>Permanent</h6>
+      </div>
+    </div>
+
+    <div class="row mt-2" *ngFor="let notification of permaNotif">
+      <div class="col-1">
+        <p>{{returnTime(notification['created_at'])}}</p>
+      </div>
+      <div class="col-1">
+        <p>{{notification['color']}}</p>
+      </div>
+      <div class="col-5">
+        <p>{{notification['message']}}</p>
+      </div>
+      <div class="col-2">
+        <p>{{notification['permanent']}}</p>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-outline-danger" (click)="deleteNotification(notification['id'])">Delete</button>
+      </div>
+    </div>
+  </div>
+
   </div>
