@@ -13,7 +13,7 @@
 
 
 $red : #FF6B6B;
-$blue : #7FC6CB;
+$blue : #4FCDC4;
 $yellow : #F9D48A;
 $black : #000;
 $white : #fff;
@@ -146,16 +146,19 @@ h2, h3, h4, h5, h6 {
 
 // desktop specific css
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
   body{
     overflow-x: hidden;
   }
   .container-grid{
     display: grid;
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     grid-template-columns: 5% repeat(10, 7.89%) 5%;
-    grid-template-rows: 60px 60px 20px auto auto auto 60px;
+    grid-template-rows: 60px 60px 20px minmax(0, 1fr) minmax(0,1fr) minmax(0, 1fr) 80px;
     column-gap: 1%;
     row-gap: 0;
   }
+  
 }
+
