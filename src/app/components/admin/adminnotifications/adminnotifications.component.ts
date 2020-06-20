@@ -12,7 +12,7 @@ export class AdminnotificationsComponent implements OnInit {
 
   constructor(private service: AdminService, private router: Router) {
     if(sessionStorage.getItem('password') != environment.credentials.password){
-      this.router.navigate([''])
+      this.router.navigate(['admin'])
     }
   }
 

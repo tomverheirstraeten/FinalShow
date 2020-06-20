@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: 'AIzaSyABvAb09DZzUPPNXyQNuk0-tDaRdoOAqzs',
-    authDomain: 'finalshow.firebaseapp.com',
-    databaseURL: 'https://finalshow.firebaseio.com',
-    projectId: 'finalshow',
-    storageBucket: 'finalshow.appspot.com',
+    apiKey: 'AIzaSyDil2Zauz3WGZAvCKvuXXQhmiRCcdK1JPw',
+    authDomain: 'prototype-interactionroom.firebaseapp.com',
+    databaseURL: 'https://prototype-interactionroom.firebaseio.com',
+    projectId: 'prototype-interactionroom',
+    storageBucket: 'prototype-interactionroom.appspot.com',
     messagingSenderId: '853852160934',
     appId: '1:853852160934:web:fc998d0dc3e790c0270567'
   },

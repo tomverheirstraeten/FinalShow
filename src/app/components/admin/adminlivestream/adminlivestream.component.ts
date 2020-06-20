@@ -15,7 +15,7 @@ export class AdminlivestreamComponent implements OnInit {
 
   constructor(private service: AdminService, @Inject(DOCUMENT) document, private router: Router) {
     if (sessionStorage.getItem('password') != environment.credentials.password) {
-      this.router.navigate([''])
+      this.router.navigate(['admin'])
     }
     this.service.getStreamUrl().subscribe(data => {
       this.currentUrl = data['url'];
