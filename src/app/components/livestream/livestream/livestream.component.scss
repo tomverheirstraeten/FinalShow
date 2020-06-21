@@ -52,11 +52,18 @@
       p {
         font-weight: 400;
       }
-  .state{
+  .statelive{
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: #FF6B6B;
+    margin: auto 0;
+  }
+  .stateoffline{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #c9c9c9;
     margin: auto 0;
   }
 }

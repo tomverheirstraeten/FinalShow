@@ -1,5 +1,5 @@
 
-   
+
 <app-header></app-header>
 <div class="page-wrap container-grid">
 
@@ -8,15 +8,21 @@
 </div>
 <div class="head">
    <div class="status">
-     <div class="state">
-
-     </div>
-     <p>Live</p>
+     <ng-container *ngIf="live == true">
+      <div class="statelive"></div>
+      <p>Live</p>
+     </ng-container>
+     <ng-container *ngIf="live == false">
+      <div class="stateoffline"></div>
+      <p>Offline</p>
+     </ng-container>
    </div>
-   |
-   <div class="event">
-     <p>Prijsuitreiking</p>
-   </div>
+   <ng-container *ngIf="live == true">
+    |
+    <div class="event">
+      <p>{{currentActivity}}</p>
+    </div>
+   </ng-container>
  </div>
 <div class="chat">
    <app-livechat></app-livechat>
