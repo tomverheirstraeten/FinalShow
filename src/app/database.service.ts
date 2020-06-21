@@ -32,7 +32,7 @@ export class DatabaseService {
 
   getTimetable() {
     this.data = new Array();
-    this.db.collection('timetable').get().then((querySnapshot) => {
+    this.db.collection('timetable').orderBy('time').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.data.push(doc.data());
       });
