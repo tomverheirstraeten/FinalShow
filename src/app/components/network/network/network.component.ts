@@ -111,30 +111,45 @@ export class NetworkComponent implements OnInit {
   }
 
   move(sketch) {
-    // code adapted from https://p5js.org/examples/input-easing.html
-    // this code calculates the easing in/out
-    // by always moving the user towards the mouse
-    // but only a fraction (as defined by this.easing) of the distance
-    const targetX = sketch.mouseX;
-    const dx = targetX - this.myX;
-    this.myX += dx * this.easing - 5;
+    let x = sketch.mouseX;
+    let y = sketch.mouseY;
 
-    const targetY = sketch.mouseY;
-    const dy = targetY - this.myY;
-    this.myY += dy * this.easing + 5;
+    const speed = 5;
 
-    // outer boundaries
-    if (this.myY < -500) {
-      this.myY = -500;
+    // console.log('x: ' + x);
+    // console.log('y: ' + y);
+    // console.log(this.myX);
+
+    let dirX = 0;
+    let dirY = 0;
+
+    if (x < sketch.width / 2 - 10) {
+      dirX = -1;
+    } else if(x > sketch.width / 2 + 10) {
+      dirX = 1;
+    }
+
+    if (y < sketch.height / 2 - 10) {
+      dirY = -1;
+    } else if (y > sketch.height / 2 + 10) {
+      dirY = 1;
+    }
+
+        // outer boundaries
+    if (this.myY < 10) {
+      this.myY = 10;
     } else if (this.myY > 1000) {
       this.myY = 1000;
     }
 
-    if (this.myX < -500) {
-      this.myX = -500;
+    if (this.myX < 10) {
+      this.myX = 10;
     } else if (this.myX > 1000) {
       this.myX = 1000;
     }
+
+    this.myX += speed * dirX;
+    this.myY += speed * dirY;
 
     this.database.ref('users/' + this.username).set({
       x: this.myX,
@@ -153,7 +168,7 @@ export class NetworkComponent implements OnInit {
     console.log(role);
     switch (role) {
       case 'student':
-        sketch.fill(79, 205, 196);
+        sketch.fill(79, 205, 196); // 
         break;
       case 'docent':
         sketch.fill(243, 193, 193);
