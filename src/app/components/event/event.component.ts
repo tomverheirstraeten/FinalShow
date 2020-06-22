@@ -12,6 +12,7 @@ export class EventComponent implements OnInit {
 
   eventName: string;
   data;
+  isDesktop: boolean;
 
   constructor(private route: ActivatedRoute, public service: DatabaseService) {  }
 
@@ -23,6 +24,9 @@ export class EventComponent implements OnInit {
       this.data = this.service.getEventByName(this.eventName);
     });
 
+    if (window.screen.width >= 769) {
+      this.isDesktop = true;
+    }
 
   }
 

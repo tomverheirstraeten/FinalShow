@@ -92,6 +92,13 @@ h2, h3, h4, h5, h6 {
 }
 
 
+.msg-deleted{
+  background:transparent !important;
+  font-style: italic;
+  font-size: 11px;
+  color: grey;
+}
+
 
 // Andres css
 .flex {
@@ -154,11 +161,11 @@ h2, h3, h4, h5, h6 {
     display: grid;
     min-height: 100vh;
     max-height: 100vh;
-    grid-template-columns: 5% repeat(10, 7.89%) 5%;
+    grid-template-columns: repeat(12, 7.41%);
     grid-template-rows: 60px 60px 20px minmax(0, 1fr) minmax(0,1fr) minmax(0, 1fr) 80px;
     column-gap: 1%;
     row-gap: 0;
   }
-  
+
 }
 
