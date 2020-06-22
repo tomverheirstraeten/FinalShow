@@ -57,11 +57,14 @@
 
 //desktop
 @media only screen and (min-width: 769px) {
-    .container{
-      width: 90%;
-    }
+  .container{
+    width: 100%- 2*8.41%;
+  }
 }
 
 //mobile
 @media only screen and (max-width: 769px) {
+  .container{
+    width: 90%;
+  }
 }
