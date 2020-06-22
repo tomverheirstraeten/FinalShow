@@ -48,9 +48,28 @@ export class NetworkComponent implements OnInit {
 
     let allUsers = [{ x: -100, y: -100, name: 'test' }];
 
+    this.database.ref('users').on('value', (snapshot) => {
+      let count = 0;
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
+          const childData = dataSnapshot.val();
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey };
+        });
+        count++;
+      });
+    });
+
+    this.roomsService.getRooms().subscribe((rooms) => {
+      this.allRooms = rooms;
+      // console.log(this.allRooms);
+    });
+
+    // start drawing the interaction room
     const sketch = s => {
       s.setup = () => { // initial setup
         s.createCanvas(s.windowWidth, s.windowHeight);
+        s.frameRate(15);
       };
       s.draw = () => { // updates every frame
         s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2);
@@ -60,22 +79,9 @@ export class NetworkComponent implements OnInit {
 
         this.displayGroups(s);
 
-        if (this.playing) {
-          // get the information from the database
-          this.database.ref('users').once('value', (snapshot) => {
-            let count = 0;
-            snapshot.forEach((childSnapshot) => {
-              const childKey = childSnapshot.key;
-              this.database.ref('users/' + childKey).on('value', (dataSnapshot) => {
-                const childData = dataSnapshot.val();
-                allUsers[count] = { x: childData.x, y: childData.y, name: childKey };
-              });
-              count++;
-            });
-          });
-
-
+        if (this.playing) { // if all the conditions to start playing are met (e.g. logged in)
           // console.log(allUsers);
+
           let drawnUsers = []; // this makes sure we draw every user only once every frame
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < allUsers.length; i++) { // display all of the users
@@ -119,14 +125,14 @@ export class NetworkComponent implements OnInit {
     // outer boundaries
     if (this.myY < -500) {
       this.myY = -500;
-    } else if (this.myY > sketch.width) {
-      this.myY = sketch.width - 0;
+    } else if (this.myY > 1000) {
+      this.myY = 1000;
     }
 
     if (this.myX < -500) {
       this.myX = -500;
-    } else if (this.myX > sketch.width) {
-      this.myX = sketch.width;
+    } else if (this.myX > 1000) {
+      this.myX = 1000;
     }
 
     this.database.ref('users/' + this.username).set({
@@ -147,12 +153,6 @@ export class NetworkComponent implements OnInit {
     sketch.textSize(12);
     sketch.text(name, x, y + userSize);
     sketch.noFill();
-  }
-
-
-  changeUsername(value: string) {
-    this.username = value;
-    this.playing = true;
   }
 
   displayGroups(sketch) {
@@ -212,18 +212,14 @@ export class NetworkComponent implements OnInit {
         break;
     }
 
-    this.roomsService.getRooms().subscribe((rooms) => {
-      this.allRooms = rooms;
-      // console.log(this.allRooms);
-      for (const kamer of this.allRooms) {
-        if (kamer.roomName === roomName) {
-          // console.log(roomName);
-          if (kamer.id !== undefined) {
-            window.location.href = '/room/' + kamer.id;
-          }
+    for (const kamer of this.allRooms) {
+      if (kamer.roomName === roomName) {
+        // console.log(roomName);
+        if (kamer.id !== undefined) {
+          window.location.href = '/room/' + kamer.id;
         }
       }
-    });
+    }
 
   }
 
