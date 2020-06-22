@@ -1,5 +1,4 @@
-<app-header back="true"></app-header>
-<div *ngFor='let event of data' class="pagina">
+<div *ngFor='let event of timeTable' class="event">
   <div class="red-square">
     <img [src]="event['icon']" [alt]="event['name']" id='eventIcon'>
   </div>
