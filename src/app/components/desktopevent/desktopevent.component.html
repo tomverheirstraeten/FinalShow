@@ -1,4 +1,4 @@
-<div *ngFor='let event of timeTable' class="pagina">
+<div *ngFor='let event of timeTable' class="event">
   <div class="red-square">
     <img [src]="event['icon']" [alt]="event['name']" id='eventIcon'>
   </div>
@@ -7,5 +7,4 @@
     <p>{{event['desc']}}</p>
     <h2 class="subtititle">credits to:</h2>
   </div>
-  <p id="time" class="subtititle">{{service.displayTime(event['time'])}}</p>
 </div>
