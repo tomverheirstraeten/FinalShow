@@ -52,29 +52,23 @@
     // scrollbar styling reference: - https://stackoverflow.com/questions/50817727/change-scrollbar-height
     //                              - https://css-tricks.com/custom-scrollbars-in-webkit/
 
-    .pagina::-webkit-scrollbar {
+    .pagina.custom-scroll::-webkit-scrollbar {
         display: block;
         width: 5px;
     }
-    .pagina::-webkit-scrollbar-track {
+    .pagina.custom-scroll::-webkit-scrollbar-track {
         background: transparent;
-        background-clip: content-box;
-        border: 4px solid transparent;
     }
         
-    .pagina::-webkit-scrollbar-thumb {
+    .pagina.custom-scroll::-webkit-scrollbar-thumb {
         background-color: grey;
-        max-height: 10px;
-        border-right: none;
-        border-left: none;
     }
     
-    .pagina::-webkit-scrollbar-track-piece:end {
+    .pagina.custom-scroll::-webkit-scrollbar-track-piece:end {
         margin-bottom: 10%; 
     }
     
-    .pagina::-webkit-scrollbar-track-piece:start {
-        background: transparent;
+    .pagina.custom-scroll::-webkit-scrollbar-track-piece:start {
         margin-top: 10%;
     }
 
