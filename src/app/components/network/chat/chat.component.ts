@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener, Inject, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     public auth: AuthService,
     public userService: UsersService,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) document
   ) { }
   ngAfterViewInit() {
     this.scrollBottom();
@@ -50,9 +52,19 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.cs.getAllChats().subscribe((chats) => {
       this.allChats = chats;
       this.scrollBottom();
-      // console.log(this.allChats);
+      setTimeout(this.showLastSeen, 500);
     });
   }
+
+  showLastSeen(){
+    const list = document.getElementsByClassName('seen');
+    for(let i = 0; i < list.length - 1; i++){
+      list[i].classList.remove('seen-show');
+    }
+    const item = list.item(list.length - 1);
+    item.classList.add('seen-show');
+  }
+
   submit(chatId) {
     if (!this.newMsg) {
       return alert('you need to enter something');

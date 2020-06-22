@@ -178,7 +178,16 @@
   align-items: center;
   justify-content: center;
   margin-left: 0.5em;
-  padding-right: 0;
+}
+
+.seen{
+  height: 20px;
+  opacity: 0.2;
+  display: none;
+}
+
+.seen-show{
+  display: inline;
 }
 
 .delete:hover{
