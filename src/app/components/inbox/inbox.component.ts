@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.scss']
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, OnDestroy {
 
-  closer: boolean = true;
+  closer = true;
   displayNameOtherUser;
   myChats = [];
-
+  allChatSub;
   seen;
 
 
@@ -27,12 +27,15 @@ export class InboxComponent implements OnInit {
   ngOnInit() {
     this.getmyChats();
   }
+  ngOnDestroy(): void {
+    this.allChatSub.unsubscribe();
+  }
 
   async getmyChats() {
     const user = await this.auth.getUser();
     if (user) {
       const userId = user.uid;
-      await this.cs.getAllChats().subscribe((res) => {
+      this.allChatSub =  await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {
