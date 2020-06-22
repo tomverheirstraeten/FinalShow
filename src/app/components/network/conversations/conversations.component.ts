@@ -34,7 +34,7 @@ export class ConversationsComponent implements OnInit {
   closer: boolean = true;
   displayNameOtherUser;
   functionOtherUser;
-  myChats;
+  myChats = [];
   filteredUsers = [];
   filteredChats = [];
   seen;
@@ -48,7 +48,7 @@ export class ConversationsComponent implements OnInit {
   ngOnInit() {
     this.getmyChats();
     this.getUsers();
-    console.log(this.closer);
+
   }
   updateMessageSeen(chatid) {
     this.cs.updateMessageSeenConversation(chatid);
@@ -73,10 +73,10 @@ export class ConversationsComponent implements OnInit {
 
   async checkIfSeen(chat) {
     let checkIfSeen;
-    console.log(chat.messages);
+
     for (const message of chat['messages']) {
       if (message.uid !== this.auth.userId && !message.seen) {
-        console.log(message)
+
         checkIfSeen = true;
       }
     }
@@ -97,9 +97,9 @@ export class ConversationsComponent implements OnInit {
 
 
             await this.checkIfSeen(chat).then(res => {
-              // console.log(res);
+
               if (res) {
-                console.log('seen ' + res);
+
               }
               chat.seen = res;
               chats.push(chat);
@@ -117,7 +117,7 @@ export class ConversationsComponent implements OnInit {
 
             await this.checkIfSeen(chat).then(res => {
               if (res) {
-                console.log('seen ' + res);
+
               }
               chat.seen = res;
               chats.push(chat);
@@ -127,7 +127,7 @@ export class ConversationsComponent implements OnInit {
         }
         this.myChats = chats;
         this.filteredChats = chats;
-        console.log(this.filteredChats);
+        
 
       }
     });
@@ -168,7 +168,7 @@ export class ConversationsComponent implements OnInit {
   }
 
   toggleConversation() {
-    console.log(this.closer)
+
     this.closer = !this.closer;
   }
   closeConversation() {
@@ -181,7 +181,7 @@ export class ConversationsComponent implements OnInit {
       const users = [];
       for (const user of this.allUsers) {
 
-        // console.log(user['uid']);
+
         for (const status of this.status) {
           if (status.uid === user['uid']) {
             user['status'] = status.status;

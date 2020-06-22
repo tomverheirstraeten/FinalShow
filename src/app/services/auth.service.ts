@@ -8,6 +8,8 @@ import{ tap, map, switchMap, first} from 'rxjs/operators';
 import {of, Subscription} from'rxjs';
 import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
+import { getParseErrors } from '@angular/compiler';
+import { isError } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestor
 export class AuthService {
   user$: Observable < any > ;
   userId: String = '';
-
+  error: Observable < any > ;
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router, private db: AngularFireDatabase) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -90,34 +92,6 @@ return this.afAuth.authState.pipe(
 
 
 
-  // checkIfOnline(visibility) {
-  //   const uid = this.afAuth.auth.currentUser.uid;
-  //   const userStatusFirestoreRef = this.afs.doc('/status/' + uid);
-
-  //   // Firestore uses a different server timestamp value, so we'll
-  //   // create two more constants for Firestore state.
-  //   if (visibility === 'hidden' || visibility === 'unloaded') {
-  //     const isOfflineForFirestore = {
-  //       state: 'offline',
-  //       last_changed: new Date().getTime(),
-  //     };
-  //     userStatusFirestoreRef.set(isOfflineForFirestore);
-  //   } else if (visibility === 'visible') {
-  //     const isOnlineForFirestore = {
-  //       state: 'online',
-  //       last_changed: new Date().getTime(),
-  //     };
-  //     userStatusFirestoreRef.set(isOnlineForFirestore);
-  //   } else {
-  //     const isOfflineForFirestore = {
-  //       state: 'offline',
-  //       last_changed: new Date().getTime(),
-  //     };
-  //     userStatusFirestoreRef.set(isOfflineForFirestore);
-  //   }
-  // }
-
-
 
 
 
@@ -131,8 +105,27 @@ return this.afAuth.authState.pipe(
 
 
   // !=============SIGNIN============= //
+
   // Google signin
-  googleSignUp(formVal) {
+  googleSignIn() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  private async oAuthLogin(provider) {
+    const credential = await this.afAuth.signInWithPopup(provider);
+    this.getUser().then(user => {
+      if(user === undefined){
+        return this.router.navigate(['/register']);
+      }else {
+        return this.router.navigate(['/network']);
+      }
+    });
+  }
+
+  // !=============REGISTER============= //
+   // Google register
+   googleSignUp(formVal) {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthRegister(provider,formVal);
 
@@ -159,7 +152,8 @@ return this.afAuth.authState.pipe(
       website: formVal.website,
       function: formVal.functie,
       bio: formVal.bio,
-      admin: false
+      admin: false,
+      gdpr: formVal.gdpr
     };
 
     return userRef.set(data, {
@@ -167,43 +161,17 @@ return this.afAuth.authState.pipe(
     }), this.router.navigate(['/network']);
   }
 
-  // Google signin
-  googleSignIn() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
-  }
-
-  private async oAuthLogin(provider) {
-    const credential = await this.afAuth.signInWithPopup(provider);
-    return this.router.navigate(['/network']);
-  }
-
-
-    // Email & password sign in
-    async EmailPasswordSignIn(formVal) {
-      const credentials = await this.afAuth.signInWithEmailAndPassword(formVal.email, formVal.password).catch(function(error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ...
-      console.log(errorCode, errorMessage);
-      return errorMessage;
-    });
-      return this.router.navigate(['/network']);
-    }
-
-
-
     // Email & password register
     async EmailPasswordRegister(formVal) {
 
-      const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(function(error) {
+      const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(await function(error) {
       // Handle Errors here.
       const errorCode = error.code;
-      const errorMessage = error.message;
+      // this.errorMessage = error.message;
       // ...
-      console.log(errorCode, errorMessage);
-      return errorMessage;
+
+      this.errorMessage = error.message;
+      console.log(this.errorMessage);
     });
     return this.updateUserDataEmail(credentials,formVal);
     }
@@ -218,7 +186,8 @@ return this.afAuth.authState.pipe(
       function: formVal.functie,
       website: formVal.website,
       bio: formVal.bio,
-      admin: false
+      admin: false,
+      gdpr: formVal.gdpr
     };
 
     return userRef.set(data, {
@@ -249,6 +218,8 @@ return this.afAuth.authState.pipe(
         merge: true
       });
     }
+
+
   async signOut() {
     await this.setPresence('offline');
     await this.afAuth.signOut();
