@@ -1,8 +1,8 @@
-<app-header class="yellow" back='true'></app-header>
-
-
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
+
+    <app-header class="yellow" back='true' *ngIf="chat.uid != user.uid" title="{{chat.uid}}"></app-header>
+    <app-header class="yellow" back='true' *ngIf="chat.uid2 != user.uid" title="{{chat.uid2}}"></app-header>
 
     <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>

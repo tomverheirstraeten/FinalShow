@@ -35,6 +35,7 @@ export class NetworkComponent implements OnInit {
   playing = false;
   speed = 30;
   database;
+  myRole;
 
   roomDelay = 50; // the amount of frames you have to wait to enter a room
 
@@ -46,11 +47,30 @@ export class NetworkComponent implements OnInit {
     // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test' }];
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student' }];
 
+    this.database.ref('users').on('value', (snapshot) => {
+      let count = 0;
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
+          const childData = dataSnapshot.val();
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role };
+        });
+        count++;
+      });
+    });
+
+    this.roomsService.getRooms().subscribe((rooms) => {
+      this.allRooms = rooms;
+      // console.log(this.allRooms);
+    });
+
+    // start drawing the interaction room
     const sketch = s => {
       s.setup = () => { // initial setup
         s.createCanvas(s.windowWidth, s.windowHeight);
+        s.frameRate(15);
       };
       s.draw = () => { // updates every frame
         s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2);
@@ -60,22 +80,9 @@ export class NetworkComponent implements OnInit {
 
         this.displayGroups(s);
 
-        if (this.playing) {
-          // get the information from the database
-          this.database.ref('users').once('value', (snapshot) => {
-            let count = 0;
-            snapshot.forEach((childSnapshot) => {
-              const childKey = childSnapshot.key;
-              this.database.ref('users/' + childKey).on('value', (dataSnapshot) => {
-                const childData = dataSnapshot.val();
-                allUsers[count] = { x: childData.x, y: childData.y, name: childKey };
-              });
-              count++;
-            });
-          });
-
-
+        if (this.playing) { // if all the conditions to start playing are met (e.g. logged in)
           // console.log(allUsers);
+
           let drawnUsers = []; // this makes sure we draw every user only once every frame
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < allUsers.length; i++) { // display all of the users
@@ -83,7 +90,7 @@ export class NetworkComponent implements OnInit {
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
                 // if it's not the current user & the user hasn't been drawn already
-                this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name); // draw the user
+                this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
                 drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
                 // check if the current user is close
                 this.checkDistance(s, this.myX, this.myY, allUsers[i].x, allUsers[i].y, allUsers[i].name, 50);
@@ -119,40 +126,54 @@ export class NetworkComponent implements OnInit {
     // outer boundaries
     if (this.myY < -500) {
       this.myY = -500;
-    } else if (this.myY > sketch.width) {
-      this.myY = sketch.width - 0;
+    } else if (this.myY > 1000) {
+      this.myY = 1000;
     }
 
     if (this.myX < -500) {
       this.myX = -500;
-    } else if (this.myX > sketch.width) {
-      this.myX = sketch.width;
+    } else if (this.myX > 1000) {
+      this.myX = 1000;
     }
 
     this.database.ref('users/' + this.username).set({
       x: this.myX,
-      y: this.myY
+      y: this.myY,
+      role: this.myRole
     });
 
-    this.drawUser(sketch, this.myX, this.myY, this.username);
+    this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
   }
 
-  drawUser(sketch, x, y, name) {
+  drawUser(sketch, x, y, name, role) {
     const userSize = 50;
     sketch.strokeWeight(0);
-    sketch.fill(79, 205, 196);
+
+    // decide the color based on the role of the user
+    console.log(role);
+    switch (role) {
+      case 'student':
+        sketch.fill(79, 205, 196);
+        break;
+      case 'docent':
+        sketch.fill(243, 193, 193);
+        break;
+      case 'alumni':
+        sketch.fill(255, 107, 107);
+        break;
+      case 'bedrijf':
+        sketch.fill(	149, 209, 123);
+        break;
+      default:
+        sketch.fill(249, 212, 138);
+    }
+
     sketch.ellipseMode('center');
     sketch.ellipse(x, y, userSize, userSize);
     sketch.fill(0);
     sketch.textSize(12);
     sketch.text(name, x, y + userSize);
     sketch.noFill();
-  }
-
-
-  changeUsername(value: string) {
-    this.username = value;
-    this.playing = true;
   }
 
   displayGroups(sketch) {
@@ -189,7 +210,7 @@ export class NetworkComponent implements OnInit {
   checkDistance(sketch, x1, y1, x2, y2, action, radius) {
     let d = sketch.dist(x1, y1, x2, y2);
     if (d < radius) {
-      console.log(action);
+      // console.log(action);
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
       if ((sketch.frameCount % this.roomDelay) == 0) {
@@ -212,18 +233,14 @@ export class NetworkComponent implements OnInit {
         break;
     }
 
-    this.roomsService.getRooms().subscribe((rooms) => {
-      this.allRooms = rooms;
-      // console.log(this.allRooms);
-      for (const kamer of this.allRooms) {
-        if (kamer.roomName === roomName) {
-          // console.log(roomName);
-          if (kamer.id !== undefined) {
-            window.location.href = '/room/' + kamer.id;
-          }
+    for (const kamer of this.allRooms) {
+      if (kamer.roomName === roomName) {
+        // console.log(roomName);
+        if (kamer.id !== undefined) {
+          window.location.href = '/room/' + kamer.id;
         }
       }
-    });
+    }
 
   }
 
@@ -236,11 +253,12 @@ export class NetworkComponent implements OnInit {
         for (const user of res) {
           if (user['uid'] == this.auth.userId) {
             this.username = user['displayName'];
+            this.myRole = user['function'];
           }
         }
       });
 
-      console.log(this.username);
+      // console.log(this.username);
       this.playing = true;
     } else {
       this.goToLogin();

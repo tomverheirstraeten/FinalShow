@@ -23,13 +23,13 @@ export class RoomnavComponent implements OnInit {
       image: 'conversationroom.png'
     },
     {
-      name: 'Timetable',
+      name: 'Programma',
       link: '/timetable',
       image: 'entrance.png'
     }
   ];
   @ViewChild('slidercontainer') slidercontainer: ElementRef;
-  
+
   ngAfterViewInit() {
     const viewWidth =  this.slidercontainer.nativeElement.clientWidth;
     const previousLocation = sessionStorage.getItem('rooms_scroll_x_position');
@@ -44,7 +44,7 @@ export class RoomnavComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  
+
   }
 
 }

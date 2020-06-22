@@ -6,7 +6,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-@Input() back: string;
+
+  @Input() back: string;
+  @Input() title: string;
 
   constructor(private _location: Location) { }
 
