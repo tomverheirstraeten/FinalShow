@@ -1,6 +1,6 @@
 <div class="wrapper container-grid" id="wrapper">
     <app-header title='Programma'></app-header>
-    <ul>
+    <ul #timetableHtmlList (scroll)="showEvent()">
         <li *ngFor='let event of timetable' class="timetable-list-item">
             <span class="time-text">{{displayTime(event["time"]) }}</span>
             <div class="event-div event-mobile">
@@ -10,7 +10,7 @@
                 </a>
                 <!-- <p class="info-text">{{event["desc"]}}</p> -->
             </div>
-            <div class="event-div event-desktop">
+            <div id="{{event['name']}}" class="event-div event-desktop">
                     <h3 class="title">{{event["name"]}}</h3>
             </div>
 
