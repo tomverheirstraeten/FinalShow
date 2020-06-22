@@ -35,6 +35,7 @@ export class NetworkComponent implements OnInit {
   playing = false;
   speed = 30;
   database;
+  myRole;
 
   roomDelay = 50; // the amount of frames you have to wait to enter a room
 
@@ -46,7 +47,7 @@ export class NetworkComponent implements OnInit {
     // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test' }];
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student' }];
 
     this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
@@ -54,7 +55,7 @@ export class NetworkComponent implements OnInit {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey };
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role };
         });
         count++;
       });
@@ -89,7 +90,7 @@ export class NetworkComponent implements OnInit {
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
                 // if it's not the current user & the user hasn't been drawn already
-                this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name); // draw the user
+                this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
                 drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
                 // check if the current user is close
                 this.checkDistance(s, this.myX, this.myY, allUsers[i].x, allUsers[i].y, allUsers[i].name, 50);
@@ -137,16 +138,36 @@ export class NetworkComponent implements OnInit {
 
     this.database.ref('users/' + this.username).set({
       x: this.myX,
-      y: this.myY
+      y: this.myY,
+      role: this.myRole
     });
 
-    this.drawUser(sketch, this.myX, this.myY, this.username);
+    this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
   }
 
-  drawUser(sketch, x, y, name) {
+  drawUser(sketch, x, y, name, role) {
     const userSize = 50;
     sketch.strokeWeight(0);
-    sketch.fill(79, 205, 196);
+
+    // decide the color based on the role of the user
+    console.log(role);
+    switch (role) {
+      case 'student':
+        sketch.fill(79, 205, 196);
+        break;
+      case 'docent':
+        sketch.fill(243, 193, 193);
+        break;
+      case 'alumni':
+        sketch.fill(255, 107, 107);
+        break;
+      case 'bedrijf':
+        sketch.fill(	149, 209, 123);
+        break;
+      default:
+        sketch.fill(249, 212, 138);
+    }
+
     sketch.ellipseMode('center');
     sketch.ellipse(x, y, userSize, userSize);
     sketch.fill(0);
@@ -189,7 +210,7 @@ export class NetworkComponent implements OnInit {
   checkDistance(sketch, x1, y1, x2, y2, action, radius) {
     let d = sketch.dist(x1, y1, x2, y2);
     if (d < radius) {
-      console.log(action);
+      // console.log(action);
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
       if ((sketch.frameCount % this.roomDelay) == 0) {
@@ -232,11 +253,12 @@ export class NetworkComponent implements OnInit {
         for (const user of res) {
           if (user['uid'] == this.auth.userId) {
             this.username = user['displayName'];
+            this.myRole = user['function'];
           }
         }
       });
 
-      console.log(this.username);
+      // console.log(this.username);
       this.playing = true;
     } else {
       this.goToLogin();
