@@ -1,17 +1,20 @@
 <div class="header">
-<section class="container display flex row">
-     <div class="exit">
-       <img src="assets/images/door.png" [routerLink]="['/rooms']" routerLinkActive="router-link-active"  alt="">
-           </div>
-  <div class="card">
+  <section class="container display flex row">
+    <div class="exit">
+      <img src="assets/images/door.svg" *ngIf="back !== 'true'" [routerLink]="['/rooms']"
+        routerLinkActive="router-link-active" alt="">
+      <img src="assets/images/back.svg" *ngIf="back === 'true'" (click)="goBack()" routerLinkActive="router-link-active"
+        alt="">
+    </div>
+    <div class="card">
 
-  <div class="body">
-    <h1>Final Show</h1>
-    <p>Room Navigation</p>
-  </div>
-  <div class="profile">
+      <div class="body">
+        <h1>Final Show</h1>
+        <p>Room Navigation</p>
+      </div>
+      <div class="profile">
 
-  </div>
-  </div>
-</section>
+      </div>
+    </div>
+  </section>
 </div>

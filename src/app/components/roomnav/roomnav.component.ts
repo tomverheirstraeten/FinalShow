@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-roomnav',
@@ -27,10 +27,24 @@ export class RoomnavComponent implements OnInit {
       link: '/timetable',
       image: 'entrance.png'
     }
-  ]
+  ];
+  @ViewChild('slidercontainer') slidercontainer: ElementRef;
+  
+  ngAfterViewInit() {
+    const viewWidth =  this.slidercontainer.nativeElement.clientWidth;
+    const previousLocation = sessionStorage.getItem('rooms_scroll_x_position');
+    this.slidercontainer.nativeElement.scrollTo(previousLocation, 0);
+  }
+
+  rememberScrollPosition(){
+    const scrollPosition = this.slidercontainer.nativeElement.scrollLeft;
+    sessionStorage.setItem('rooms_scroll_x_position', scrollPosition);
+  }
+
   constructor() { }
 
   ngOnInit(): void {
+  
   }
 
 }

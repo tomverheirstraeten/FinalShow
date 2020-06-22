@@ -1,75 +1,59 @@
 .container{
-  .head{
-    display: flex;
-    height: 50px;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-font-weight: bold;
-box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
-  .status{
-    justify-content: space-evenly;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-        p {
-          font-weight: 400;
-        }
-    .state{
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: red;
-    }
-  }
-  .event{
-    width: 70%;
-    p{
-      margin-left: 2em;
-      font-weight: 400;
-    }
-
-
-  }
-}
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 .body{
   height: 100%;
   width: 100%;
   .messages{
-height: 80%;
+height: 90%;
 width: 100%;
   }
   .userinput{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    //position: absolute;
+    //bottom: 0;
     display: flex;
-    justify-content: space-around;
+    //justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     height: 10%;
+    //width: 90%;
     .send,.clap{
        display: flex;
        align-items: center;
-      width: 10%;
-      height: 100%;
+        width: 10%;
+        height: 100%;
     }
     .message{
-          display: flex;
-          align-items: center;
-      height: 100%;
+        display: flex;
+        align-items: center;
+        height: 100%;
 
       input {
         padding: 0.5em 3em;
         width: 100%;
         border: none;
-box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
+        box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
         width: 100%;
         background:#F0F0F0;
-        border-radius: 10px;
     }
     }
 
   }
 }
+}
+@media only screen and (max-width: 768px) {
+  .userinput{
+    position: absolute;
+    bottom: 0;
+    //justify-content: space-around;
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .userinput{
+  }
 }

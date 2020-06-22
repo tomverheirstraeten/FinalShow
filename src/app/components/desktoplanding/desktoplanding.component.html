@@ -1,0 +1,6 @@
+<div #render id="canvas"></div>
+<h2 [hidden]="!loaded">FINAL SHOW <span>2020</span></h2>
+<div id="loadbarcontainer">
+  <h3 [hidden]="loaded">Loading Campus {{percentloaded}}</h3>
+  <div id="loadbar" [style.width]="percentloaded" [hidden]="loaded"></div>
+</div>

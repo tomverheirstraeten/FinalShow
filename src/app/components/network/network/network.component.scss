@@ -1,4 +1,13 @@
 .conversation-room-chat-title {
-    font-weight: bold;
-    font-size: 18pt;
+  font-weight: bold;
+  font-size: 18pt;
+}
+
+.conversations {
+  position: absolute;
+  top: 100px;
+}
+
+#defaultCanvas0 {
+  display: none;
 }

@@ -26,7 +26,7 @@ export class RoomsService {
       .snapshotChanges()
       .pipe(
         map(doc => {
-          return { id: doc.payload.id, ...doc.payload.data};
+          return { id: doc.payload.id, ...doc.payload.data() as object};
         })
       );
   }
@@ -72,7 +72,8 @@ export class RoomsService {
     const data = {
       uid,
       content,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      deleted: false
     };
 
     if (uid) {

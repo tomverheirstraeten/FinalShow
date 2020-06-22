@@ -1,0 +1,22 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5">
+  <h2>Final Show Admin Panel</h2>
+  <ng-container *ngIf="loggedIn == true">
+    <h4 class="font-weight-light">Wat wil je aanpassen?</h4>
+    <div class="mt-5">
+      <a [routerLink]="'/admin/timetable'" class="mr-2 ml-2"><button class="btn btn-outline-primary">Timetable</button></a>
+      <a [routerLink]="'/admin/livestream'" class="mr-2 ml-2"><button class="btn btn-outline-primary">Livestream</button></a>
+      <a [routerLink]="'/admin/users'" class="mr-2 ml-2"><button class="btn btn-outline-primary">Users</button></a>
+      <a [routerLink]="'/admin/chat'" class="mr-2 ml-2"><button class="btn btn-outline-primary">Chat</button></a>
+      <a [routerLink]="'/admin/notifications'" class="mr-2 ml-2"><button class="btn btn-outline-primary">Notificaties</button></a>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="loggedIn != true">
+    <div class="mt-5">
+      <input type="text" class="form-control" placeholder="Username" id="username">
+      <input type="password" class="form-control mt-3" placeholder="Password" id="password">
+      <button class="btn btn-primary mt-5" (click)="logIn()">Log in</button>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,41 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5" id="wrapper">
+
+  <h6 class="mb-5">Registered users: {{userLength}}</h6>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Picture</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Uid</th>
+        <th scope="col">Role</th>
+        <th scope="col">Admin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let user of users'>
+        <td class="align-middle"><img src="{{user['photoURL']}}" style="width: 40px; height: 40px;"></td>
+        <td class="align-middle">{{user["displayName"]}}</td>
+        <td class="align-middle">{{user["email"]}}</td>
+        <td class="align-middle">{{user["uid"]}}</td>
+        <td class="align-middle">
+          <select name="role" id="role" class="form-control {{user['uid']}}">
+            <option value="docent" [selected]="user['function'] == 'docent'">Docent</option>
+            <option value="student" [selected]="user['function'] == 'student'">Student</option>
+            <option value="bedrijf" [selected]="user['function'] == 'bedrijf'">Bedrijf</option>
+            <option value="alumni" [selected]="user['function'] == 'alumni'">Alumni</option>
+            <option value="bezoeker" [selected]="user['function'] == 'bezoeker'">Bezoeker</option>
+          </select>
+        </td>
+        <td class="align-middle"><input type="checkbox" [checked]="user['admin']" class="{{user['uid']}}"></td>
+        <div class="modify-user-buttons">
+          <button (click)="updateUser(user['uid'])" class="btn btn-outline-primary update-user-button" type="submit">Update</button>
+          <button (click)="deleteUser(user['uid'], user['displayName'])" class="btn btn-outline-danger">Delete</button>
+        </div>
+      </tr>
+    </tbody>
+  </table>
+</div>

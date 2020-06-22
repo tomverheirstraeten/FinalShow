@@ -1,0 +1,43 @@
+<div class="container" >
+
+
+<div class="conversations">
+  <div class="search">
+    <div class="searchinput">
+<input type="search" name="" id="" placeholder="Zoek op naam of interesse" (keyup)='search($event)' (click)='toggleConversation()'>
+    </div>
+
+    <div class="searchbutton">
+<img src="assets/images/search.png" alt="">
+    </div>
+
+  </div>
+  <div class="conv-rooms" *ngIf="!closer">
+    <h1>Vorige Gesprekken</h1>
+ <div class="conversation" *ngFor="let chats of filteredChats" (click)='goToChat(chats)'>
+  <div *ngIf="chats.messages.length">
+ <img [src]="'assets/man.svg'" alt="">
+ <div class="namestatus">
+   <p>{{ chats.displayName }}</p>
+   <p>
+     {{ chats.function | titlecase }}
+   </p>
+  </div>
+    <span *ngIf="chats.seen" class="last-message"></span>
+
+
+
+<!--
+  <p *ngIf="!chats.messages[chats.messages.length - 1].seen" class="last-message">
+    {{ chats.messages[chats.messages.length - 1].seen }}
+  </p> -->
+
+   </div>
+
+ </div>
+ <h1>Suggesties</h1>
+ <app-users [data]='filteredUsers'></app-users>
+  </div>
+
+</div>
+</div>

@@ -1,5 +1,4 @@
 // @use "sass:map";
-
 // $colors: (
 //     "red" : #FF6B6B,
 //     "blue" : #7FC6CB,
@@ -7,12 +6,14 @@
 //     "black" : #000,
 //     "white" : #fff
 // );
+
 @use './app/css/var';
 @use './app/css/base';
+// @use './app/css/emoji';
 
 
 $red : #FF6B6B;
-$blue : #7FC6CB;
+$blue : #4FCDC4;
 $yellow : #F9D48A;
 $black : #000;
 $white : #fff;
@@ -24,26 +25,12 @@ $white : #fff;
     text-decoration: none;
     color: #000;
     font-weight: 300;
-    line-height: 15px;
 }
 
 ul {
     list-style: none;
 }
 
-// .button {
-//     background-color: $red;
-//     border: none;
-//     border-left: 4px solid $white;
-//     color: $white !important;
-//     padding: 10px 20px;
-//     display: inline-block;
-//     font-weight: 500;
-//     z-index: 1;
-//     text-align: center;
-//     box-shadow: 4px 4px 0px $blue, 5px 5px 0px $white;
-//     margin-top: 20px;
-//   }
 
 .button {
   background-color: $white;
@@ -65,13 +52,13 @@ a {
     color: $blue
 }
 
-a:visited {
-    color: $red
-}
+// a:visited {
+//     color: $red
+// }
 
-a:hover{
-    color: $yellow;
-}
+// a:hover{
+//     color: $yellow;
+// }
 
 h1 {
     font-weight: 700;
@@ -84,24 +71,24 @@ h2, h3, h4, h5, h6 {
 .page-title {
   display: inline-table;
     font-weight: bold;
-    font-size: 32pt;
+    font-size: 32px;
     margin-bottom: 5%;
 }
 
 .title {
     font-weight: 300;
-    font-size: 16pt;
+    font-size: 16px;
     line-height: 40px;
 }
 
 .subtititle {
     font-weight: normal;
-    font-size: 16pt;
+    font-size: 16px;
 }
 
 .text {
     font-weight: lighter;
-    font-size: 13pt;
+    font-size: 13px;
 }
 
 
@@ -134,16 +121,12 @@ h2, h3, h4, h5, h6 {
 .align-center {
   align-items: center;
 }
-.container {
-  text-align: center;
-  width:90%;
-  max-width: 1200px;
-  margin: auto;
-}
 
 .txt-light{
   color: rgb(167, 167, 167);
   margin-top: 0.5em;
+}.w-100{
+  width: 100%;
 }
 .w-50{
   width: 50%;
@@ -151,3 +134,31 @@ h2, h3, h4, h5, h6 {
 .w-33{
   width: 33%;
 }
+
+@media only screen and (max-width: 768px) {
+.container {
+  text-align: center;
+  width:90%;
+  max-width: 1200px;
+  margin: auto;
+}
+}
+
+// desktop specific css
+
+@media only screen and (min-width: 769px) {
+  body{
+    overflow-x: hidden;
+  }
+  .container-grid{
+    display: grid;
+    min-height: 100vh;
+    max-height: 100vh;
+    grid-template-columns: 5% repeat(10, 7.89%) 5%;
+    grid-template-rows: 60px 60px 20px minmax(0, 1fr) minmax(0,1fr) minmax(0, 1fr) 80px;
+    column-gap: 1%;
+    row-gap: 0;
+  }
+  
+}
+

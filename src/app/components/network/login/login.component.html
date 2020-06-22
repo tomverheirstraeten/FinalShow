@@ -1,6 +1,6 @@
 
 <section id='login'>
-  <app-header></app-header>
+  <app-header class="yellow"></app-header>
   <article class="container login-wrapper">
     <h2>Je bent nog niet ingelogd.</h2>
     <p>Om met andere mensen te kunnen chatten hebben we even je tijd nodig om te registreren of in te loggen. Andere
@@ -11,19 +11,23 @@
       <article class="login-container">
         <div id="LoginForm">
           <article >
-            <form class="flex column" [formGroup]="loginEmailForm" (ngSubmit)="EmailPasswordSignIn(loginEmailForm.value)">
+            <form class="flex column login-form" [formGroup]="loginEmailForm" novalidate #loginForm="ngForm" (ngSubmit)="EmailPasswordSignIn(loginEmailForm.value)">
               <section class="flex column">
                 <div class="input-form flex column">
                   <label for="Email">Email *</label>
-                  <input placeholder="Email" type='email' #emailLogin formControlName="email">
+                  <input placeholder="Email" type='email' #emailLogin id="email"  formControlName="email">
+                  <div *ngIf="loginEmailForm.get('email').hasError('required') && loginForm.submitted" class='alert alert-danger'>Email is required</div>
+                  <div *ngIf="loginEmailForm.get('email').hasError('email') && loginForm.submitted" class='alert alert-danger'>Please enter valid email.</div>
                 </div>
                 <div class="input-form flex column">
                   <label for="Password">Password *</label>
-                  <input placeholder="Password" type='password' autocomplete="on" #passwordLogin formControlName="password">
+                  <input placeholder="Password" type='password' id="password" autocomplete="on" #passwordLogin formControlName="password" ng-required="true">
+                  <div *ngIf="loginEmailForm.get('password').hasError('required') && loginForm.submitted" class='alert alert-danger'>Password is required</div>
+                  <div *ngIf="loginEmailForm.get('password').hasError('minlength') && loginForm.submitted" class='alert alert-danger'>Your password must be at least 8 characters long</div>
                 </div>
-
+                <div >{{errorMessages}}</div>
                 <div class="input-form flex column">
-                  <button class="submit active">LOGIN</button>
+                  <button class="submit active" type="submit">LOGIN</button>
                 </div>
               </section>
             </form>
