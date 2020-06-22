@@ -84,6 +84,8 @@ export class RoomsService {
     }
   }
 
+
+
   async deleteMessage(chat, msg) {
     const { uid } = await this.auth.getUser();
 
@@ -124,5 +126,26 @@ export class RoomsService {
         return chat;
       })
     );
+  }
+  async sendMessageHand(chatId) {
+    console.log(chatId)
+    const {
+      uid
+    } = await this.auth.getUser();
+    const data = {
+      uid,
+      content: '',
+      createdAt: Date.now(),
+      deleted: false,
+      hand: true,
+      seen: false
+    };
+
+    if (uid) {
+      const ref = this.afs.collection('rooms').doc(chatId);
+      return ref.update({
+        messages: firestore.FieldValue.arrayUnion(data)
+      });
+    }
   }
 }

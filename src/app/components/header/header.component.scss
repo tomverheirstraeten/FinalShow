@@ -15,13 +15,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
   }
 
   .card {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    position: relative;
   }
 
   .body {
@@ -39,6 +40,10 @@
       font-size: 15px;
     }
 
+  }
+  app-inbox{
+    position: absolute;
+    top: 60px;
   }
 
   .profile {

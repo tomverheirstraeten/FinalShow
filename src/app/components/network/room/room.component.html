@@ -1,5 +1,4 @@
 <ng-container *ngIf="chat$ | async as chat">
-  <ng-container *ngIf=" auth.user$ | async as user">
 
     <div class="top">
       <p><a class="tag" routerLink="">Back</a></p>
@@ -16,28 +15,10 @@
         <app-rooms></app-rooms>
         <div #chatBox class="chat right " id="chat"  (scroll)='onScroll()'>
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
-            <!-- My MESSAGE -->
-            <div *ngIf="msg.uid === user.uid" class="flex center row right message-content">
-              <article>
-                <div>
-                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span></div>
-                  <p>{{ msg.content }}</p>
-                </div>
-
-                <div class="user flex column">
-                  <img [src]="'assets/man.svg'" width="50px">
-
-                </div>
-
-              </article>
-
-                <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button is-danger is-small"
-                (click)="cs.deleteMessage(chat, msg)">Delete</button> -->
-            </div>
 
 
-            <!-- OTHER MESSAGE -->
-            <div *ngIf="msg.uid !== user.uid" class="flex center row left  message-content">
+
+            <div  class="flex center row left  message-content">
               <article>
               <div class="user  flex column">
                 <img [src]="'assets/man.svg'" width="50px">
@@ -64,4 +45,4 @@
 
     </article>
   </ng-container>
-</ng-container>
+

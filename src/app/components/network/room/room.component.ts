@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnChanges, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ChatService } from 'src/app/services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -20,7 +19,6 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
   disableScrollDown = false;
 
   constructor(
-    public cs: ChatService,
     private route: ActivatedRoute,
     public auth: AuthService,
     public userService: UsersService,

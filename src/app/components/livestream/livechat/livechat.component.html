@@ -1,20 +1,61 @@
-<div class="container">
+<ng-container *ngIf="chat$ | async as chat">
+
+<div class="container " id="livechat-container">
   <div class="body">
     <div class="messages">
+    <article class="wrapper flex row flex-start">
+      <section class="left users flex row w-30">
+        <aside>
+          <app-users class="rooms"></app-users>
+        </aside>
+      </section>
 
+      <article class="flex column  w-50">
+        <div #chatBox class="chat right " id="chat" (scroll)='onScroll()'>
+          <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+
+            <article *ngIf="msg.hand !== true;" class="flex center row left  message-content">
+                  <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                  <p>{{ msg.content }}</p>
+            </article>
+
+               <div *ngIf="msg.hand === true;"
+                 class="flex center row right  hand message-content">
+                 <article>
+                   <div>
+                     <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                     </div>
+                     <p>👏</p>
+                   </div>
+
+                 </article>
+
+               </div>
+          </div>
+        </div>
+      </article>
+
+    </article>
     </div>
     <div class="userinput">
       <div class="clap">
-        <img src="assets/images/theclap.svg" alt="">
+        <img src="assets/images/theclap.svg" alt="" (click)="submitHand(chat.id)">
       </div>
-      <div class="message">
-        <input type="text" placeholder="Type your message..">
+      <div class="message" *ngIf="auth.user$ | async; else login">
+        <input type="text" (keydown.enter)="submit(chat.id)"
+          placeholder="Type your message.." [(ngModel)]="newMsg">
       </div>
-
-      <div class="send">
-        <img src="assets/images/send.svg" alt="">
-      </div>
+     <ng-template #login>
+       <div class="message" [routerLink]="['/login', 'livestream']">
+         <input type="text" placeholder="Type your message.." >
+       </div>
+     </ng-template>
+      <button class="send" [disabled]='!newMsg'>
+        <img src="assets/images/send.svg" (click)="submit(chat.id)"  alt="">
+      </button>
     </div>
 
   </div>
 </div>
+
+</ng-container>

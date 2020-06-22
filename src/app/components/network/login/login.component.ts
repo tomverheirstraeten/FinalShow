@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  OnChanges
+  OnChanges,
+  OnDestroy
 } from '@angular/core';
 
 import {
@@ -12,7 +13,7 @@ import {
 } from '@angular/forms';
 
 import {
-  Router
+  Router, ActivatedRoute
 } from '@angular/router';
 import {
   AuthService
@@ -26,14 +27,16 @@ import { AngularFireAuth } from '@angular/fire/auth';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnChanges {
+export class LoginComponent implements OnInit, OnChanges, OnDestroy{
   user;
   errorMessages;
+  id;
+  routeSub;
   loginEmailForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
-  constructor(private afAuth: AngularFireAuth, public auth: AuthService, private formBuilder: FormBuilder, public route: Router, public rooms: RoomsService) {
+  constructor(private afAuth: AngularFireAuth, public auth: AuthService, private formBuilder: FormBuilder, public router: ActivatedRoute,public route: Router , public rooms: RoomsService) {
 
   }
 
@@ -43,21 +46,32 @@ export class LoginComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
+    this.routeSub = this.router.params.subscribe(params => {
+      if(params.id && params.id !== undefined){
+        this.id = params.id;
+      }
+    });
     this.checkIfUser();
   }
-
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
+  }
 
 
   private async checkIfUser() {
     this.user = await this.auth.getUser();
     if (this.user) {
-      this.goToHome();
+      if (this.id === 'livestream') {
+        this.goToLivestream();
+      } else {
+        this.goToHome();
+      }
     }
   }
 
       // Email & password sign in
    async EmailPasswordSignIn(formVal) {
-    if(this.loginEmailForm.valid){
+    if (this.loginEmailForm.valid) {
       let errorMessage;
       const credentials = await this.afAuth.signInWithEmailAndPassword(formVal.email, formVal.password).catch((error) => {
             const errorCode = error.code;
@@ -65,7 +79,11 @@ export class LoginComponent implements OnInit, OnChanges {
           });
       this.errorMessages = errorMessage;
       if (!this.errorMessages) {
-        return this.route.navigate(['/network']);
+        if (this.id === 'livestream') {
+          this.goToLivestream();
+        } else {
+          return this.route.navigate(['/network']);
+        }
       }
       }
 
@@ -74,8 +92,10 @@ export class LoginComponent implements OnInit, OnChanges {
   goToHome() {
     this.route.navigate(['/network']);
   }
+  goToLivestream() {
+    this.route.navigate(['/livestream']);
+  }
   ngOnChanges() {
     this.checkIfUser();
-
   }
 }

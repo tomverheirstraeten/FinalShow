@@ -107,33 +107,43 @@ return this.afAuth.authState.pipe(
   // !=============SIGNIN============= //
 
   // Google signin
-  googleSignIn() {
+  googleSignIn(id) {
+
     const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
+    return this.oAuthLogin(provider, id);
   }
 
-  private async oAuthLogin(provider) {
+  private async oAuthLogin(provider, id) {
     const credential = await this.afAuth.signInWithPopup(provider);
     this.getUser().then(user => {
-      if(user === undefined){
-        return this.router.navigate(['/register']);
-      }else {
-        return this.router.navigate(['/network']);
+
+      if (user === undefined) {
+        if (id === 'livestream') {
+          return this.router.navigate(['/register', id]);
+        } else{
+          return this.router.navigate(['/register']);
+        }
+      } else {
+        if (id === 'livestream') {
+          return this.router.navigate(['/livestream']);
+        } else {
+          return this.router.navigate(['/network']);
+        }
       }
     });
   }
 
   // !=============REGISTER============= //
    // Google register
-   googleSignUp(formVal) {
+   googleSignUp(formVal, id) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthRegister(provider,formVal);
+    return this.oAuthRegister(provider,formVal, id);
 
   }
 
-  private async oAuthRegister(provider, formVal) {
+  private async oAuthRegister(provider, formVal, id) {
     const credential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserDataGoogle(credential.user, formVal);
+    return this.updateUserDataGoogle(credential.user, formVal, id);
   }
 
   private updateUserDataGoogle({
@@ -141,7 +151,7 @@ return this.afAuth.authState.pipe(
     email,
     displayName,
     photoURL
-  }, formVal) {
+  }, formVal, id) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${uid}`);
 
     const data = {
@@ -156,13 +166,18 @@ return this.afAuth.authState.pipe(
       gdpr: formVal.gdpr
     };
 
-    return userRef.set(data, {
+    userRef.set(data, {
       merge: true
-    }), this.router.navigate(['/network']);
+    });
+    if (id === 'livestream') {
+      return this.router.navigate(['/livestream']);
+    } else {
+      return this.router.navigate(['/network']);
+    }
   }
 
     // Email & password register
-    async EmailPasswordRegister(formVal) {
+    async EmailPasswordRegister(formVal, id) {
 
       const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(await function(error) {
       // Handle Errors here.
@@ -173,11 +188,11 @@ return this.afAuth.authState.pipe(
       this.errorMessage = error.message;
       console.log(this.errorMessage);
     });
-    return this.updateUserDataEmail(credentials,formVal);
+    return this.updateUserDataEmail(credentials,formVal, id);
     }
 
       // Update user data with email
-  private updateUserDataEmail(credentials, formVal) {
+  private updateUserDataEmail(credentials, formVal, id) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${credentials.user.uid}`);
     const data = {
       uid: credentials.user.uid,
@@ -190,9 +205,15 @@ return this.afAuth.authState.pipe(
       gdpr: formVal.gdpr
     };
 
-    return userRef.set(data, {
+    userRef.set(data, {
       merge: true
     });
+    if(id === 'livestream'){
+      return  this.router.navigate(['/livestream']);
+    }else{
+      return this.router.navigate(['/network']);
+    }
+
   }
 
 
