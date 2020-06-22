@@ -92,6 +92,13 @@ h2, h3, h4, h5, h6 {
 }
 
 
+.msg-deleted{
+  background:transparent !important;
+  font-style: italic;
+  font-size: 11px;
+  color: grey;
+}
+
 
 // Andres css
 .flex {
@@ -159,6 +166,6 @@ h2, h3, h4, h5, h6 {
     column-gap: 1%;
     row-gap: 0;
   }
-  
+
 }
 
