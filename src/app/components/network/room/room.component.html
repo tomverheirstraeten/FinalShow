@@ -21,7 +21,7 @@
               <article>
                 <div>
                   <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span></div>
-                  <p>{{ msg.content }}</p>
+                  <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
                 </div>
 
                 <div class="user flex column">
@@ -45,7 +45,7 @@
               </div>
               <div>
                 <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                <p>{{ msg.content }}</p>
+                <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
               </div>
 
                 </article>

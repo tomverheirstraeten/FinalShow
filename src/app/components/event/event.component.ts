@@ -12,7 +12,7 @@ export class EventComponent implements OnInit {
 
   eventName: string;
   data;
-  isDesktop: boolean;
+  // isDesktop: boolean;
 
   constructor(private route: ActivatedRoute, public service: DatabaseService) {  }
 
@@ -22,11 +22,12 @@ export class EventComponent implements OnInit {
       console.log(this.eventName);
 
       this.data = this.service.getEventByName(this.eventName);
+      console.log(this.data);
     });
 
-    if (window.screen.width >= 769) {
-      this.isDesktop = true;
-    }
+    // if (window.screen.width >= 769) {
+    //   this.isDesktop = true;
+    // }
 
   }
 
