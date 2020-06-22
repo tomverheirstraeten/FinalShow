@@ -25,8 +25,8 @@ import { AdminnotificationsComponent } from './components/admin/adminnotificatio
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  // { path: '', component: DesktopLandingComponent },
+  // { path: '', component: HomeComponent },
+  { path: '', component: DesktopLandingComponent },
   { path: 'room/:id', component: RoomComponent },
   { path: 'rooms', component: RoomnavComponent },
   { path: 'livestream', component: LivestreamComponent },
