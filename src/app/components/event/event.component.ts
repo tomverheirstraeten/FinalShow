@@ -22,6 +22,7 @@ export class EventComponent implements OnInit {
       console.log(this.eventName);
 
       this.data = this.service.getEventByName(this.eventName);
+      console.log(this.data);
     });
 
     if (window.screen.width >= 769) {
