@@ -62,6 +62,7 @@
 
       p {
         background: #F9D48A;
+        overflow-wrap: anywhere;
     }
   }
   }
@@ -120,7 +121,7 @@
 
 .form.messagebar {
   width: 90%;
-  max-width: 1200px;
+  // max-width: 1200px;
   display: flex;
   background: rgba(255, 255, 255, 1);
   position: fixed;
@@ -177,6 +178,11 @@
   align-items: center;
   justify-content: center;
   margin-left: 0.5em;
+  padding-right: 0;
+}
+
+.delete:hover{
+  cursor: pointer;
 }
 
 .users {

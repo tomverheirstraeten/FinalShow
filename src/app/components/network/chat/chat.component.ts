@@ -85,4 +85,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
     setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 200);
   }
+
+  returnDate(timestamp) {
+    let date = new Date(timestamp);
+    let string = date.getHours() + ":" + date.getMinutes();
+    return string;
+  }
 }
