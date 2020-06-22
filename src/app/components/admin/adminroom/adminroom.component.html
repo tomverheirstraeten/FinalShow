@@ -1,0 +1,57 @@
+<app-adminheader></app-adminheader>
+
+<div class="container mt-5 mb-5" id="wrapper">
+  <h6>{{roomName}}</h6>
+  <h6 class="text-muted">{{messages.length}} messages</h6>
+  <hr>
+
+  <div class="row mt-5 mb-3" id="titles">
+    <div class="col-1">
+      <h6>Picture</h6>
+    </div>
+    <div class="col-2">
+      <h6>User</h6>
+    </div>
+    <div class="col-1">
+      <h6>Time</h6>
+    </div>
+    <div class="col-3">
+      <h6>Message</h6>
+    </div>
+    <div class="col-3">
+      <h6>Original message</h6>
+    </div>
+  </div>
+
+  <div (scroll)="scrollDetect()" id="chat">
+    <div class="row pt-2 pb-2" *ngFor='let message of messages; let index = index' [ngStyle]="message['deleted']==true && {'background-color': '#fbf4f3', 'opacity': '0.5'}">
+      <div class="col-1">
+        <img *ngIf="message['user']['photoURL']" src="{{message['user']['photoURL']}}" referrerpolicy="no-referrer" style="height: 30px; width: 30px;">
+      </div>
+      <div class="col-2">
+        <p [ngStyle]="message['user']['admin']==true && {'font-weight': 'bold'}">{{message['user']['displayName']}}</p>
+      </div>
+      <div class="col-1">
+        <p>{{returnDate(message['createdAt'])}}</p>
+      </div>
+      <div class="col-3">
+        <p *ngIf="message['deleted'] == true" class="card-text font-italic">
+          {{message['content']}}
+        </p>
+        <p *ngIf="message['deleted'] == false || message['deleted'] == null">
+          {{message['content']}}
+        </p>
+      </div>
+      <div class="col-3">
+        <p *ngIf="message['deleted'] == true">
+          {{message['originalContent']}}
+        </p>
+      </div>
+      <div class="col-1">
+        <button *ngIf="message['deleted'] == false || message['deleted'] == null" class="btn btn-outline-danger" (click)="deleteMessage(index)">Delete</button>
+        <button *ngIf="message['deleted'] == true" class="btn btn-outline-primary" (click)="revertMessage(index)">Revert</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from 'src/app/services/notification.service';
+import { AdminService } from 'src/app/services/admin.service';
+import { formatDate, CommonModule } from '@angular/common';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-livestream',
@@ -6,10 +10,76 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./livestream.component.scss']
 })
 export class LivestreamComponent implements OnInit {
+liveStreamNotifications = [];
 
-  constructor() { }
+  currentActivity = 'Offline';
+  live = false;
+  timetable;
+  currentTime;
+
+  constructor(private ns: NotificationService, private as: AdminService) {
+    this.as.getTimetable().subscribe((timetableData) => {
+      this.timetable = _.orderBy(timetableData, 'time', 'asc');
+      this.currentTime = formatDate(new Date(), 'hh:mm', 'en-US');
+      this.showCurrentActivity();
+      setInterval(() => {
+        this.currentTime = formatDate(new Date(), 'hh:mm', 'en-US');
+        this.showCurrentActivity();
+      }, 30000);
+    })
+  }
+
+  showCurrentActivity(){
+    this.currentActivity = 'Offline';
+    this.live = false;
+    this.timetable.forEach(timeslot => {
+      if(this.currentTime > this.returnTime(timeslot.time)){
+        this.currentActivity = timeslot.name;
+        this.live = true;
+      }
+    });
+  }
+
+  returnTime(time){
+    let date = new Date(time.seconds * 1000);
+    let hours = date.getHours();
+    let hourString: string;
+    if(hours < 10) {
+      hourString = '0' + hours.toString();
+    } else {
+      hourString = hours.toString();
+    }
+
+    let minutes = date.getMinutes();
+    let minuteString: string;
+    if(minutes < 10) {
+      minuteString = '0' + minutes.toString();
+    } else {
+      minuteString = minutes.toString();
+    }
+
+    return hourString + ':' + minuteString;
+  }
 
   ngOnInit(): void {
+    this.getLiveStreamNotifications();
+  }
+
+  getLiveStreamNotifications(){
+    this.ns.getNotifiation().subscribe(res => {
+      res.forEach(notification => {
+        if(notification['rooms']){
+          notification['rooms'].forEach(room => {
+            if(room === 'live stream'){
+              this.liveStreamNotifications.push(notification);
+            }
+
+          });
+        }
+      });
+      console.log(this.liveStreamNotifications);
+    });
+
   }
 
 }

@@ -1,8 +1,9 @@
+@import '~src/styles.scss';
   .slidercontainer {
     width: 100%;
     overflow: scroll;
     scroll-snap-type: x mandatory;
-    background: linear-gradient(-35deg, white 75%, rgba(0, 212, 255, 0.6))
+    background: linear-gradient(-35deg, white 55%, rgba(79,205,196, 0.6))
   }
 
   #rooms {
@@ -25,6 +26,7 @@
 
       h2 {
         text-transform: uppercase;
+        font-size: 1.8em;
       }
 
       img {

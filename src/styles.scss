@@ -13,7 +13,7 @@
 
 
 $red : #FF6B6B;
-$blue : #7FC6CB;
+$blue : #4FCDC4;
 $yellow : #F9D48A;
 $black : #000;
 $white : #fff;
@@ -52,13 +52,13 @@ a {
     color: $blue
 }
 
-a:visited {
-    color: $red
-}
+// a:visited {
+//     color: $red
+// }
 
-a:hover{
-    color: $yellow;
-}
+// a:hover{
+//     color: $yellow;
+// }
 
 h1 {
     font-weight: 700;
@@ -71,26 +71,33 @@ h2, h3, h4, h5, h6 {
 .page-title {
   display: inline-table;
     font-weight: bold;
-    font-size: 32pt;
+    font-size: 32px;
     margin-bottom: 5%;
 }
 
 .title {
     font-weight: 300;
-    font-size: 16pt;
+    font-size: 16px;
     line-height: 40px;
 }
 
 .subtititle {
     font-weight: normal;
-    font-size: 16pt;
+    font-size: 16px;
 }
 
 .text {
     font-weight: lighter;
-    font-size: 13pt;
+    font-size: 13px;
 }
 
+
+.msg-deleted{
+  background:transparent !important;
+  font-style: italic;
+  font-size: 11px;
+  color: grey;
+}
 
 
 // Andres css
@@ -121,12 +128,6 @@ h2, h3, h4, h5, h6 {
 .align-center {
   align-items: center;
 }
-.container {
-  text-align: center;
-  width:90%;
-  max-width: 1200px;
-  margin: auto;
-}
 
 .txt-light{
   color: rgb(167, 167, 167);
@@ -140,3 +141,31 @@ h2, h3, h4, h5, h6 {
 .w-33{
   width: 33%;
 }
+
+@media only screen and (max-width: 768px) {
+.container {
+  text-align: center;
+  width:90%;
+  max-width: 1200px;
+  margin: auto;
+}
+}
+
+// desktop specific css
+
+@media only screen and (min-width: 769px) {
+  body{
+    overflow-x: hidden;
+  }
+  .container-grid{
+    display: grid;
+    min-height: 100vh;
+    max-height: 100vh;
+    grid-template-columns: repeat(12, 7.41%);
+    grid-template-rows: 60px 60px 20px minmax(0, 1fr) minmax(0,1fr) minmax(0, 1fr) 80px;
+    column-gap: 1%;
+    row-gap: 0;
+  }
+
+}
+
