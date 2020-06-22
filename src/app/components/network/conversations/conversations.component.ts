@@ -127,7 +127,7 @@ export class ConversationsComponent implements OnInit {
         }
         this.myChats = chats;
         this.filteredChats = chats;
-        console.log(this.filteredChats);
+        // console.log(this.filteredChats);
 
       }
     });

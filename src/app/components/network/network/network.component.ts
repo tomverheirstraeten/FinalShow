@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
+import { ɵBROWSER_SANITIZATION_PROVIDERS } from '@angular/platform-browser';
 
 
 @Component({
@@ -26,18 +27,25 @@ export class NetworkComponent implements OnInit {
   closer = true;
 
   canvas;
-  ctx;
   users = new Array();
   myX = 0;
   myY = 0;
   easing = .05;
-  username;
+  username: string;
   playing = false;
   speed = 30;
   database;
-  myRole;
-
+  myRole: string;
   roomDelay = 50; // the amount of frames you have to wait to enter a room
+
+  circleMask;
+
+  webImage;
+  motionImage;
+  mobileImage;
+  digitalMakingImage;
+  generalImage;
+
 
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router, public interactionService: InteractionService, public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
@@ -68,17 +76,25 @@ export class NetworkComponent implements OnInit {
 
     // start drawing the interaction room
     const sketch = s => {
+      s.preload = () => { // load the images needed
+        this.webImage = s.loadImage('assets/images/cluster-icons/web.svg');
+        this.motionImage = s.loadImage('assets/images/cluster-icons/motion.svg');
+        this.mobileImage = s.loadImage('assets/images/cluster-icons/mobile.svg');
+        this.digitalMakingImage = s.loadImage('assets/images/cluster-icons/digitalMaking.svg');
+        this.generalImage = s.loadImage('assets/images/cluster-icons/generalChat.svg');
+      }
+
       s.setup = () => { // initial setup
         s.createCanvas(s.windowWidth, s.windowHeight);
-        s.frameRate(15);
+
+        s.frameRate(20);
       };
       s.draw = () => { // updates every frame
-        s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2);
+        s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2); // center your player
+
         s.background(255);
         s.stroke(0);
         s.rect(0, 0, s.width, s.height);
-
-        this.displayGroups(s);
 
         if (this.playing) { // if all the conditions to start playing are met (e.g. logged in)
           // console.log(allUsers);
@@ -89,16 +105,18 @@ export class NetworkComponent implements OnInit {
             if (allUsers[i] !== undefined) {
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
-                // if it's not the current user & the user hasn't been drawn already
-                this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
-                drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
-                // check if the current user is close
-                this.checkDistance(s, this.myX, this.myY, allUsers[i].x, allUsers[i].y, allUsers[i].name, 50);
+                if (allUsers[i].name !== 'undefined') {
+                  // if it's not the current user & the user hasn't been drawn already
+                  this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
+                  drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
+                  // check if the current user is close
+                  this.checkDistance(s, this.myX, this.myY, allUsers[i].x, allUsers[i].y, allUsers[i].name, 50);
+                }
               }
             }
           }
 
-
+          this.displayGroups(s);
           this.move(s); // move the current player
         }
       };
@@ -125,7 +143,7 @@ export class NetworkComponent implements OnInit {
 
     if (x < sketch.width / 2 - 10) {
       dirX = -1;
-    } else if(x > sketch.width / 2 + 10) {
+    } else if (x > sketch.width / 2 + 10) {
       dirX = 1;
     }
 
@@ -135,7 +153,7 @@ export class NetworkComponent implements OnInit {
       dirY = 1;
     }
 
-        // outer boundaries
+    // outer boundaries
     if (this.myY < 10) {
       this.myY = 10;
     } else if (this.myY > 1000) {
@@ -165,10 +183,9 @@ export class NetworkComponent implements OnInit {
     sketch.strokeWeight(0);
 
     // decide the color based on the role of the user
-    console.log(role);
     switch (role) {
       case 'student':
-        sketch.fill(79, 205, 196); // 
+        sketch.fill(79, 205, 196);
         break;
       case 'docent':
         sketch.fill(243, 193, 193);
@@ -177,15 +194,15 @@ export class NetworkComponent implements OnInit {
         sketch.fill(255, 107, 107);
         break;
       case 'bedrijf':
-        sketch.fill(	149, 209, 123);
+        sketch.fill(149, 209, 123);
         break;
       default:
         sketch.fill(249, 212, 138);
     }
 
-    sketch.ellipseMode('center');
-    sketch.ellipse(x, y, userSize, userSize);
-    sketch.fill(0);
+    sketch.rectMode('center');
+    sketch.rect(x, y, userSize, userSize);
+    sketch.fill(172, 182, 195);
     sketch.textSize(12);
     sketch.text(name, x, y + userSize);
     sketch.noFill();
@@ -193,28 +210,55 @@ export class NetworkComponent implements OnInit {
 
   displayGroups(sketch) {
     // web room
-    this.displayGroup(sketch, 500, 450, 150, 'Web Cluster');
+    this.displayGroup(sketch, 500, 450, 150, 'Web');
     // motion room
-    this.displayGroup(sketch, 800, 700, 200, 'Motion Cluster');
+    this.displayGroup(sketch, 800, 700, 200, 'Motion');
     // alternate reality room
-    this.displayGroup(sketch, 400, 100, 130, 'AR Cluster');
+    this.displayGroup(sketch, 400, 100, 130, 'AR');
     // mobile room
-    this.displayGroup(sketch, 200, 700, 170, 'Mobile Cluster');
+    this.displayGroup(sketch, 200, 700, 170, 'Mobile');
     // experience room
-    this.displayGroup(sketch, 50, 400, 250, 'Experience Cluster')
+    this.displayGroup(sketch, 50, 400, 250, 'Digital Making');
   }
 
   displayGroup(sketch, x, y, r, name) {
-    sketch.strokeWeight(3);
-    sketch.stroke(249, 212, 138);
-    sketch.noFill();
+    // background
+    sketch.noStroke();
+    sketch.fill(249, 212, 138);
     sketch.circle(x, y, r);
+
+    // text
     sketch.fill(0);
     sketch.textAlign('center');
     sketch.strokeWeight(0);
     sketch.textSize(20);
-    sketch.text(name, x, y);
+    sketch.text(name, x, y - r / 3);
     sketch.noFill();
+
+    // image
+    let image;
+    switch (name) {
+      case 'Web':
+        image = this.webImage;
+        break;
+      case 'Motion':
+        image = this.motionImage;
+        break;
+      case 'Mobile':
+        image = this.mobileImage;
+        break;
+      case 'Digital Making':
+        image = this.digitalMakingImage;
+        break;
+      default:
+        image = this.generalImage;
+        break;
+    }
+
+    sketch.imageMode('center');
+    sketch.image(image, x, y, r / 3, r / 3);
+
+    // check the distance
     this.checkDistance(sketch, this.myX, this.myY, x, y, name, r / 2);
 
     // to integrate with chat: check how many people are in this room
@@ -228,7 +272,7 @@ export class NetworkComponent implements OnInit {
       // console.log(action);
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
-      if ((sketch.frameCount % this.roomDelay) == 0) {
+      if ((sketch.frameCount % this.roomDelay) === 0) {
         this.gotoRoom(action);
       }
     }
@@ -237,14 +281,23 @@ export class NetworkComponent implements OnInit {
   gotoRoom(room) {
     let roomName;
     switch (room) {
-      case 'Motion Cluster':
+      case 'Motion':
         roomName = 'Motion';
         break;
-      case 'Web Cluster':
+      case 'Web':
         roomName = 'Web';
         break;
+      case 'AR':
+        roomName = 'Alternate Reality';
+        break;
+      case 'Mobile':
+        roomName = 'Mobile Appliance';
+        break;
+      case 'Digital Making':
+        roomName = 'Digital Making';
+        break;
       default:
-        roomName = 'Dance';
+        roomName = 'General';
         break;
     }
 
