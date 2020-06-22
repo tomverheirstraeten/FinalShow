@@ -6,7 +6,6 @@ import { tap } from 'rxjs/operators';
 import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
-import { DatabaseService } from 'src/app/database.service';
 
 
 @Component({
