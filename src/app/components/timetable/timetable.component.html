@@ -1,4 +1,4 @@
-<div class="wrapper" id="wrapper">
+<div class="wrapper container-grid" id="wrapper">
     <app-header></app-header>
     <ul>
         <li *ngFor='let event of timetable' class="timetable-list-item">
@@ -12,5 +12,6 @@
             </div>
         </li>
     </ul>
+    <app-event *ngIf="isDesktop"></app-event>
 </div>
 

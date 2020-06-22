@@ -132,6 +132,20 @@ export class AdminService {
       );
   }
 
+  createRoom(name){
+    const collection = this.afs.collection('rooms');
+    collection.add({
+      roomName: name,
+      messages: new Array(),
+      createdAt: Date.now()
+    });
+  }
+
+  deleteRoom(chatId){
+    const collection = this.afs.collection('rooms');
+    collection.doc(chatId).delete();
+  }
+
   getUsers(messages){
     let newArray = messages;
     newArray.forEach(message => {
@@ -140,15 +154,57 @@ export class AdminService {
     return newArray;
   }
 
-  sendNotification(messageText, colorCode, selectedRooms, permanentMessage){
+  sendNotification(messageText, colorCode, selectedRooms, permanentMessage, iconString){
     const collection = this.afs.collection('notifications');
     collection.add({
       created_at: new Date(),
       message: messageText,
       color: colorCode,
       rooms: selectedRooms,
-      permanent: permanentMessage
+      permanent: permanentMessage,
+      icon: iconString
     });
+  }
+
+  deleteNotification(id){
+    const collection = this.afs.collection('notifications');
+    collection.doc(id).delete();
+  }
+
+  getPermanentNotifications(){
+    return this.afs.collection<any>('notifications', ref => ref
+      .where('permanent', '==', true))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data: Object = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+
+  getStreamUrl(){
+    return this.afs
+    .collection<any>('stream')
+    .doc('0')
+    .snapshotChanges()
+    .pipe(
+      map(doc => {
+        return { id: doc.payload.id, ...doc.payload.data() as object};
+      })
+    );
+  }
+
+  updateStreamUrl(url){
+    return this.afs
+    .collection<any>('stream')
+    .doc('0')
+    .update({
+      url: url
+    })
   }
 
 }

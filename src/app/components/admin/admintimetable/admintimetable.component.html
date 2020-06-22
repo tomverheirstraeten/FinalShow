@@ -35,10 +35,10 @@
       <input type="time" value="{{displayTime(event['time'])}}" class="form-control {{event['id']}}">
     </div>
     <div class="col-3">
-      <textarea class="form-control">{{event['name']}}</textarea>
+      <textarea class="form-control {{event['id']}}">{{event['name']}}</textarea>
     </div>
     <div class="col-5">
-      <textarea class="form-control">{{event['desc']}}</textarea>
+      <textarea class="form-control {{event['id']}}">{{event['desc']}}</textarea>
     </div>
     <div class="col-1 align-center">
       <button class="btn btn-outline-primary" (click)="clickUpdate(event['id'])">Update</button>

@@ -10,11 +10,13 @@ import { DatabaseService } from 'src/app/database.service';
 export class TimetableComponent implements OnInit {
 
   timetable: Array<object>;
+  isDesktop: boolean;
 
   constructor(private service: DatabaseService) {
     this.timetable = service.getTimetable();
   }
 
+  
   displayTime(time){
     let date = new Date(time.seconds * 1000);
     let hours = date.getHours();
@@ -38,6 +40,9 @@ export class TimetableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (window.screen.width >= 769) {
+      this.isDesktop = true;
+    }
   }
 
 }
