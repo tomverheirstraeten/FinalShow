@@ -186,6 +186,21 @@ export class AdminService {
       );
   }
 
+  getEventByName(name: string) {
+    return this.afs.collection<any>('timetable', ref => ref
+      .where('name', '==', name))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data: Object = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+
   getStreamUrl(){
     return this.afs
     .collection<any>('stream')
