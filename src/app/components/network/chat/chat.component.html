@@ -23,9 +23,12 @@
               class="flex center row right deleted message-content">
               <article>
                 <div>
-                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                  <div class="flex space-between">
+                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
+                    <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
                   <p>{{ msg.content }}</p>
+                  <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
               </article>
             </div>
@@ -33,9 +36,12 @@
             <div *ngIf="msg.uid === user.uid && msg.deleted === false && msg.hand !== true;" class="flex center row right message-content">
               <article>
                 <div>
-                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                  <div class="flex space-between">
+                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
+                    <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
                   <p>{{ msg.content }}</p>
+                  <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
@@ -48,9 +54,12 @@
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
               <article>
                 <div>
-                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                  <div class="flex space-between">
+                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
+                    <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
                   <p>👏</p>
+                  <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
@@ -71,7 +80,10 @@
               class="flex center row left deleted message-content">
               <article>
                 <div>
-                  <div><span class="tag is-dark ">{{ msg.user?.displayName || msg.user?.uid }}</span></div>
+                  <div class="flex space-between">
+                    <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                    <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
+                  </div>
                   <p>{{ msg.content }}</p>
                 </div>
               </article>
@@ -86,7 +98,10 @@
                   <img [src]="'assets/man.svg'" width="50px">
                 </div> -->
                 <div>
-                  <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                  <div class="flex space-between">
+                    <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                    <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
+                  </div>
                   <p>{{ msg.content }}</p>
                 </div>
 
@@ -98,7 +113,9 @@
               <div *ngIf="msg.uid !== user.uid && msg.hand === true;" class="flex center row left hand message-content">
                 <article>
                   <div>
-                    <div><span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                    <div class="flex space-between">
+                      <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                      <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
                     </div>
                     <p>👏</p>
                   </div>
@@ -119,7 +136,7 @@
             <input class="input form-control"  [(ngModel)]="newMsg" maxlength="100" placeholder="Typ een chatbericht..."
               (keydown.enter)="submit(chat.id)" data-emojiable="true" (focus)='updateMessageSeen(chat)'>
             <button (click)="submit(chat.id)" class="send" [disabled]="!newMsg"><img
-                src="assets/images/send.png"></button>
+                src="assets/images/send.svg"></button>
           </section>
         </div>
       </article>

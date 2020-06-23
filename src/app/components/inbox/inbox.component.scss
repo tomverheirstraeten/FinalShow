@@ -8,3 +8,12 @@ box-sizing: border-box;
 }.inbox-container img{
 width: 30px
 }
+
+.conversations{
+  background-color: #F0F0F0;
+}
+
+.conversation:hover{
+  cursor: pointer;
+  background-color: #dbdbdb;
+}

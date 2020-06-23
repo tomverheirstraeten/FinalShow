@@ -37,7 +37,7 @@
   p{
     background:transparent !important;
     font-style: italic;
-    font-size: 11px;
+    font-size: 15px;
     color: grey;
     text-align: right;
   }
@@ -86,7 +86,7 @@
   span {
     color: rgb(199, 199, 199);
     font-weight: lighter;
-    font-size: 11px;
+    font-size: 13px;
     width: 100%;
     display: block;
     text-align: left;
@@ -101,6 +101,7 @@
     min-width: 200px;
     background-color:#F0F0F0;
     text-align: left;
+    overflow-wrap: anywhere;
   }
 
   .user {

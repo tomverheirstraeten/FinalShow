@@ -91,7 +91,28 @@ h2, h3, h4, h5, h6 {
     font-size: 13px;
 }
 
+.text-right{
+  text-align: right;
+}
 
+.seen{
+  opacity: 0.2;
+  height: 20px;
+  float: right;
+  display: none;
+}
+
+.seen-show{
+  display: block;
+}
+
+.delete:hover, .header img:hover, .profile:hover{
+  cursor: pointer;
+}
+
+.exit, .profile{
+  align-self: center;
+}
 
 // Andres css
 .flex {
@@ -159,6 +180,6 @@ h2, h3, h4, h5, h6 {
     column-gap: 1%;
     row-gap: 0;
   }
-  
+
 }
 
