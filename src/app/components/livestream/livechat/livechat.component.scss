@@ -1,3 +1,26 @@
+@import '~src/styles.scss';
+//Kleuren balkjes functies
+.docent, .student{
+  padding-left: 0.5em;
+}
+.docent{
+  border-left: 5px solid $pink;
+}
+.student{
+  border-left: 5px solid $blue;
+}
+.alumni{
+  border-left: 5px solid $blue;
+}
+
+
+
+
+
+
+
+
+
 .container::-webkit-scrollbar{
   display:none;
 }
@@ -64,6 +87,16 @@
   font-weight: normal;
   padding-right: 0.5em;
 }
+
+
+
+
+
+
+
+
+
+
 
 //mobile
 @media only screen and (max-width: 768px) {

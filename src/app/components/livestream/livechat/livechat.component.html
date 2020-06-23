@@ -8,28 +8,23 @@
         <aside>
           <app-users class="rooms"></app-users>
         </aside>
-      </!--> -->
+      </!-->
 
       <article class="">
         <div #chatBox class="chat right " id="chat" (scroll)='onScroll()'>
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
             <article *ngIf="msg.hand !== true;" class="text-msg">
                   <p>
-                  <span class="tag is-dark msg-user">{{ msg.user?.displayName || msg.user?.uid }} </span>
+                  <span class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}  </span>
                   {{ msg.content }}
                   </p>
             </article>
-
-               <div *ngIf="msg.hand === true;" class="hand message-content">
+               <div *ngIf="msg.hand === true;" class="hand text-msg">
                  <article>
-                   <div>
-                     <div>
+                      <p>
                        <span
-                         class="tag is-dark txt-right {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                     </div>
-                     <div>👏</div>
-                   </div>
-
+                         class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                     👏</p>
                  </article>
                </div>
           </div>
