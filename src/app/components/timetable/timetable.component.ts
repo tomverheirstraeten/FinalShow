@@ -11,9 +11,10 @@ export class TimetableComponent implements OnInit {
 
   timetable: Array<object>;
   isDesktop: boolean;
-  maxScroll: number;
+  //maxScroll: number;
   eventHeight: number;
   eventPositions: Array<number>;
+  previousSelectedHtmlEvent: Element;
 
   @ViewChild('timetableHtmlList') timetableHtmlList: ElementRef;
 
@@ -46,6 +47,10 @@ export class TimetableComponent implements OnInit {
 
   showEvent() {
     if (this.isDesktop) {
+      if(this.eventHeight == null){
+        this.getScrollValues();
+      }
+
       // scroll values
       let scrollPosition = this.timetableHtmlList.nativeElement.scrollTop;
 
@@ -55,19 +60,32 @@ export class TimetableComponent implements OnInit {
         return (Math.abs(curr - scrollPosition) < Math.abs(prev - scrollPosition) ? curr : prev);
       });
 
+      // elememet currently targeted
+      const currentEvent = this.timetable.find(event => event['scrollHeight'] === closest);
+      this.showSelectedHtmlEvent(currentEvent);
+
       console.log(closest);
-      console.log(scrollPosition);
     }
   }
 
-  init () {
-    if (window.screen.width >= 769) {
-      this.isDesktop = true;
+  showSelectedHtmlEvent(currentEvent){
+    const currentSelectedEventHtml = document.getElementById(currentEvent['name']);
+    if(currentSelectedEventHtml != this.previousSelectedHtmlEvent){
+      //currentSelectedEventHtml.classList.remove("selectedEvent");
+      this.previousSelectedHtmlEvent = currentSelectedEventHtml;
+      currentSelectedEventHtml.classList.add("selectedEvent");
+    }
+    
 
-      this.maxScroll = this.timetableHtmlList.nativeElement.scrollHeight - this.timetableHtmlList.nativeElement.clientHeight;
-      this.eventHeight = this.maxScroll / this.timetable.length;
+    
+  }
 
-      console.log(this.maxScroll);
+  // save nessasary scroll values
+  getScrollValues () {
+      //this.maxScroll = this.timetableHtmlList.nativeElement.scrollHeight - this.timetableHtmlList.nativeElement.clientHeight;
+      this.eventHeight = 94;
+
+      //console.log(this.maxScroll);
       console.log(this.eventHeight);
 
       // get event positions in the html.
@@ -80,10 +98,11 @@ export class TimetableComponent implements OnInit {
         } else {
           value = valueCounter;
         }
+        this.timetable[index]['scrollHeight'] = value;
         return value;
       });
+      console.log(this.timetable);
       console.log(this.eventPositions);
-    }
   };
 
   ngOnInit(): void {
