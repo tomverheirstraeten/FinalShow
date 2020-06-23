@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
 import { DatabaseService } from 'src/app/database.service';
 
 
@@ -68,15 +68,19 @@ export class TimetableComponent implements OnInit {
     }
   }
 
+  // color selected list element in the html
   showSelectedHtmlEvent(currentEvent){
     const currentSelectedEventHtml = document.getElementById(currentEvent['name']);
     if(currentSelectedEventHtml != this.previousSelectedHtmlEvent){
-      //currentSelectedEventHtml.classList.remove("selectedEvent");
+
+      if(this.previousSelectedHtmlEvent != null){
+        console.log('test');
+        this.previousSelectedHtmlEvent.classList.remove("selectedEvent");
+      }
+      
       this.previousSelectedHtmlEvent = currentSelectedEventHtml;
       currentSelectedEventHtml.classList.add("selectedEvent");
     }
-    
-
     
   }
 
@@ -110,7 +114,5 @@ export class TimetableComponent implements OnInit {
       this.isDesktop = true;
     }
   }
-
-  
 
 }
