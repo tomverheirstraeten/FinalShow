@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ɵɵresolveBody } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as  THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { HemisphereLight, SpotLight } from 'three';
@@ -30,6 +30,8 @@ export class DesktopLandingComponent implements OnInit {
   mixer = null;
   clips = null;
   carint = 0;
+  animationBool = true;
+  animationsOn = "ON"
   yPos = {
     mediaY: -0.044314876198768616,
     converY: -0.044314876198768616,
@@ -163,30 +165,32 @@ export class DesktopLandingComponent implements OnInit {
     })
   }
   randomCar = () => {
-
-    if (this.carint === 0) {
-      this.mixer.clipAction(this.animations[0]).play();
-      this.mixer.clipAction(this.animations[0]).reset();
-    } else if (this.carint === 1) {
-      this.mixer.clipAction(this.animations[1]).play();
-      this.mixer.clipAction(this.animations[1]).reset();
-    } else if (this.carint === 2) {
-      this.mixer.clipAction(this.animations[5]).play();
-      this.mixer.clipAction(this.animations[5]).reset();
-    } else if (this.carint === 3) {
-      this.mixer.clipAction(this.animations[6]).play();
-      this.mixer.clipAction(this.animations[6]).reset();
-    }
-    else if (this.carint === 4) {
-      this.mixer.clipAction(this.animations[9]).play();
-      this.mixer.clipAction(this.animations[9]).reset();
-    }
-    this.carint += 1;
-    if (this.carint > 4) {
-      this.carint = 0;
-    }
+    if (this.animationBool) {
 
 
+      if (this.carint === 0) {
+        this.mixer.clipAction(this.animations[0]).play();
+        this.mixer.clipAction(this.animations[0]).reset();
+      } else if (this.carint === 1) {
+        this.mixer.clipAction(this.animations[1]).play();
+        this.mixer.clipAction(this.animations[1]).reset();
+      } else if (this.carint === 2) {
+        this.mixer.clipAction(this.animations[5]).play();
+        this.mixer.clipAction(this.animations[5]).reset();
+      } else if (this.carint === 3) {
+        this.mixer.clipAction(this.animations[6]).play();
+        this.mixer.clipAction(this.animations[6]).reset();
+      }
+      else if (this.carint === 4) {
+        this.mixer.clipAction(this.animations[9]).play();
+        this.mixer.clipAction(this.animations[9]).reset();
+      }
+      this.carint += 1;
+      if (this.carint > 4) {
+        this.carint = 0;
+      }
+
+    }
   }
   animatePlane = () => {
     this.mixer.clipAction(this.animations[8]).play();
@@ -200,16 +204,26 @@ export class DesktopLandingComponent implements OnInit {
   onDocumentMouseClick = () => {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+
     // checkrooms
     if (intersects.length > 0) {
+
       if (intersects[0].object.parent.name === 'medialab') {
+        this.disposeEverything();
         this.router.navigate(['/livestream'])
 
+
       } else if (intersects[0].object.parent.name === 'fablab') {
+        this.disposeEverything();
         this.router.navigate(['/timetable'])
 
       } else if (intersects[0].object.parent.name === 'conversationroom') {
+        this.disposeEverything();
         this.router.navigate(['/network'])
+
+      } else if (intersects[0].object.parent.name === 'entrance') {
+        this.disposeEverything();
+        this.router.navigate(['/faq'])
 
       } else if (intersects[0].object.parent.name === 'ehb_logo') {
         window.open('https://www.erasmushogeschool.be/nl/opleidingen/multimedia-communicatietechnologie', '_blank');
@@ -220,14 +234,56 @@ export class DesktopLandingComponent implements OnInit {
 
     }
   }
+  disposeEverything = () => {
+    // dispose geometries and materials in scene
+    this.scene.traverse((o) => {
+
+      if (o.geometry) {
+        o.geometry.dispose()
+        console.log("dispose geometry ", o.geometry)
+      }
+
+      if (o.material) {
+        if (o.material.length) {
+          for (let i = 0; i < o.material.length; ++i) {
+            o.material[i].dispose()
+            console.log("dispose material ", o.material[i])
+          }
+        }
+        else {
+          o.material.dispose()
+          console.log("dispose material ", o.material)
+        }
+      }
+    })
+
+    this.scene = null
+    this.camera = null
+    this.renderer && this.renderer.renderLists.dispose()
+    this.renderer = null
+    console.log("Dispose!")
+
+  }
+
   // RESIZE DOCUMENT EVENTLISTENER
   onWindowResize = () => {
     this.camera.updateProjectionMatrix();
   }
+  toggleAnimations = () => {
+    if (this.animationBool) {
+      this.animationBool = false
+      this.animationsOn = "OFF"
+    } else {
+      this.animationBool = true
+      this.animationsOn = "ON"
+    }
+  }
   // ANIMATION
   animate = () => {
     requestAnimationFrame(this.animate);
-    this.mixer.update(0.03);
+    if (this.animationBool) {
+      this.mixer.update(0.03);
+    }
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children, true);
     // checkrooms

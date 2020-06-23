@@ -3,4 +3,7 @@
 <div id="loadbarcontainer">
   <h3 [hidden]="loaded">Loading Campus {{percentloaded}}</h3>
   <div id="loadbar" [style.width]="percentloaded" [hidden]="loaded"></div>
+
 </div>
+<div id="animationsOn" [class.playanimation]="animationBool" (click)="toggleAnimations()" [hidden]="!loaded">
+  {{animationsOn}}</div>
