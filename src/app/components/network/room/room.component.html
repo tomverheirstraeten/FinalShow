@@ -26,7 +26,7 @@
               </div>
               <div>
                 <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                <p>{{ msg.content }}</p>
+                <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
               </div>
 
                 </article>
