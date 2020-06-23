@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-adminnotifications',
@@ -10,19 +11,18 @@ import { environment } from 'src/environments/environment';
 })
 export class AdminnotificationsComponent implements OnInit {
 
-  permaNotif;
+  notifications;
 
   constructor(private service: AdminService, private router: Router) {
     if(sessionStorage.getItem('password') != environment.credentials.password){
       this.router.navigate(['admin'])
     }
-    this.getPermanentNotifications();
+    this.getNotifications();
   }
 
-  getPermanentNotifications(){
-    this.service.getPermanentNotifications().subscribe((val) => {
-      this.permaNotif = val;
-      console.log(val);
+  getNotifications(){
+    this.service.getNotifications().subscribe((val) => {
+      this.notifications = _.orderBy(val, 'created_at', 'desc');
     })
   }
 
