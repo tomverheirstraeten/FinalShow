@@ -26,7 +26,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
     public auth: AuthService,
     public userService: UsersService,
     private router: Router
-  ) { }
+  ) {
+    this.route.paramMap.subscribe(params => {
+      this.ngOnInit();
+    });
+   }
   ngAfterViewInit() {
     this.scrollBottom();
   }
