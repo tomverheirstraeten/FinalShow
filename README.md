@@ -12,3 +12,4 @@
 * https://www.digitalocean.com/community/tutorials/angular-socket-io#project-setup
 * https://indepth.dev/creating-a-sketchpad-with-angular-and-p5js/
 * https://alligator.io/angular/cloud-firestore-angularfire/
+* https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
