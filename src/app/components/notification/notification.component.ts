@@ -27,7 +27,6 @@ export class NotificationComponent implements OnInit {
   ngOnInit() {
     this.getNotifications();
     const ids = localStorage.getItem('notificationId');
-    console.log(ids)
     if (ids === undefined || ids === null) {
       localStorage.setItem('notificationId', JSON.stringify(this.notifIds));
     } else {
@@ -37,7 +36,6 @@ export class NotificationComponent implements OnInit {
 
   getNotifications() {
     this.ns.getNotifiation().subscribe(res => {
-      console.log(res);
       res.forEach(notification => {
         if (notification['rooms']) {
           notification['rooms'].forEach(room => {
@@ -61,7 +59,6 @@ export class NotificationComponent implements OnInit {
                     }
                   });
                   if(!idIsErIn){
-                    console.log(idIsErIn);
                     this.liveStreamNotifications.push(notification);
                     this.makeNotificationDissapear(notification);
                   }
@@ -86,7 +83,7 @@ export class NotificationComponent implements OnInit {
                     }
                   });
                   if (!idIsErIn) {
-                    console.log(idIsErIn);
+
                     this.chatroomNotifications.push(notification);
                     this.makeNotificationDissapear(notification);
                   }
@@ -109,11 +106,9 @@ export class NotificationComponent implements OnInit {
                     }
                   });
                   if (!idIsErIn) {
-                    console.log(idIsErIn);
                     this.expoNotifications.push(notification);
                     this.makeNotificationDissapear(notification);
                   }
-
                 } else {
                   this.expoNotifications.push(notification);
                   this.makeNotificationDissapear(notification);
@@ -132,7 +127,7 @@ export class NotificationComponent implements OnInit {
                     }
                   });
                   if (!idIsErIn) {
-                    console.log(idIsErIn);
+
                     this.faqNotifications.push(notification);
                     this.makeNotificationDissapear(notification);
                   }
@@ -143,28 +138,16 @@ export class NotificationComponent implements OnInit {
                 }
               }
             }
-
-
-
-
-
-
-
           });
         }
       });
-      console.log("chat:", this.chatroomNotifications);
-      console.log("expo:", this.expoNotifications);
-      console.log("faq:", this.faqNotifications);
-      console.log("stream:", this.liveStreamNotifications);
+
     });
 
   }
   makeNotificationDissapear(notification) {
     setTimeout(() => {
       notification.show = false;
-      console.log('event')
-      console.log(notification);
       if(!notification.permanent){
         this.notifIds.push(notification.id);
         localStorage.setItem('notificationId', JSON.stringify(this.notifIds));

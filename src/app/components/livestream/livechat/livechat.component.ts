@@ -32,14 +32,12 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
     this.getAllChats();
     const source = this.roomService.get('xWsddAUZ7AFFUOVJ9Muv');
     this.chat$ = this.roomService.joinUsers(source);
-    console.log(this.chat$);
 
     this.scrollBottom();
   }
 
   getAllChats(){
     this.roomService.get('xWsddAUZ7AFFUOVJ9Muv').subscribe(res => {
-      console.log(res['messages']);
       this.scrollBottom();
     });
 
@@ -47,7 +45,6 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
 
   submitHand(chat) {
     this.roomService.sendMessageHand('xWsddAUZ7AFFUOVJ9Muv');
-    // this.updateMessageSeen(chat);
     this.newMsg = '';
     this.scrollBottom();
   }
@@ -65,7 +62,6 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
   }
 
   trackByCreated(i, msg) {
-    // this.scrollBottom();
     return msg.createdAt;
   }
 
