@@ -1,35 +1,36 @@
 <ng-container *ngIf="chat$ | async as chat">
 
-<div class="container " id="livechat-container">
-  <div class="body">
-    <div class="messages">
+<div class="container ">
+  <!-- <div class="body"> -->
+    <div class="messages" id="livechat-container" >
     <article class="wrapper flex row flex-start">
-      <section class="left users flex row w-30">
+      <!-- <section class="left users flex row w-30">
         <aside>
           <app-users class="rooms"></app-users>
         </aside>
-      </section>
+      </!--> -->
 
-      <article class="flex column  w-50">
+      <article class="">
         <div #chatBox class="chat right " id="chat" (scroll)='onScroll()'>
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
-
-            <article *ngIf="msg.hand !== true;" class="flex center row left  message-content">
-                  <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                  <p>{{ msg.content }}</p>
+            <article *ngIf="msg.hand !== true;" class="text-msg">
+                  <p>
+                  <span class="tag is-dark msg-user">{{ msg.user?.displayName || msg.user?.uid }} </span>
+                  {{ msg.content }}
+                  </p>
             </article>
 
-               <div *ngIf="msg.hand === true;"
-                 class="flex center row right  hand message-content">
+               <div *ngIf="msg.hand === true;" class="hand message-content">
                  <article>
                    <div>
-                     <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                     <div>
+                       <span
+                         class="tag is-dark txt-right {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}</span>
                      </div>
-                     <p>👏</p>
+                     <div>👏</div>
                    </div>
 
                  </article>
-
                </div>
           </div>
         </div>
@@ -55,7 +56,7 @@
       </button>
     </div>
 
-  </div>
+  <!-- </div> -->
 </div>
 
 </ng-container>
