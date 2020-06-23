@@ -100,7 +100,7 @@ export class RoomsService {
     }
   }
 
-  joinUsers(chat$: Observable<any>) {
+  joinUsers(chat$: Observable < any > ) {
     let chat;
     const joinKeys = {};
 
@@ -115,18 +115,23 @@ export class RoomsService {
           this.afs.doc(`users/${u}`).valueChanges()
         );
 
-        return userDocs.length ? combineLatest(userDocs) : of([]);
+        return userDocs.length ? combineLatest(userDocs) : of ([]);
       }),
       map(arr => {
-        arr.forEach(v => (joinKeys[(<any>v).uid] = v));
+        console.log(arr);
+        arr.forEach(v => (joinKeys[( < any > v).uid] = v));
         chat.messages = chat.messages.map(v => {
-          return { ...v, user: joinKeys[v.uid] };
+          return {
+            ...v,
+            user: joinKeys[v.uid]
+          };
         });
 
         return chat;
       })
     );
-  }
+    }
+
   async sendMessageHand(chatId) {
     console.log(chatId)
     const {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { ɵBROWSER_SANITIZATION_PROVIDERS } from '@angular/platform-browser';
   templateUrl: './network.component.html',
   styleUrls: ['./network.component.scss']
 })
-export class NetworkComponent implements OnInit {
+export class NetworkComponent implements OnInit, OnDestroy {
   user;
   userChats$;
   myChats: any = [];
@@ -49,6 +49,10 @@ export class NetworkComponent implements OnInit {
 
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router, public interactionService: InteractionService, public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
+  }
+
+  ngOnDestroy(){
+    this.canvas.remove();
   }
 
   ngOnInit() {
