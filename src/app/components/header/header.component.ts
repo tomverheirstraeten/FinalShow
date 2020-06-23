@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
 @Input() back: string;
+@Input() title: string;
 toggleInbox = true;
   constructor(private _location: Location) { }
 
@@ -14,7 +15,7 @@ toggleInbox = true;
 
   }
 
-  goBack(){
+  goBack() {
     this._location.back();
   }
 

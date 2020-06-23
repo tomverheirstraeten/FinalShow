@@ -1,0 +1,14 @@
+<div *ngFor='let event of timeTable' class="pagina">
+
+  <app-header back="true" title="{{event['name']}}"></app-header>
+
+    <div class="red-square">
+      <img [src]="event['icon']" [alt]="event['name']" id='eventIcon'>
+    </div>
+    <div class="tekst-event">
+      <h1 class="subtititle">{{event['name']}}</h1>
+      <p>{{event['desc']}}</p>
+      <h2 class="subtititle">credits to:</h2>
+    </div>
+    <p id="time" class="subtititle">{{displayTime(event['time'])}}</p>
+  </div>

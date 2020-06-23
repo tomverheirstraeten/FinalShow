@@ -36,6 +36,7 @@ import { AdminroomComponent } from './components/admin/adminroom/adminroom.compo
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
 import { InboxComponent } from './components/inbox/inbox.component';
+import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { InboxComponent } from './components/inbox/inbox.component';
       AdminroomComponent,
       AdminnotificationsComponent,
       AdminlivestreamComponent,
-      InboxComponent
+      InboxComponent,
+      DesktopeventComponent,
    ],
    imports: [
       BrowserModule,
