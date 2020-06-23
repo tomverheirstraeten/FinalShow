@@ -39,6 +39,33 @@ export class AdminService {
     });
   }
 
+  setActive(id, timetable){
+    timetable.forEach(element => {
+      if(element['id'] != id){
+        this.afs.collection('timetable').doc(element['id']).update({
+          active: false
+        });
+      } else{
+        this.afs.collection('timetable').doc(element['id']).update({
+          active: true
+        });
+      }
+    });
+  }
+
+  sendAutomaticNotification(name){
+    const collection = this.afs.collection('notifications');
+    collection.add({
+      created_at: new Date(),
+      message: name + ' gaat zodadelijk beginnen!',
+      color: 'green',
+      rooms: ['chatrooms', 'expo', 'faq'],
+      permanent: false,
+      icon: '',
+      automatic: true
+    });
+  }
+
   addTimetableField(time, name, desc){
     const collection = this.afs.collection('timetable');
     const hour = time.split(':')[0];
@@ -48,7 +75,8 @@ export class AdminService {
       name: name,
       desc: desc,
       img: 'assets/images/titlecard.png',
-      icon: 'assets/images/clap.png'
+      icon: 'assets/images/clap.png',
+      active: false
     });
   }
 
@@ -162,7 +190,8 @@ export class AdminService {
       color: colorCode,
       rooms: selectedRooms,
       permanent: permanentMessage,
-      icon: iconString
+      icon: iconString,
+      automatic: false
     });
   }
 
@@ -171,19 +200,18 @@ export class AdminService {
     collection.doc(id).delete();
   }
 
-  getPermanentNotifications(){
-    return this.afs.collection<any>('notifications', ref => ref
-      .where('permanent', '==', true))
-      .snapshotChanges()
-      .pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data: Object = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
+  getNotifications(){
+    return this.afs.collection<any>('notifications')
+    .snapshotChanges()
+    .pipe(
+     map(actions => {
+       return actions.map(a => {
+         const data: Object = a.payload.doc.data();
+         const id = a.payload.doc.id;
+         return { id, ...data };
+       });
+     })
+    );
   }
 
   getStreamUrl(){

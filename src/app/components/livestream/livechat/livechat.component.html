@@ -1,14 +1,8 @@
 <ng-container *ngIf="chat$ | async as chat">
 
 <div class="container ">
-  <!-- <div class="body"> -->
     <div class="messages" id="livechat-container" >
     <article class="wrapper flex row flex-start">
-      <!-- <section class="left users flex row w-30">
-        <aside>
-          <app-users class="rooms"></app-users>
-        </aside>
-      </section> -->
 
       <article class="">
         <div #chatBox class="chat right " id="chat" (scroll)='onScroll()'>
@@ -22,10 +16,12 @@
 
                <div *ngIf="msg.hand === true;" class="hand message-content">
                  <article>
-                   <div class="clap-msg">
-                    <p>
-                     <span class="tag is-dark msg-user">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                     👏</p>
+                   <div>
+                     <div>
+                       <span
+                         class="tag is-dark txt-right {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                     </div>
+                     <div>👏</div>
                    </div>
 
                  </article>
