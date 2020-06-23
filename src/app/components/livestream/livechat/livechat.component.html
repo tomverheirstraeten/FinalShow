@@ -23,7 +23,9 @@
                  class="flex center row right  hand message-content">
                  <article>
                    <div>
-                     <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                     <div>
+                       <span
+                         class="tag is-dark txt-right {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}</span>
                      </div>
                      <p>👏</p>
                    </div>
