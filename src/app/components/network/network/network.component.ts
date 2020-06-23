@@ -45,6 +45,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   mobileImage;
   digitalMakingImage;
   generalImage;
+  vrImage;
 
 
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router, public interactionService: InteractionService, public roomsService: RoomsService) {
@@ -86,6 +87,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         this.mobileImage = s.loadImage('assets/images/cluster-icons/mobile.svg');
         this.digitalMakingImage = s.loadImage('assets/images/cluster-icons/digitalMaking.svg');
         this.generalImage = s.loadImage('assets/images/cluster-icons/generalChat.svg');
+        this.vrImage = s.loadImage('assets/images/cluster-icons/vr.svg');
       }
 
       s.setup = () => { // initial setup
@@ -254,6 +256,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
       case 'Digital Making':
         image = this.digitalMakingImage;
         break;
+      case 'AR':
+        image = this.vrImage;
+        break;
       default:
         image = this.generalImage;
         break;
@@ -286,7 +291,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     let roomName;
     switch (room) {
       case 'Motion':
-        roomName = 'Motion';
+        roomName = 'Interactive Motion';
         break;
       case 'Web':
         roomName = 'Web';
@@ -300,7 +305,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       case 'Digital Making':
         roomName = 'Digital Making';
         break;
-      default:
+      case 'General':
         roomName = 'General';
         break;
     }
