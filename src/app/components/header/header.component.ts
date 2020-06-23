@@ -14,7 +14,7 @@ toggleInbox = true;
 
   }
 
-  goBack(){
+  goBack() {
     this._location.back();
   }
 

@@ -1,3 +1,4 @@
+@import '~src/styles.scss';
 .wrapper {
 
   display: flex;
@@ -61,7 +62,8 @@
       display: flex;
 
       p {
-        background: #F9D48A;
+        background: $red;
+        overflow-wrap: anywhere;
     }
   }
   }
