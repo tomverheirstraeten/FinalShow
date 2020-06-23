@@ -12,7 +12,6 @@
       </section>
 
       <article class="flex column  w-50">
-        <app-rooms></app-rooms>
         <div #chatBox class="chat right " id="chat"  (scroll)='onScroll()'>
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
 
