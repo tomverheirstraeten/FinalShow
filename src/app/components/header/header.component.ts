@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  goBack(){
+  goBack() {
     this._location.back();
   }
 
