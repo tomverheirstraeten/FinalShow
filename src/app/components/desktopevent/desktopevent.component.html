@@ -1,4 +1,4 @@
-<div *ngFor='let event of timeTable' class="event">
+<div *ngFor='let event of timeTable' id="desktop-event-{{event['name']}}" class="desktop-event">
   <div class="red-square">
     <img [src]="event['icon']" [alt]="event['name']" id='eventIcon'>
   </div>

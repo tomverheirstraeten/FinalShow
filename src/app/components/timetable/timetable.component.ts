@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { DatabaseService } from 'src/app/database.service';
 
 
@@ -7,21 +7,21 @@ import { DatabaseService } from 'src/app/database.service';
   templateUrl: './timetable.component.html',
   styleUrls: ['./timetable.component.scss']
 })
-export class TimetableComponent implements OnInit {
+export class TimetableComponent implements OnInit, AfterViewInit {
 
   timetable: Array<object>;
   isDesktop: boolean;
-  //maxScroll: number;
   eventHeight: number;
   eventPositions: Array<number>;
   previousSelectedHtmlEvent: Element;
+  previousSelectedHtmlEventDetails: Element;
 
   @ViewChild('timetableHtmlList') timetableHtmlList: ElementRef;
+  @ViewChildren('eventListItems') eventListItems: QueryList<any>;
 
   constructor(private service: DatabaseService) {
     this.timetable = service.getTimetable();
   }
-
 
   displayTime(time) {
     let date = new Date(time.seconds * 1000);
@@ -47,10 +47,6 @@ export class TimetableComponent implements OnInit {
 
   showEvent() {
     if (this.isDesktop) {
-      if(this.eventHeight == null){
-        this.getScrollValues();
-      }
-
       // scroll values
       let scrollPosition = this.timetableHtmlList.nativeElement.scrollTop;
 
@@ -63,8 +59,6 @@ export class TimetableComponent implements OnInit {
       // elememet currently targeted
       const currentEvent = this.timetable.find(event => event['scrollHeight'] === closest);
       this.showSelectedHtmlEvent(currentEvent);
-
-      console.log(closest);
     }
   }
 
@@ -72,25 +66,23 @@ export class TimetableComponent implements OnInit {
   showSelectedHtmlEvent(currentEvent){
     const currentSelectedEventHtml = document.getElementById(currentEvent['name']);
     if(currentSelectedEventHtml != this.previousSelectedHtmlEvent){
-
-      if(this.previousSelectedHtmlEvent != null){
-        console.log('test');
-        this.previousSelectedHtmlEvent.classList.remove("selectedEvent");
-      }
-      
+      // timetable list
+      this.previousSelectedHtmlEvent.classList.remove("selectedEvent");
       this.previousSelectedHtmlEvent = currentSelectedEventHtml;
       currentSelectedEventHtml.classList.add("selectedEvent");
+
+      // details
+      this.previousSelectedHtmlEventDetails.classList.add('hidden');
+      const currentSelectedEventDetailHtml = document.getElementById('desktop-event-' + currentEvent['name']);
+      currentSelectedEventDetailHtml.classList.remove("hidden");
+      this.previousSelectedHtmlEventDetails = currentSelectedEventDetailHtml;
     }
     
   }
 
   // save nessasary scroll values
   getScrollValues () {
-      //this.maxScroll = this.timetableHtmlList.nativeElement.scrollHeight - this.timetableHtmlList.nativeElement.clientHeight;
       this.eventHeight = 94;
-
-      //console.log(this.maxScroll);
-      console.log(this.eventHeight);
 
       // get event positions in the html.
       let valueCounter = 0;
@@ -105,14 +97,30 @@ export class TimetableComponent implements OnInit {
         this.timetable[index]['scrollHeight'] = value;
         return value;
       });
-      console.log(this.timetable);
-      console.log(this.eventPositions);
   };
 
   ngOnInit(): void {
     if (window.screen.width >= 769) {
       this.isDesktop = true;
     }
+  }
+
+  ngAfterViewInit() {
+    // executes after list load
+    // solution from: https://stackoverflow.com/questions/37087864/execute-a-function-when-ngfor-finished-in-angular-2
+    this.eventListItems.changes.subscribe(t => {
+      this.getScrollValues ();
+      
+      const eventsDetailsDivs = document.getElementsByClassName("desktop-event");
+      this.previousSelectedHtmlEventDetails = eventsDetailsDivs.item(0);
+      for(let i = 1; i < eventsDetailsDivs.length; i++){
+        eventsDetailsDivs[i].classList.add('hidden');
+        console.log(eventsDetailsDivs[i]);
+      }
+
+      this.previousSelectedHtmlEvent = this.eventListItems.first.nativeElement.childNodes[2]
+      this.previousSelectedHtmlEvent.classList.add("selectedEvent");
+    })
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="wrapper container-grid" id="wrapper">
     <app-header title='Programma'></app-header>
     <ul #timetableHtmlList (scroll)="showEvent()">
-        <li *ngFor='let event of timetable' class="timetable-list-item">
+        <li #eventListItems *ngFor='let event of timetable' class="timetable-list-item">
             <span class="time-text">{{displayTime(event["time"]) }}</span>
             <div class="event-div event-mobile">
                 <a [routerLink]="'/timetable/' + event['name']">
