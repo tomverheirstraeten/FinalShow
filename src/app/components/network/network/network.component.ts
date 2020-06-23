@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -10,7 +10,6 @@ import { RoomsService } from 'src/app/services/rooms.service';
 
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
-import { ɵBROWSER_SANITIZATION_PROVIDERS } from '@angular/platform-browser';
 
 
 @Component({
@@ -37,6 +36,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   database;
   myRole: string;
   roomDelay = 50; // the amount of frames you have to wait to enter a room
+  userSize = 50;
 
   circleMask;
 
@@ -45,13 +45,24 @@ export class NetworkComponent implements OnInit, OnDestroy {
   mobileImage;
   digitalMakingImage;
   generalImage;
+  vrImage;
+
+  userInfo = false;
+  userInfoName: string;
+  x;
+  y;
 
 
-  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router, public interactionService: InteractionService, public roomsService: RoomsService) {
+  constructor(public auth: AuthService,
+              public cs: ChatService,
+              public userService: UsersService,
+              public route: Router,
+              public interactionService: InteractionService,
+              public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.canvas.remove();
   }
 
@@ -86,6 +97,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         this.mobileImage = s.loadImage('assets/images/cluster-icons/mobile.svg');
         this.digitalMakingImage = s.loadImage('assets/images/cluster-icons/digitalMaking.svg');
         this.generalImage = s.loadImage('assets/images/cluster-icons/generalChat.svg');
+        this.vrImage = s.loadImage('assets/images/cluster-icons/vr.svg');
       }
 
       s.setup = () => { // initial setup
@@ -113,8 +125,13 @@ export class NetworkComponent implements OnInit, OnDestroy {
                   // if it's not the current user & the user hasn't been drawn already
                   this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
                   drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
-                  // check if the current user is close
-                  this.checkDistance(s, this.myX, this.myY, allUsers[i].x, allUsers[i].y, allUsers[i].name, 50);
+
+                  let dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
+                  // console.log('clicked x: ' + this.x + ',' + allUsers[i].name + ' x: ' + allUsers[i].x);
+                  // console.log(dist);
+                  if (dist < this.userSize) {
+                    this.showUserInfo(s, allUsers[i]);
+                  }
                 }
               }
             }
@@ -125,22 +142,24 @@ export class NetworkComponent implements OnInit, OnDestroy {
         }
       };
 
+      s.mousePressed = () => {
+        this.userInfo = true;
+        this.x = s.mouseX; // + s.width / 2;
+        this.y = s.mouseY; // + s.height / 2;
+      };
+
     };
     this.canvas = new p5(sketch);
 
     document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
-
   }
 
+
   move(sketch) {
-    let x = sketch.mouseX;
-    let y = sketch.mouseY;
+    const x = sketch.mouseX;
+    const y = sketch.mouseY;
 
     const speed = 5;
-
-    // console.log('x: ' + x);
-    // console.log('y: ' + y);
-    // console.log(this.myX);
 
     let dirX = 0;
     let dirY = 0;
@@ -183,9 +202,19 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   drawUser(sketch, x, y, name, role) {
-    const userSize = 50;
     sketch.strokeWeight(0);
 
+    this.getUserColor(sketch, role);
+
+    sketch.rectMode('center');
+    sketch.rect(x, y, this.userSize, this.userSize);
+    sketch.fill(172, 182, 195);
+    sketch.textSize(12);
+    sketch.text(name, x, y + this.userSize);
+    sketch.noFill();
+  }
+
+  getUserColor(sketch, role) {
     // decide the color based on the role of the user
     switch (role) {
       case 'student':
@@ -203,13 +232,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
       default:
         sketch.fill(249, 212, 138);
     }
-
-    sketch.rectMode('center');
-    sketch.rect(x, y, userSize, userSize);
-    sketch.fill(172, 182, 195);
-    sketch.textSize(12);
-    sketch.text(name, x, y + userSize);
-    sketch.noFill();
   }
 
   displayGroups(sketch) {
@@ -254,6 +276,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
       case 'Digital Making':
         image = this.digitalMakingImage;
         break;
+      case 'AR':
+        image = this.vrImage;
+        break;
       default:
         image = this.generalImage;
         break;
@@ -277,16 +302,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
       if ((sketch.frameCount % this.roomDelay) === 0) {
-        this.gotoRoom(action);
+        this.gotoRoom(sketch, action, x2, y2);
       }
     }
   }
 
-  gotoRoom(room) {
+  gotoRoom(sketch, room, x, y) {
     let roomName;
     switch (room) {
       case 'Motion':
-        roomName = 'Motion';
+        roomName = 'Interactive Motion';
         break;
       case 'Web':
         roomName = 'Web';
@@ -300,7 +325,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       case 'Digital Making':
         roomName = 'Digital Making';
         break;
-      default:
+      case 'General':
         roomName = 'General';
         break;
     }
@@ -316,6 +341,15 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   }
 
+  showUserInfo(sketch, user) {
+    this.getUserColor(sketch, user.role);
+    sketch.rect(user.x, user.y, 100);
+    sketch.fill(0);
+    sketch.text(user.name, user.x, user.y);
+    // console.log(user.name);
+
+  }
+
 
   async checkIfUser() {
     if (this.auth.userId) {
@@ -323,7 +357,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
       this.userService.getUsers().pipe(first()).subscribe(res => {
         for (const user of res) {
-          if (user['uid'] == this.auth.userId) {
+          if (user['uid'] === this.auth.userId) {
             this.username = user['displayName'];
             this.myRole = user['function'];
           }

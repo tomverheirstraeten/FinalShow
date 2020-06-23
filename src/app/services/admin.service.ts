@@ -198,6 +198,45 @@ export class AdminService {
     );
   }
 
+  getChat(uid){
+    return this.afs
+    .collection<any>('chats')
+    .doc(uid)
+    .snapshotChanges()
+    .pipe(
+      map(doc => {
+        return { id: doc.payload.id, ...doc.payload.data() as object};
+      })
+    );
+  }
+
+  getUserByID(uid){
+    return this.afs
+    .collection<any>('users')
+    .doc(uid)
+    .snapshotChanges()
+    .pipe(
+      map(doc => {
+        return { id: doc.payload.id, ...doc.payload.data() as object};
+      })
+    );
+  }
+
+  getEventByName(name: string) {
+    return this.afs.collection<any>('timetable', ref => ref
+      .where('name', '==', name))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data: Object = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+
   updateStreamUrl(url){
     return this.afs
     .collection<any>('stream')

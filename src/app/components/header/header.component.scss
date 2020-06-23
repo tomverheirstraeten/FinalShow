@@ -46,6 +46,7 @@
   app-inbox{
     position: absolute;
     top: 60px;
+    right: 0;
   }
 
   .profile {
@@ -73,19 +74,19 @@
   .container{
     width: 90%;
   }
-  
+
   :host-context(.red) .header {
     background: $red;
   }
-  
+
   :host-context(.yellow) .header {
     background: $yellow;
   }
-  
+
   :host-context(.blue) .header {
     background: $blue;
   }
-  
+
   :host-context(.green) .header {
     background: $green;
   }
