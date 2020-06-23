@@ -3,21 +3,15 @@
     <ul>
         <li *ngFor='let event of timetable' class="timetable-list-item">
             <span class="time-text">{{displayTime(event["time"]) }}</span>
-            <div class="event-div event-mobile">
+            <div class="event-div">
                 <a [routerLink]="'/timetable/' + event['name']">
-                    <h3 class="title">{{event["name"]}}</h3>
+                    <h3 class="title">{{event["name"]}}</h3> 
                     <div class="red-arrow"><img src="../../../assets/images/arrow-white.svg"></div>
                 </a>
                 <!-- <p class="info-text">{{event["desc"]}}</p> -->
             </div>
-            <div class="event-div event-desktop">
-                    <h3 class="title">{{event["name"]}}</h3>
-            </div>
-
         </li>
     </ul>
-    <div class="event-detail">
-        <app-desktopevent [timeTable] = "timetable" ></app-desktopevent>
-    </div>
+    <app-event *ngIf="isDesktop"></app-event>
 </div>
 

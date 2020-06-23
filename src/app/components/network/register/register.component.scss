@@ -126,3 +126,11 @@ align-items: center;
   color: #fff;
   user-select: none
 }
+
+#ja, #nee{
+  display: flex;
+align-items: center;
+input{
+  width: 20px !important;
+}
+}

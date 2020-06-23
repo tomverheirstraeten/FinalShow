@@ -1,3 +1,6 @@
+<app-header class="yellow" back='true'></app-header>
+
+
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
 
@@ -22,28 +25,20 @@
             <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
               class="flex center row right deleted message-content">
               <article>
-                <div class="txt-right">
-                  <div class="flex">
-                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
-                    <!-- <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span> -->
-                    <span class="tag is-dark txt-right">Jij</span>
+                <div>
+                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
-                  <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
-                  <img src="assets/eye.svg" class="seen" *ngIf="msg.seen">
+                  <p>{{ msg.content }}</p>
                 </div>
               </article>
             </div>
             <!-- My MESSAGE  -->
             <div *ngIf="msg.uid === user.uid && msg.deleted === false && msg.hand !== true;" class="flex center row right message-content">
               <article>
-                <div class="txt-right">
-                  <div class="flex">
-                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
-                    <!-- <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span> -->
-                    <span class="tag is-dark txt-right">Jij</span>
+                <div>
+                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
-                  <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
-                  <img src="assets/eye.svg" class="seen" *ngIf="msg.seen">
+                  <p>{{ msg.content }}</p>
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
@@ -55,14 +50,10 @@
             <!-- My MESSAGE empty  -->
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
               <article>
-                <div class="txt-right">
-                  <div class="flex">
-                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
-                    <!-- <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span> -->
-                    <span class="tag is-dark txt-right">Jij</span>
+                <div>
+                  <div><span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
                   <p>👏</p>
-                  <img src="assets/eye.svg" class="seen" *ngIf="msg.seen">
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
@@ -83,11 +74,8 @@
               class="flex center row left deleted message-content">
               <article>
                 <div>
-                  <div class="flex">
-                    <span class="tag is-dark ">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                    <span class="tag is-dark txt-right">{{returnDate(msg.createdAt)}}</span>
-                  </div>
-                  <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
+                  <div><span class="tag is-dark ">{{ msg.user?.displayName || msg.user?.uid }}</span></div>
+                  <p>{{ msg.content }}</p>
                 </div>
               </article>
             </div>
@@ -101,11 +89,8 @@
                   <img [src]="'assets/man.svg'" width="50px">
                 </div> -->
                 <div>
-                  <div class="flex">
-                    <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                    <span class="tag is-dark txt-right">{{returnDate(msg.createdAt)}}</span>
-                  </div>
-                  <p [ngClass]="{'msg-deleted': msg.deleted}">{{ msg.content }}</p>
+                  <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                  <p>{{ msg.content }}</p>
                 </div>
 
               </article>
@@ -116,9 +101,7 @@
               <div *ngIf="msg.uid !== user.uid && msg.hand === true;" class="flex center row left hand message-content">
                 <article>
                   <div>
-                    <div class="flex">
-                      <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                      <span class="tag is-dark txt-right">{{returnDate(msg.createdAt)}}</span>
+                    <div><span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
                     </div>
                     <p>👏</p>
                   </div>
@@ -134,12 +117,12 @@
 
 
         <div class="form messagebar">
-          <section class="textBar flex row emoji-picker-container">
+          <section class="textBar flex row ">
             <a class="flex align-center clap" (click)="submitHand(chat)">👏</a>
-            <input class="input form-control"  [(ngModel)]="newMsg" placeholder="Typ een chatbericht..."
+            <input class="input form-control"  [(ngModel)]="newMsg" maxlength="100" placeholder="Typ een chatbericht..."
               (keydown.enter)="submit(chat.id)" data-emojiable="true" (focus)='updateMessageSeen(chat)'>
             <button (click)="submit(chat.id)" class="send" [disabled]="!newMsg"><img
-                src="assets/images/send.svg"></button>
+                src="assets/images/send.png"></button>
           </section>
         </div>
       </article>

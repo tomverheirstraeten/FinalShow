@@ -25,7 +25,6 @@ import {
 import {
   UsersService
 } from './users.service';
-import { take } from 'rxjs/operators';
 
 
 @Injectable({

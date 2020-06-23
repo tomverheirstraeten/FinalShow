@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
-import { AdminService } from 'src/app/services/admin.service';
+import { DatabaseService } from 'src/app/database.service';
 
 
 @Component({
@@ -13,14 +12,11 @@ export class TimetableComponent implements OnInit {
   timetable: Array<object>;
   isDesktop: boolean;
 
-  constructor(private service: AdminService) {
-    this.service.getTimetable().subscribe((timetableData) => {
-      this.timetable = _.orderBy(timetableData, 'time', 'asc');
-      console.log(timetableData);
-    });
+  constructor(private service: DatabaseService) {
+    this.timetable = service.getTimetable();
   }
 
-
+  
   displayTime(time){
     let date = new Date(time.seconds * 1000);
     let hours = date.getHours();

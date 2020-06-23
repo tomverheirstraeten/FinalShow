@@ -43,6 +43,7 @@ ul {
   text-transform: uppercase;
 width: 80%;
 font-size: 15px;
+  z-index: 1;
   text-align: center;
   box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
   margin-top: 20px;
@@ -91,20 +92,7 @@ h2, h3, h4, h5, h6 {
     font-size: 13px;
 }
 
-.header img:hover, .profile:hover{
-  cursor: pointer;
-}
 
-.msg-deleted{
-  background:transparent !important;
-  font-style: italic;
-  font-size: 11px;
-  color: grey;
-}
-
-.flex{
-  display: flex;
-}
 
 // Andres css
 .flex {
@@ -167,11 +155,11 @@ h2, h3, h4, h5, h6 {
     display: grid;
     min-height: 100vh;
     max-height: 100vh;
-    grid-template-columns: repeat(12, 7.41%);
+    grid-template-columns: 5% repeat(10, 7.89%) 5%;
     grid-template-rows: 60px 60px 20px minmax(0, 1fr) minmax(0,1fr) minmax(0, 1fr) 80px;
     column-gap: 1%;
     row-gap: 0;
   }
-
+  
 }
 

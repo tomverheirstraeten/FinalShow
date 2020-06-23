@@ -35,7 +35,8 @@ import { AdminusersComponent } from './components/admin/adminusers/adminusers.co
 import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
-import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
+import { InboxComponent } from './components/inbox/inbox.component';
+
 
 @NgModule({
    declarations: [
@@ -66,7 +67,7 @@ import { DesktopeventComponent } from './components/desktopevent/desktopevent.co
       AdminroomComponent,
       AdminnotificationsComponent,
       AdminlivestreamComponent,
-      DesktopeventComponent
+      InboxComponent
    ],
    imports: [
       BrowserModule,

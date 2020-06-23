@@ -6,15 +6,16 @@
       <img src="assets/images/back.svg" *ngIf="back === 'true'" (click)="goBack()" routerLinkActive="router-link-active"
         alt="">
     </div>
-    <div class="card">
-
-      <div class="body">
-        <h1>Final Show</h1>
-        <p>{{title}}</p>
-      </div>
-      <div class="profile">
-
-      </div>
+    <div class="card flex column" (click) = 'toggleInbox = !toggleInbox'>
+      <section class="flex row">
+        <div class="body">
+          <h1>Final Show</h1>
+          <p>Room Navigation</p>
+        </div>
+        <div class="profile">
+        </div>
+      </section>
+      <app-inbox [hidden] = 'toggleInbox'></app-inbox>
     </div>
   </section>
 </div>
