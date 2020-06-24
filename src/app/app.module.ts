@@ -37,6 +37,7 @@ import { AdminnotificationsComponent } from './components/admin/adminnotificatio
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
+import { RedirectComponent } from './components/redirect/redirect.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { DesktopeventComponent } from './components/desktopevent/desktopevent.co
       AdminlivestreamComponent,
       InboxComponent,
       DesktopeventComponent,
+      RedirectComponent
    ],
    imports: [
       BrowserModule,
