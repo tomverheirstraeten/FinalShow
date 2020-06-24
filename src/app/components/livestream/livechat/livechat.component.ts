@@ -17,8 +17,8 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
   myScrollContainer: any;
   disableScrollDown: boolean = true;
   count = 0
-  livestreamID = "ALqUn9fy9fWieiwvEFOk";
-  // livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
+  //livestreamID = "ALqUn9fy9fWieiwvEFOk";
+  livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
 
   constructor(private route: ActivatedRoute,
               public auth: AuthService,
