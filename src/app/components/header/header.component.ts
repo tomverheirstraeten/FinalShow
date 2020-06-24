@@ -6,18 +6,18 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  @Input() back: string;
-  @Input() title: string;
-
+@Input() back: string;
+@Input() title: string;
+toggleInbox = true;
   constructor(private _location: Location) { }
 
   ngOnInit(): void {
 
   }
 
-  goBack(){
+  goBack() {
     this._location.back();
   }
+
 
 }

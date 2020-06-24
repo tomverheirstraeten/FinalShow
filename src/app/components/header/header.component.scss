@@ -1,8 +1,10 @@
+@import '~src/styles.scss';
+
 .header {
   z-index: 10;
   height: 60px;
   position: fixed;
-  width: 100vw;
+  width: 100%;
   background: white;
   display: flex;
   flex-direction: row;
@@ -15,13 +17,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
   }
 
   .card {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    position: relative;
   }
 
   .body {
@@ -40,6 +43,11 @@
     }
 
   }
+  // app-inbox{
+  //   position: absolute;
+  //   top: 60px;
+  //   right: 0;
+  // }
 
   .profile {
     margin-left: 1em;
@@ -51,17 +59,35 @@
 
 
 // header
-:host-context(.yellow) .header {
-  background: #F9D48A;
-}
+
+
 
 //desktop
 @media only screen and (min-width: 769px) {
-    .container{
-      width: 90%;
-    }
+  .container{
+    width: 100%- 2*8.41%;
+  }
 }
 
 //mobile
 @media only screen and (max-width: 769px) {
+  .container{
+    width: 90%;
+  }
+
+  :host-context(.red) .header {
+    background: $red;
+  }
+
+  :host-context(.yellow) .header {
+    background: $yellow;
+  }
+
+  :host-context(.blue) .header {
+    background: $blue;
+  }
+
+  :host-context(.green) .header {
+    background: $green;
+  }
 }

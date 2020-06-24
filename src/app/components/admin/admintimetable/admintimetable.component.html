@@ -34,17 +34,20 @@
     <div class="col-2 align-center">
       <input type="time" value="{{displayTime(event['time'])}}" class="form-control {{event['id']}}">
     </div>
-    <div class="col-3">
+    <div class="col-3 align-center">
       <textarea class="form-control {{event['id']}}">{{event['name']}}</textarea>
     </div>
-    <div class="col-5">
+    <div class="col-5 align-center">
       <textarea class="form-control {{event['id']}}">{{event['desc']}}</textarea>
     </div>
-    <div class="col-1 align-center">
+    <div class="col-1 align-center flex flex-column">
       <button class="btn btn-outline-primary" (click)="clickUpdate(event['id'])">Update</button>
+      <button *ngIf="!event['active']" class="btn btn-outline-success mt-2" (click)="clickActive(event['id'])">Active</button>
+      <button *ngIf="event['active']" class="btn btn-success mt-2">Active</button>
     </div>
-    <div class="col-1 align-center">
+    <div class="col-1 align-center flex flex-column">
       <button class="btn btn-outline-danger" (click)="clickRemove(event['name'], event['id'])">Delete</button>
+      <button class="btn btn-outline-info mt-2" (click)="clickNotification((event['id']))">Notification</button>
     </div>
     <hr style="width: 100%;">
   </div>

@@ -21,18 +21,28 @@ ul{
         h3{
             margin-left: 5vw;
         }
+        .red-arrow{
+            width: 10%;
+            height: 100%;
+            background-color: $blue;
+            display: flex;
+            align-items: center;
+            img{
+                margin: 0 auto;
+            }
         }
+    }
 }
 
 .time-text {
     width: 20%;
+    margin: auto;
     text-align: center;
     -webkit-transform: rotate(-90deg);
     font-size: 20px;
     font-weight: 700;
 }
 
-//desktop
 @media only screen and (min-width: 769px) {
     ul{
         grid-column: 2/ span 3;
@@ -81,7 +91,7 @@ ul{
     .red-arrow{
         width: 10%;
         height: 100%;
-        background-color: $red;
+        background-color: $blue;
         display: flex;
         align-items: center;
         img{

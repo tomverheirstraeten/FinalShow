@@ -1,0 +1,25 @@
+.inbox-container{
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 60px;
+  left: 0;
+}
+.inbox-container .conversation{
+padding: 1em 1em;
+box-sizing: border-box;
+}
+
+.inbox-container img{
+width: 40px
+}
+
+.conversations{
+  background-color: #F0F0F0;
+}
+
+.conversation:hover{
+  cursor: pointer;
+  background-color: #dbdbdb;
+}

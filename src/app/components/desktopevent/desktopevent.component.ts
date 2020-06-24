@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-desktopevent',
@@ -10,7 +9,8 @@ export class DesktopeventComponent implements OnInit {
 
   eventName: string;
   @Input() timeTable;
-  constructor(public service: AdminService) {  }
+
+  constructor() {  }
 
   ngOnInit(): void {
 
@@ -36,9 +36,7 @@ export class DesktopeventComponent implements OnInit {
 
       return hourString + ':' + minuteString;
 
-    }
-
-
+  }
 }
 
 

@@ -1,3 +1,4 @@
+@import '~src/styles.scss';
 .wrapper {
 
   display: flex;
@@ -61,7 +62,7 @@
       display: flex;
 
       p {
-        background: #F9D48A;
+        background: $red;
         overflow-wrap: anywhere;
     }
   }
@@ -102,6 +103,7 @@
     min-width: 200px;
     background-color:#F0F0F0;
     text-align: left;
+    overflow-wrap: anywhere;
   }
 
   .user {
@@ -121,7 +123,6 @@
 
 .form.messagebar {
   width: 90%;
-  // max-width: 1200px;
   display: flex;
   background: rgba(255, 255, 255, 1);
   position: fixed;
@@ -178,11 +179,6 @@
   align-items: center;
   justify-content: center;
   margin-left: 0.5em;
-  padding-right: 0;
-}
-
-.delete:hover{
-  cursor: pointer;
 }
 
 .users {

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AdminService } from 'src/app/services/admin.service';
 import { formatDate, CommonModule } from '@angular/common';
 import * as _ from 'lodash';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-livestream',
@@ -10,14 +11,19 @@ import * as _ from 'lodash';
   styleUrls: ['./livestream.component.scss']
 })
 export class LivestreamComponent implements OnInit {
-liveStreamNotifications = [];
 
+  room = 'live stream';
   currentActivity = 'Offline';
   live = false;
   timetable;
   currentTime;
+  url;
 
-  constructor(private ns: NotificationService, private as: AdminService) {
+  constructor(private ns: NotificationService, private as: AdminService, private sanitizer: DomSanitizer) {
+    this.as.getStreamUrl().subscribe(val => {
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(val['url']);
+      console.log(this.url);
+    })
     this.as.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
       this.currentTime = formatDate(new Date(), 'hh:mm', 'en-US');
@@ -26,7 +32,7 @@ liveStreamNotifications = [];
         this.currentTime = formatDate(new Date(), 'hh:mm', 'en-US');
         this.showCurrentActivity();
       }, 30000);
-    })
+    });
   }
 
   showCurrentActivity(){
@@ -62,24 +68,8 @@ liveStreamNotifications = [];
   }
 
   ngOnInit(): void {
-    this.getLiveStreamNotifications();
-  }
-
-  getLiveStreamNotifications(){
-    this.ns.getNotifiation().subscribe(res => {
-      res.forEach(notification => {
-        if(notification['rooms']){
-          notification['rooms'].forEach(room => {
-            if(room === 'live stream'){
-              this.liveStreamNotifications.push(notification);
-            }
-
-          });
-        }
-      });
-      console.log(this.liveStreamNotifications);
-    });
 
   }
+
 
 }

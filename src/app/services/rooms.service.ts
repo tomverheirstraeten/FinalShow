@@ -84,6 +84,8 @@ export class RoomsService {
     }
   }
 
+
+
   async deleteMessage(chat, msg) {
     const { uid } = await this.auth.getUser();
 
@@ -98,7 +100,7 @@ export class RoomsService {
     }
   }
 
-  joinUsers(chat$: Observable<any>) {
+  joinUsers(chat$: Observable < any > ) {
     let chat;
     const joinKeys = {};
 
@@ -113,16 +115,61 @@ export class RoomsService {
           this.afs.doc(`users/${u}`).valueChanges()
         );
 
-        return userDocs.length ? combineLatest(userDocs) : of([]);
+        return userDocs.length ? combineLatest(userDocs) : of ([]);
       }),
       map(arr => {
-        arr.forEach(v => (joinKeys[(<any>v).uid] = v));
+        console.log(arr);
+        arr.forEach(v => (joinKeys[( < any > v).uid] = v));
         chat.messages = chat.messages.map(v => {
-          return { ...v, user: joinKeys[v.uid] };
+          return {
+            ...v,
+            user: joinKeys[v.uid]
+          };
         });
 
         return chat;
       })
     );
+    }
+
+  async sendMessageHand(chatId) {
+    console.log(chatId)
+    const {
+      uid
+    } = await this.auth.getUser();
+    const data = {
+      uid,
+      content: '',
+      createdAt: Date.now(),
+      deleted: false,
+      hand: true,
+      seen: false
+    };
+
+    if (uid) {
+      const ref = this.afs.collection('rooms').doc(chatId);
+      return ref.update({
+        messages: firestore.FieldValue.arrayUnion(data)
+      });
+    }
+  }
+
+  async updateMessage(chat, msg, i) {
+    const {
+      uid
+    } = await this.auth.getUser();
+    const ref = this.afs.collection('rooms').doc(chat.id);
+    if (chat.uid === uid || msg.uid === uid) {
+      let allMessages;
+      this.get(chat.id).subscribe(res => {
+        allMessages = res['messages'],
+          allMessages[i].originalContent = allMessages[i].content;
+        allMessages[i].content = 'Dit bericht werd verwijderd';
+        allMessages[i].deleted = true;
+        return ref.update({
+          messages: allMessages
+        });
+      });
+    }
   }
 }

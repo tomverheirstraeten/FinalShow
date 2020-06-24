@@ -32,6 +32,8 @@ const routes: Routes = [
   { path: 'rooms', component: RoomnavComponent },
   { path: 'livestream', component: LivestreamComponent },
   { path: 'timetable', component: TimetableComponent },
+  { path: 'login/:id', component: LoginComponent },
+  { path: 'register/:id', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'network', component: NetworkComponent },

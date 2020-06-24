@@ -12,7 +12,7 @@ export class EventComponent implements OnInit {
 
   eventName: string;
   data;
-  // isDesktop: boolean;
+  isDesktop: boolean;
 
   constructor(private route: ActivatedRoute, public service: AdminService) {  }
 
@@ -27,10 +27,9 @@ export class EventComponent implements OnInit {
       })
     });
 
-    // if (window.screen.width >= 769) {
-    //   this.isDesktop = true;
-    // }
-
+    if (window.screen.width >= 769) {
+      this.isDesktop = true;
+    }
   }
 
   displayTime(time){
@@ -52,7 +51,6 @@ export class EventComponent implements OnInit {
     }
 
     return hourString + ':' + minuteString;
-
   }
 
 }
