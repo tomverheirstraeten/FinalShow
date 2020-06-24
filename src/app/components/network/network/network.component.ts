@@ -50,18 +50,19 @@ export class NetworkComponent implements OnInit, OnDestroy {
   vrImage;
   privateChatImage;
 
-  userInfo = false;
+  userInfo: boolean;
   userInfoName: string;
+  userInfoId: string;
   x;
   y;
 
 
   constructor(public auth: AuthService,
-              public cs: ChatService,
-              public userService: UsersService,
-              public route: Router,
-              public interactionService: InteractionService,
-              public roomsService: RoomsService) {
+    public cs: ChatService,
+    public userService: UsersService,
+    public route: Router,
+    public interactionService: InteractionService,
+    public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
   }
 
@@ -73,7 +74,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     //     // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '' }];
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '' }];
 
     this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
@@ -81,7 +82,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio };
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childKey };
         });
         count++;
       });
@@ -94,6 +95,13 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
     // start drawing the interaction room
     const sketch = s => {
+      s.mousePressed = () => {
+        //console.log(this.userInfo);
+        if (s.mouseY > 120 && this.userInfo) {
+          this.goToPrivateRoom();
+        }
+      };
+
       s.preload = () => { // load the images needed
         this.webImage = s.loadImage('assets/images/cluster-icons/web.svg');
         this.motionImage = s.loadImage('assets/images/cluster-icons/motion.svg');
@@ -111,6 +119,10 @@ export class NetworkComponent implements OnInit, OnDestroy {
       };
       s.draw = () => { // updates every frame
         s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2); // center your player
+
+        this.userInfo = false;
+        this.userInfoName = '';
+        this.userInfoId = '';
 
         s.background(255);
         s.stroke(0);
@@ -133,6 +145,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
                   let dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
 
                   if (dist < this.userSize * 2) {
+                    this.userInfo = true;
+                    this.userInfoName = allUsers[i].name;
+                    this.userInfoId = allUsers[i].id;
                     this.showUserInfo(s, allUsers[i]);
                   }
                 }
@@ -153,53 +168,52 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
   move(sketch) {
-    let inbox = document.getElementsByClassName('inbox-container')[0];
-    console.log(inbox);
-    // console.log(window.getComputedStyle(inbox).visibility);
-
     const x = sketch.mouseX;
     const y = sketch.mouseY;
 
-    const speed = 5;
+    if (y > 60) {
 
-    let dirX = 0;
-    let dirY = 0;
 
-    if (x < sketch.width / 2 - 10) {
-      dirX = -1;
-    } else if (x > sketch.width / 2 + 10) {
-      dirX = 1;
+      const speed = 5;
+
+      let dirX = 0;
+      let dirY = 0;
+
+      if (x < sketch.width / 2 - 10) {
+        dirX = -1;
+      } else if (x > sketch.width / 2 + 10) {
+        dirX = 1;
+      }
+
+      if (y < sketch.height / 2 - 10) {
+        dirY = -1;
+      } else if (y > sketch.height / 2 + 10) {
+        dirY = 1;
+      }
+
+      // outer boundaries
+      if (this.myY < 10) {
+        this.myY = 10;
+      } else if (this.myY > 1000) {
+        this.myY = 1000;
+      }
+
+      if (this.myX < 10) {
+        this.myX = 10;
+      } else if (this.myX > 1000) {
+        this.myX = 1000;
+      }
+
+      this.myX += speed * dirX;
+      this.myY += speed * dirY;
+
+      this.database.ref('users/' + this.username).set({
+        x: this.myX,
+        y: this.myY,
+        role: this.myRole,
+        bio: this.myBio
+      });
     }
-
-    if (y < sketch.height / 2 - 10) {
-      dirY = -1;
-    } else if (y > sketch.height / 2 + 10) {
-      dirY = 1;
-    }
-
-    // outer boundaries
-    if (this.myY < 10) {
-      this.myY = 10;
-    } else if (this.myY > 1000) {
-      this.myY = 1000;
-    }
-
-    if (this.myX < 10) {
-      this.myX = 10;
-    } else if (this.myX > 1000) {
-      this.myX = 1000;
-    }
-
-    this.myX += speed * dirX;
-    this.myY += speed * dirY;
-
-    this.database.ref('users/' + this.username).set({
-      x: this.myX,
-      y: this.myY,
-      role: this.myRole,
-      bio: this.myBio
-    });
-
     this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
   }
 
@@ -362,13 +376,39 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.text(user.role, user.x - 60, user.y - 50);
     sketch.textStyle('normal');
     sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
+
+    sketch.image(this.privateChatImage, user.x, user.y + 80);
     // console.log(user.name);
-
-
   }
 
   goToPrivateRoom() {
-    console.log("clicked");
+    if (this.userInfoName !== '') {
+      let chatFound = false;
+      // console.log(this.userInfoName);
+      this.getmyChats();
+      if (this.myChats !== []) {
+        for (const chat of this.myChats) {
+          if (chat.displayName === this.userInfoName) {
+            chatFound = true;
+            this.goToChat(chat);
+            // console.log(chat.displayName);
+          }
+        }
+      }
+
+      if (!chatFound && this.userInfoId !== '') {
+        this.cs.create(this.userInfoId);
+      }
+    }
+  }
+
+  goToChat(chat) {
+    this.updateMessageSeen(chat.id);
+    return this.route.navigate([`chats/${chat.id}`]);
+  }
+
+  updateMessageSeen(chatid) {
+    this.cs.updateMessageSeenConversation(chatid);
   }
 
   async checkIfUser() {
@@ -400,4 +440,75 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.closer = !this.closer;
     // console.log('close');
   }
+
+  async getmyChats() {
+    const user = await this.auth.getUser();
+    if (user) {
+      const userId = user.uid;
+      await this.cs.getAllChats().subscribe((res) => {
+        const chats = [];
+        for (const chat of res) {
+          if (chat['uid'] === userId || chat['uid2'] === userId) {
+            // chats.push(chat);
+            this.getOtherUserName(chat, chats, userId);
+          }
+        }
+      });
+    }
+  }
+
+  async getOtherUserName(chat, chats, userId) {
+    this.userService.getUsers().pipe(first()).subscribe(async res => {
+      for (const user of res) {
+        if (userId === chat.uid2) {
+          if (user['uid'] === chat.uid) {
+            this.displayNameOtherUser = user['displayName'];
+            chat.displayName = this.displayNameOtherUser;
+
+
+            await this.checkIfSeen(chat).then(res => {
+              if (res) {
+
+              }
+              chat.seen = res;
+              chats.push(chat);
+            });
+
+          }
+        } else {
+          if (user['uid'] === chat.uid2) {
+            this.displayNameOtherUser = user['displayName'];
+            chat.displayName = this.displayNameOtherUser;
+
+            await this.checkIfSeen(chat).then(res => {
+              if (res) {
+
+              }
+              chat.seen = res;
+              chats.push(chat);
+            });
+
+          }
+        }
+        this.myChats = chats;
+
+
+      }
+    });
+  }
+
+
+  async checkIfSeen(chat) {
+    let checkIfSeen;
+
+    for (const message of chat['messages']) {
+      if (message.uid !== this.auth.userId && !message.seen) {
+
+        checkIfSeen = true;
+      }
+    }
+    return checkIfSeen;
+  }
+
 }
+
