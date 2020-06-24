@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { NotificationComponent } from './notification.component';
+import { DesktopeventComponent } from './desktopevent.component';
 
-describe('NotificationComponent', () => {
-  let component: NotificationComponent;
-  let fixture: ComponentFixture<NotificationComponent>;
+describe('DesktopeventComponent', () => {
+  let component: DesktopeventComponent;
+  let fixture: ComponentFixture<DesktopeventComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationComponent ]
+      declarations: [ DesktopeventComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotificationComponent);
+    fixture = TestBed.createComponent(DesktopeventComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

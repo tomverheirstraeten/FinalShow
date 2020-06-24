@@ -35,7 +35,15 @@ import { AdminusersComponent } from './components/admin/adminusers/adminusers.co
 import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
+<<<<<<< HEAD
 import { ProfileComponent } from './components/profile/profile.component';
+=======
+import { InboxComponent } from './components/inbox/inbox.component';
+import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
+import { RedirectComponent } from './components/redirect/redirect.component';
+import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
+
+>>>>>>> master
 
 @NgModule({
    declarations: [
@@ -66,7 +74,14 @@ import { ProfileComponent } from './components/profile/profile.component';
       AdminroomComponent,
       AdminnotificationsComponent,
       AdminlivestreamComponent,
+<<<<<<< HEAD
       ProfileComponent
+=======
+      InboxComponent,
+      DesktopeventComponent,
+      RedirectComponent,
+      FourOfourComponent
+>>>>>>> master
    ],
    imports: [
       BrowserModule,

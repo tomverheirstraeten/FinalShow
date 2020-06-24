@@ -22,22 +22,31 @@ import { AdminusersComponent } from './components/admin/adminusers/adminusers.co
 import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
+<<<<<<< HEAD
 import { ProfileComponent } from './components/profile/profile.component';
+=======
+import { RedirectComponent } from './components/redirect/redirect.component';
+import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
+>>>>>>> master
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  // { path: '', component: DesktopLandingComponent },
+  { path: '', component: RedirectComponent },
+  { path: 'mobileLanding', component: HomeComponent },
+  { path: 'desktopLanding', component: DesktopLandingComponent },
   { path: 'room/:id', component: RoomComponent },
   { path: 'rooms', component: RoomnavComponent },
   { path: 'livestream', component: LivestreamComponent },
   { path: 'timetable', component: TimetableComponent },
+  { path: 'login/:id', component: LoginComponent },
+  { path: 'register/:id', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'network', component: NetworkComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'timetable/:event', component: EventComponent },
   { path: 'chats/:id', component: ChatComponent, canActivate: [AuthGuard] },
+<<<<<<< HEAD
   { path: 'profile', component: ProfileComponent},
   { path: 'admin', component: AdminhomeComponent},
   { path: 'admin/timetable', component: AdmintimetableComponent},
@@ -46,6 +55,16 @@ const routes: Routes = [
   { path: 'admin/users', component: AdminusersComponent},
   { path: 'admin/notifications', component: AdminnotificationsComponent},
   { path: 'admin/livestream', component: AdminlivestreamComponent}
+=======
+  { path: 'admin', component: AdminhomeComponent },
+  { path: 'admin/timetable', component: AdmintimetableComponent },
+  { path: 'admin/chat', component: AdminroomsComponent },
+  { path: 'admin/chat/:id', component: AdminroomComponent },
+  { path: 'admin/users', component: AdminusersComponent },
+  { path: 'admin/notifications', component: AdminnotificationsComponent },
+  { path: 'admin/livestream', component: AdminlivestreamComponent },
+  { path: '404', component: FourOfourComponent }
+>>>>>>> master
   // { path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard] },
   // { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuard] },
 ];

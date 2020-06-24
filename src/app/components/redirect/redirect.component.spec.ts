@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LivestreamComponent } from './livestream.component';
+import { RedirectComponent } from './redirect.component';
 
-describe('LivestreamComponent', () => {
-  let component: LivestreamComponent;
-  let fixture: ComponentFixture<LivestreamComponent>;
+describe('RedirectComponent', () => {
+  let component: RedirectComponent;
+  let fixture: ComponentFixture<RedirectComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LivestreamComponent ]
+      declarations: [ RedirectComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LivestreamComponent);
+    fixture = TestBed.createComponent(RedirectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
