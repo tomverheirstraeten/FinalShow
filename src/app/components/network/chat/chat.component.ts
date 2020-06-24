@@ -28,6 +28,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   user1: string;
   user2: string;
 
+  mobile = false;
+
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -39,6 +41,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.route.paramMap.subscribe(params => {
       this.ngOnInit();
     });
+    if(screen.width < 768){
+      this.mobile = true;
+    }
    }
 
   ngAfterViewInit() {
@@ -56,6 +61,13 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   @HostListener('load', ['$event']) onPageLoad(event: Event) {
     this.scrollBottom();
+  }
+
+  holdHandler(e){
+    if(e == 500){
+      console.log('longpressed');
+      //extra: vibration
+    }
   }
 
   updateMessageSeen(chat){
