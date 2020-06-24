@@ -38,6 +38,7 @@ import { AdminlivestreamComponent } from './components/admin/adminlivestream/adm
 import { InboxComponent } from './components/inbox/inbox.component';
 import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
+import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { RedirectComponent } from './components/redirect/redirect.component';
       AdminlivestreamComponent,
       InboxComponent,
       DesktopeventComponent,
-      RedirectComponent
+      RedirectComponent,
+      FourOfourComponent
    ],
    imports: [
       BrowserModule,
