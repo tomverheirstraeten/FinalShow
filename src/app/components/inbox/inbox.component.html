@@ -4,12 +4,12 @@
     <div *ngIf="chats.messages.length" class="conversation">
       <img [src]="'assets/man.svg'" alt="">
       <div class="namestatus">
-        <p>{{ chats.displayName }}</p>
+        <p>{{ chats.displayName | titlecase }}</p>
         <p>
-          {{ chats.function | titlecase }}
+          {{ chats.function}} Student
         </p>
       </div>
-      <span *ngIf="chats.seen" class="last-message"></span>
+      <span *ngIf="chats.seen" class="last-message">negeer mij ni...</span>
     </div>
   </div>
 </div>
