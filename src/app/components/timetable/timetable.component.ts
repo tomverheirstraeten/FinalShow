@@ -27,7 +27,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   }
 
 
-  displayTime(time){
+  displayTime(time) {
     let date = new Date(time.seconds * 1000);
     let hours = date.getHours();
     let hourString: string;
@@ -67,9 +67,9 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   }
 
   // color selected list element in the html
-  showSelectedHtmlEvent(currentEvent){
+  showSelectedHtmlEvent(currentEvent) {
     const currentSelectedEventHtml = document.getElementById(currentEvent['name']);
-    if(currentSelectedEventHtml != this.previousSelectedHtmlEvent){
+    if (currentSelectedEventHtml != this.previousSelectedHtmlEvent) {
       // timetable list
       this.previousSelectedHtmlEvent.classList.remove("selectedEvent");
       this.previousSelectedHtmlEvent = currentSelectedEventHtml;
@@ -81,26 +81,26 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       currentSelectedEventDetailHtml.classList.remove("hidden");
       this.previousSelectedHtmlEventDetails = currentSelectedEventDetailHtml;
     }
-    
+
   }
 
   // save nessasary scroll values
-  getScrollValues () {
-      this.eventHeight = 94;
+  getScrollValues() {
+    this.eventHeight = 94;
 
-      // get event positions in the html.
-      let valueCounter = 0;
-      this.eventPositions = this.timetable.map((event, index) => {
-        let value = 0;
-        if (index != 0) {
-          value = valueCounter + this.eventHeight;
-          valueCounter += this.eventHeight;
-        } else {
-          value = valueCounter;
-        }
-        this.timetable[index]['scrollHeight'] = value;
-        return value;
-      });
+    // get event positions in the html.
+    let valueCounter = 0;
+    this.eventPositions = this.timetable.map((event, index) => {
+      let value = 0;
+      if (index != 0) {
+        value = valueCounter + this.eventHeight;
+        valueCounter += this.eventHeight;
+      } else {
+        value = valueCounter;
+      }
+      this.timetable[index]['scrollHeight'] = value;
+      return value;
+    });
   };
 
   ngOnInit(): void {
@@ -113,11 +113,11 @@ export class TimetableComponent implements OnInit, AfterViewInit {
     // executes after list load
     // solution from: https://stackoverflow.com/questions/37087864/execute-a-function-when-ngfor-finished-in-angular-2
     this.eventListItems.changes.subscribe(t => {
-      this.getScrollValues ();
-      
+      this.getScrollValues();
+
       const eventsDetailsDivs = document.getElementsByClassName("desktop-event");
       this.previousSelectedHtmlEventDetails = eventsDetailsDivs.item(0);
-      for(let i = 1; i < eventsDetailsDivs.length; i++){
+      for (let i = 1; i < eventsDetailsDivs.length; i++) {
         eventsDetailsDivs[i].classList.add('hidden');
       }
 

@@ -68,7 +68,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // console.log(this.auth.userId);
+    //     // console.log(this.auth.userId);
     this.checkIfUser();
 
     let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '' }];
