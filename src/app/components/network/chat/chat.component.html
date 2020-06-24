@@ -49,8 +49,13 @@
                       <img [src]="'assets/man.svg'" width="50px">
                     </div> -->
               </article>
-              <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
-                (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button>
+              <img src="assets/dots.svg" class="deleteDots" (click)="toggleDeleteWindow(chat.messages, msg)">
+              <div *ngIf="msg.deleteWindow" class="deleteWindow" (click)="clickedDelete(chat, msg, i)">
+                  <img src="assets/delete.svg">
+                  <span id="deleteText">Verwijder</span>
+              </div>
+              <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
+                (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button> -->
             </div>
             <!-- My MESSAGE empty  -->
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
