@@ -23,6 +23,9 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   constructor(private service: AdminService) {
     this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
+      if(this.previousSelectedHtmlEvent != null){
+        this.getCurrentActiveEvent();
+      }
     });
   }
 
@@ -53,7 +56,6 @@ export class TimetableComponent implements OnInit, AfterViewInit {
     if (this.isDesktop) {
       // scroll values
       let scrollPosition = this.timetableHtmlList.nativeElement.scrollTop;
-      console.log('pos' + scrollPosition);
       // find closest value
       // function from: https://stackoverflow.com/questions/8584902/get-closest-number-out-of-array
       var closest = this.eventPositions.reduce(function (prev, curr) {
@@ -62,8 +64,6 @@ export class TimetableComponent implements OnInit, AfterViewInit {
 
       // elememet currently targeted
       const currentEvent = this.timetable.find(event => event['scrollHeight'] === closest);
-      console.log(closest);
-      console.log(currentEvent);
       this.showSelectedHtmlEvent(currentEvent);
     }
   }
@@ -136,6 +136,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       const activeEvent = this.getCurrentActiveEvent();
 
       // smooth scroll to current event.
+      // solution from: https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
       this.timetableHtmlList.nativeElement.scrollTo({ top: activeEvent['scrollHeight'], behavior: 'smooth' });
     })
   }
