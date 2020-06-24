@@ -135,23 +135,23 @@ return this.afAuth.authState.pipe(
 
   // !=============REGISTER============= //
    // Google register
-   googleSignUp(formVal, id) {
+   googleSignUp(formVal, id, character) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthRegister(provider,formVal, id);
+    return this.oAuthRegister(provider,formVal, id, character);
 
   }
 
-  private async oAuthRegister(provider, formVal, id) {
+  private async oAuthRegister(provider, formVal, id, character) {
     const credential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserDataGoogle(credential.user, formVal, id);
+    return this.updateUserDataGoogle(credential.user, formVal, id, character);
   }
 
   private updateUserDataGoogle({
     uid,
     email,
     displayName,
-    photoURL
-  }, formVal, id) {
+    photoURL,
+  }, formVal, id, character) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${uid}`);
 
     const data = {
@@ -163,7 +163,8 @@ return this.afAuth.authState.pipe(
       function: formVal.functie,
       bio: formVal.bio,
       admin: false,
-      gdpr: formVal.gdpr
+      gdpr: formVal.gdpr,
+      character
     };
 
     userRef.set(data, {
@@ -177,7 +178,7 @@ return this.afAuth.authState.pipe(
   }
 
     // Email & password register
-    async EmailPasswordRegister(formVal, id) {
+    async EmailPasswordRegister(formVal, id, character) {
 
       const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(await function(error) {
       // Handle Errors here.
@@ -188,11 +189,11 @@ return this.afAuth.authState.pipe(
       this.errorMessage = error.message;
       console.log(this.errorMessage);
     });
-    return this.updateUserDataEmail(credentials,formVal, id);
+    return this.updateUserDataEmail(credentials,formVal, id, character);
     }
 
       // Update user data with email
-  private updateUserDataEmail(credentials, formVal, id) {
+  private updateUserDataEmail(credentials, formVal, id, character) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${credentials.user.uid}`);
     const data = {
       uid: credentials.user.uid,
@@ -202,7 +203,8 @@ return this.afAuth.authState.pipe(
       website: formVal.website,
       bio: formVal.bio,
       admin: false,
-      gdpr: formVal.gdpr
+      gdpr: formVal.gdpr,
+      character
     };
 
     userRef.set(data, {
