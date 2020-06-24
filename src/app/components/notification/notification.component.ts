@@ -36,17 +36,13 @@ export class NotificationComponent implements OnInit {
 
   getNotifications() {
     this.ns.getNotifiation().subscribe(res => {
+      this.liveStreamNotifications = [];
+      this.chatroomNotifications = [];
+      this.expoNotifications = [];
+      this.faqNotifications = [];
       res.forEach(notification => {
         if (notification['rooms']) {
           notification['rooms'].forEach(room => {
-
-
-
-
-
-
-
-
             if (this.notif === 'live stream') {
               if (room === 'live stream') {
                 notification['show'] = true;
@@ -147,11 +143,15 @@ export class NotificationComponent implements OnInit {
   }
   makeNotificationDissapear(notification) {
     setTimeout(() => {
-      notification.show = false;
-      if(!notification.permanent){
+      if(notification.permanent){
+        notification.show = true;
+      }else{
+        notification.show = false;
         this.notifIds.push(notification.id);
         localStorage.setItem('notificationId', JSON.stringify(this.notifIds));
+
       }
+
 
 
     }, 5000);

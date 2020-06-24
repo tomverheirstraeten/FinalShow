@@ -1,12 +1,18 @@
 .inbox-container{
   background-color: white;
-  min-width: 200px;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 60px;
+  left: 0;
 }
 .inbox-container .conversation{
 padding: 1em 1em;
 box-sizing: border-box;
-}.inbox-container img{
-width: 30px
+}
+
+.inbox-container img{
+width: 40px
 }
 
 .conversations{
