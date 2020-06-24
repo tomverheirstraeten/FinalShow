@@ -37,6 +37,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   database;
   myRole: string;
   myBio;
+  myId;
   roomDelay = 50; // the amount of frames you have to wait to enter a room
   userSize = 50;
 
@@ -82,7 +83,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childKey };
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childData.uid };
         });
         count++;
       });
@@ -211,7 +212,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
         x: this.myX,
         y: this.myY,
         role: this.myRole,
-        bio: this.myBio
+        bio: this.myBio,
+        id: this.myId
       });
     }
     this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
@@ -375,7 +377,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.textStyle('italic');
     sketch.text(user.role, user.x - 60, user.y - 50);
     sketch.textStyle('normal');
-    sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
+    if (user.bio !== '' && user.bio !== undefined) {
+      sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
+    }
 
     sketch.image(this.privateChatImage, user.x, user.y + 80);
     // console.log(user.name);
@@ -397,7 +401,10 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
 
       if (!chatFound && this.userInfoId !== '') {
-        this.cs.create(this.userInfoId);
+        console.log(this.userInfoId);
+        if (this.userInfoId !== undefined && this.userInfoId !== '') {
+          this.cs.create(this.userInfoId);
+        }
       }
     }
   }
@@ -421,6 +428,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
             this.username = user['displayName'];
             this.myRole = user['function'];
             this.myBio = user['bio'];
+            this.myId = user['uid'];
           }
         }
       });
