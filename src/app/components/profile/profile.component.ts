@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
+  character;
+
   user = {};
 
   data = {
@@ -18,14 +20,13 @@ export class ProfileComponent implements OnInit {
     rol: 'student',
   };
 
-  constructor(public userservice: UsersService, public authservice: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getUser();
   }
 
-  getUser() {
-    this.user = this.authservice.getUser();
-    console.log(this.user);
+  setActiveCharacter(character){
+    this.character = character;
+    console.log(this.character);
   }
 }

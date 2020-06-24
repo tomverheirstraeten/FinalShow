@@ -4,20 +4,172 @@
 <div class="pagina">
   <div class="container profilecontainer">
     <div id="profileData">
-      <ul>
-        <li>Name: {{user}}</li>
-        <li>
-          <p>Website: {{data.website}}</p>
-        </li>
-        <li>
-          <p>Bio: {{data.bio}}</p>
-        </li>
-        <li>
-          <p>Rol: {{data.rol}}</p>
-        </li>
-      </ul>
+      <section class="slider-wrapper">
+        <article id="characters"  [ngStyle]="{'width': 100*2 + '%'}">
+          <div class="slide-content" >
+            <input type="radio" id="char2" name="char" hidden checked>
+            <label for="char2" (click)='setActiveCharacter("character2")'>
+              <img src="assets/mannekes/character2.png" alt="" >
+            </label>
+          </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char3" name="char" hidden>
+            <label for="char3" (click)='setActiveCharacter("character3")'>
+              <img src="assets/mannekes/character3.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char4" name="char" hidden>
+            <label for="char4" (click)='setActiveCharacter("character4")'>
+              <img src="assets/mannekes/character4.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char5" name="char" hidden>
+            <label for="char5" (click)='setActiveCharacter("character5")'>
+              <img src="assets/mannekes/character5.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char6" name="char" hidden>
+            <label for="char6" (click)='setActiveCharacter("character6")'>
+              <img src="assets/mannekes/character6.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char7" name="char" hidden>
+            <label for="char7" (click)='setActiveCharacter("character7")'>
+              <img src="assets/mannekes/character7.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char8" name="char" hidden>
+            <label for="char8" (click)='setActiveCharacter("character8")'>
+              <img src="assets/mannekes/character8.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char9" name="char" hidden>
+            <label for="char9" (click)='setActiveCharacter("character9")'>
+              <img src="assets/mannekes/character9-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char10" name="char" hidden>
+            <label for="char10" (click)='setActiveCharacter("character10-f")'>
+              <img src="assets/mannekes/character10-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char11" name="char" hidden checked>
+            <label for="char11" (click)='setActiveCharacter("character11-f")'>
+              <img src="assets/mannekes/character11-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char12" name="char" hidden>
+            <label for="char12" (click)='setActiveCharacter("character12-f")'>
+              <img src="assets/mannekes/character12-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char13" name="char" hidden>
+            <label for="char13" (click)='setActiveCharacter("character13-f")'>
+              <img src="assets/mannekes/character13-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char14" name="char" hidden>
+            <label for="char14" (click)='setActiveCharacter("character14-f")'>
+              <img src="assets/mannekes/character14-f.png" alt="">
+            </label>
+            </div>
+
+
+          <div class="slide-content">
+            <input type="radio" id="char15" name="char" hidden>
+            <label for="char15" (click)='setActiveCharacter("character15-f")'>
+              <img src="assets/mannekes/character15-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char16" name="char" hidden>
+            <label for="char16" (click)='setActiveCharacter("character16-f")'>
+              <img src="assets/mannekes/character16-f.png" alt="">
+            </label>
+            </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char17" name="char" hidden>
+            <label for="char17" (click)='setActiveCharacter("character17-f")'>
+              <img src="assets/mannekes/character17-f.png" alt="">
+            </label>
+          </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char18" name="char" hidden>
+            <label for="char18" (click)='setActiveCharacter("character18-f")'>
+              <img src="assets/mannekes/character18-f.png" alt="">
+            </label>
+          </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char19" name="char" hidden>
+            <label for="char19" (click)='setActiveCharacter("dino1")'>
+              <img src="assets/mannekes/dino1.png" alt="">
+            </label>
+          </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char20" name="char" hidden>
+            <label for="char20" (click)='setActiveCharacter("dino2")'>
+              <img src="assets/mannekes/dino2.png" alt="">
+            </label>
+          </div>
+
+          <div class="slide-content">
+            <input type="radio" id="char21" name="char" hidden>
+            <label for="char21" (click)='setActiveCharacter("robot1")'>
+              <img src="assets/mannekes/robot1.png" alt="">
+            </label>
+          </div>
+        </article>
+      </section>
+      <div class="input-form">
+        <label for="Name">Name*</label>
+        <input placeholder="Name" type='text' #name formControlName="name" required>
+      </div>
+      <div class="input-form">
+        <label for="Website">Website</label>
+        <input placeholder="Website" type='text' #website formControlName="website">
+      </div>
+      <div class="input-form">
+        <label for="Website">Functie*</label>
+        <select #functie formControlName="functie" required>
+          <option value="student">Student</option>
+          <option value="bedrijf">Bedrijf</option>
+          <option value="docent">Docent</option>
+          <option value="alumni">Alumni</option>
+          <option value="ouders">Ouder</option>
+          <option value="bezoeker">Bezoeker</option>
+        </select>
+
+        
+      </div>
     </div>
   </div>
 </div>
-<div id="filler"></div>
 </div>
