@@ -80,6 +80,8 @@
 //     overflow: hidden;
 //   }
 // }
+
+
 #mobile {
   width: 100%;
   overflow: hidden;
@@ -106,9 +108,15 @@
     }
 
     img {
-      width: 90%;
+      width: 380px;
+    }
+    
+    #titleCard {
+      max-width: 95%;
     }
   }
+
+
 
   #campus {
     width: 100%;
@@ -137,6 +145,6 @@
       width: 90% !important;
     }
   }
-
-
 }
+
+
