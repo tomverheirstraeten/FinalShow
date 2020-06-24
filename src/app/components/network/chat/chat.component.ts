@@ -23,6 +23,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   source: Observable<any>;
   chatId;
 
+  deleteWindow = false;
+
   user1: string;
   user2: string;
 
@@ -58,6 +60,21 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   updateMessageSeen(chat){
     this.cs.updateMessageSeen(chat);
+  }
+
+  toggleDeleteWindow(messages, msg){
+    messages.forEach(element => {
+      if(element == msg){
+        msg.deleteWindow = !msg.deleteWindow;
+      } else{
+        element.deleteWindow = false;
+      }
+    });
+  }
+
+  clickedDelete(chat, msg, i){
+    this.deleteWindow = false;
+    this.cs.updateMessage(chat, msg, i);
   }
 
   getAllChats() {

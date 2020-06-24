@@ -55,9 +55,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
   x;
   y;
 
-  @ViewChild('inbox-container')
-  inbox: ElementRef;
-
 
   constructor(public auth: AuthService,
               public cs: ChatService,
@@ -156,7 +153,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
   move(sketch) {
-    console.log(this.inbox);
+    let inbox = document.getElementsByClassName('inbox-container')[0];
+    console.log(inbox);
+    // console.log(window.getComputedStyle(inbox).visibility);
 
     const x = sketch.mouseX;
     const y = sketch.mouseY;
