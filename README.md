@@ -46,4 +46,5 @@ Enjoyy! 👏
 * [Icons](https://www.flaticon.com/free-icon/view_709612?term=eye&page=1&position=1)
 ### 3D
 * [Blender](https://www.blender.org/)
+* [Maya](https://www.autodesk.com/products/maya/overview?support=ADVANCED&plc=MAYA&term=1-YEAR&quantity=1)
 
