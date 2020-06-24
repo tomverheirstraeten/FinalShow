@@ -138,6 +138,22 @@
             <div *ngIf="registerGoogleForm.get('gdpr').hasError('required') && googleform.submitted"
               class='alert alert-danger'>Kies één van de bovenstaande keuzes.</div>
           </div>
+            <article id="characters">
+              <input type="radio">
+              <label for="">
+              <img src="assets/mannekes/character2.png" alt="">
+              </label>
+              <input type="radio">
+              <img src="assets/mannekes/character3.png" alt="">
+              <img src="assets/mannekes/character4.png" alt="">
+              <img src="assets/mannekes/character5.png" alt="">
+              <img src="assets/mannekes/character6.png" alt="">
+              <img src="assets/mannekes/character7.png" alt="">
+              <img src="assets/mannekes/character8.png" alt="">
+              <img src="assets/mannekes/character8.png" alt="">
+              <img src="assets/mannekes/character9.png" alt="">
+              <img src="assets/mannekes/character10.png" alt="">
+            </article>
           <button class="google-btn active">
             <div class="google-icon-wrapper">
               <img class="google-icon-svg"
@@ -153,4 +169,5 @@
     <button *ngIf="id === 'livestream'" [routerLink]="['/login',id]" type="button" class="txt-light">LOGIN</button>
     <button *ngIf="id !== 'livestream'"[routerLink]="['/login']" type="button" class="txt-light">LOGIN</button>
   </article>
+
 </section>
