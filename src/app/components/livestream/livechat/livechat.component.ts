@@ -90,7 +90,10 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
   private scrollBottom() {
     const chatElem = document.getElementById('livechat-container');
     if (chatElem) {
-      setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
+      setTimeout(() => {
+        chatElem.scrollTop = chatElem.scrollHeight;
+      }
+      , 500);
     }
   }
 }
