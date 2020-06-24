@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import * as  THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { HemisphereLight, SpotLight } from 'three';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './desktoplanding.component.html',
   styleUrls: ['./desktoplanding.component.scss']
 })
-export class DesktopLandingComponent implements OnInit {
+export class DesktopLandingComponent implements OnInit, OnDestroy {
   gltfLoader = new GLTFLoader();
   raycaster = new THREE.Raycaster();
   percentloaded = null;
@@ -31,15 +31,17 @@ export class DesktopLandingComponent implements OnInit {
   clips = null;
   carint = 0;
   animationBool = true;
-  animationsOn = "ON"
+  animationsOn = 'ON';
+  animationFrame = null;
   yPos = {
     mediaY: -0.044314876198768616,
     converY: -0.044314876198768616,
     fablabY: -0.009189906120300283,
     entryY: -0.4470003843307495
   };
-  animationfunction = null;
-
+  ngOnDestroy() {
+    cancelAnimationFrame(this.animationFrame);
+  }
 
   @ViewChild('render') el: ElementRef;
   constructor(private router: Router,) {
@@ -241,28 +243,27 @@ export class DesktopLandingComponent implements OnInit {
 
       if (o.geometry) {
         o.geometry.dispose()
-        console.log("dispose geometry ", o.geometry)
+
       }
 
       if (o.material) {
         if (o.material.length) {
           for (let i = 0; i < o.material.length; ++i) {
             o.material[i].dispose()
-            console.log("dispose material ", o.material[i])
+
           }
         }
         else {
           o.material.dispose()
-          console.log("dispose material ", o.material)
+
         }
       }
     })
-    this.raycaster = null
-    this.scene = null
-    this.camera = null
-    this.renderer && this.renderer.renderLists.dispose()
-    this.renderer = null
-    console.log("Dispose!")
+    this.raycaster = null;
+    this.scene = null;
+    this.camera = null;
+    this.renderer && this.renderer.renderLists.dispose();
+    this.renderer = null;
 
   }
 
@@ -281,7 +282,7 @@ export class DesktopLandingComponent implements OnInit {
   }
   // ANIMATION
   animate = () => {
-    this.animationfunction = requestAnimationFrame(this.animate);
+    this.animationFrame = requestAnimationFrame(this.animate);
     if (this.animationBool) {
       this.mixer.update(0.03);
     }
