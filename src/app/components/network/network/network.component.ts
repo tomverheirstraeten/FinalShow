@@ -35,6 +35,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   speed = 30;
   database;
   myRole: string;
+  myBio;
   roomDelay = 50; // the amount of frames you have to wait to enter a room
   userSize = 50;
 
@@ -70,7 +71,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student' }];
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '' }];
 
     this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
@@ -78,7 +79,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role };
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio };
         });
         count++;
       });
@@ -127,9 +128,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
                   drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
 
                   let dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
-                  // console.log('clicked x: ' + this.x + ',' + allUsers[i].name + ' x: ' + allUsers[i].x);
-                  // console.log(dist);
-                  if (dist < this.userSize) {
+
+                  if (dist < this.userSize * 2) {
                     this.showUserInfo(s, allUsers[i]);
                   }
                 }
@@ -140,12 +140,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
           this.displayGroups(s);
           this.move(s); // move the current player
         }
-      };
-
-      s.mousePressed = () => {
-        this.userInfo = true;
-        this.x = s.mouseX; // + s.width / 2;
-        this.y = s.mouseY; // + s.height / 2;
       };
 
     };
@@ -195,7 +189,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.database.ref('users/' + this.username).set({
       x: this.myX,
       y: this.myY,
-      role: this.myRole
+      role: this.myRole,
+      bio: this.myBio
     });
 
     this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
@@ -212,6 +207,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.textSize(12);
     sketch.text(name, x, y + this.userSize);
     sketch.noFill();
+
+    sketch
   }
 
   getUserColor(sketch, role) {
@@ -244,21 +241,23 @@ export class NetworkComponent implements OnInit, OnDestroy {
     // mobile room
     this.displayGroup(sketch, 200, 700, 170, 'Mobile');
     // experience room
-    this.displayGroup(sketch, 50, 400, 250, 'Digital Making');
+    this.displayGroup(sketch, 50, 400, 200, 'Digital Making');
+    // general room
+    this.displayGroup(sketch, 800, 100, 250, 'General');
   }
 
   displayGroup(sketch, x, y, r, name) {
     // background
     sketch.noStroke();
-    sketch.fill(249, 212, 138);
+    sketch.fill(255, 107, 107);
     sketch.circle(x, y, r);
 
     // text
     sketch.fill(0);
     sketch.textAlign('center');
     sketch.strokeWeight(0);
-    sketch.textSize(20);
-    sketch.text(name, x, y - r / 3);
+    sketch.textSize(25);
+    sketch.text(name, x, y - r / 3.5);
     sketch.noFill();
 
     // image
@@ -278,6 +277,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
         break;
       case 'AR':
         image = this.vrImage;
+        break;
+      case 'General':
+        image = this.generalImage;
         break;
       default:
         image = this.generalImage;
@@ -343,9 +345,13 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   showUserInfo(sketch, user) {
     this.getUserColor(sketch, user.role);
-    sketch.rect(user.x, user.y, 100);
+    sketch.rect(user.x, user.y, 150, 150);
     sketch.fill(0);
-    sketch.text(user.name, user.x, user.y);
+    sketch.textSize(15);
+    sketch.text(user.name, user.x, user.y - 50);
+    sketch.textSize(12);
+    sketch.textAlign('left');
+    sketch.text(user.bio, user.x, user.y + 15, 100, 120);
     // console.log(user.name);
 
   }
@@ -360,6 +366,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
           if (user['uid'] === this.auth.userId) {
             this.username = user['displayName'];
             this.myRole = user['function'];
+            this.myBio = user['bio'];
           }
         }
       });

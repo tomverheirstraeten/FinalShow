@@ -153,4 +153,23 @@ export class RoomsService {
       });
     }
   }
+
+  async updateMessage(chat, msg, i) {
+    const {
+      uid
+    } = await this.auth.getUser();
+    const ref = this.afs.collection('rooms').doc(chat.id);
+    if (chat.uid === uid || msg.uid === uid) {
+      let allMessages;
+      this.get(chat.id).subscribe(res => {
+        allMessages = res['messages'],
+          allMessages[i].originalContent = allMessages[i].content;
+        allMessages[i].content = 'Dit bericht werd verwijderd';
+        allMessages[i].deleted = true;
+        return ref.update({
+          messages: allMessages
+        });
+      });
+    }
+  }
 }
