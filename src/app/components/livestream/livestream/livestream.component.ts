@@ -16,7 +16,6 @@ export class LivestreamComponent implements OnInit {
   currentActivity = 'Offline';
   live = false;
   timetable;
-  currentTime;
   url;
 
   constructor(private ns: NotificationService, private as: AdminService, private sanitizer: DomSanitizer) {
@@ -26,12 +25,7 @@ export class LivestreamComponent implements OnInit {
     })
     this.as.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
-      this.currentTime = formatDate(new Date(), 'hh:mm', 'en-US');
       this.showCurrentActivity();
-      setInterval(() => {
-        this.currentTime = formatDate(new Date(), 'hh:mm', 'en-US');
-        this.showCurrentActivity();
-      }, 30000);
     });
   }
 
@@ -39,7 +33,7 @@ export class LivestreamComponent implements OnInit {
     this.currentActivity = 'Offline';
     this.live = false;
     this.timetable.forEach(timeslot => {
-      if(this.currentTime > this.returnTime(timeslot.time)){
+      if(timeslot.active){
         this.currentActivity = timeslot.name;
         this.live = true;
       }
