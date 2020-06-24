@@ -1,4 +1,4 @@
-.inbox-container{
+.inbox-container {
   background-color: white;
   width: 100vw;
   height: 100vh;
@@ -8,23 +8,53 @@
   z-index: 11;
 }
 
-.inbox-container .conversation{
-padding: 1em 1em;
-box-sizing: border-box;
+.inbox-container .conversation {
+  padding: 1em 1em;
+  box-sizing: border-box;
 }
 
-.conversations{
-  background-color: #F0F0F0;  
+.conversations {
+  background-color: #F0F0F0;
+
+  .newMessage {
+    color: #FFFF;
+  }
 }
 
-.conversation{
+.conversation {
   display: flex;
-  img{
+
+
+  img {
     width: 40px;
+    margin: 0em 1em 0em 0em;
+  }
+
+  .message-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .namestatus {
+      width: 100%;
+
+      p {
+        // font-weight: 400;
+      }
     }
+
+    span {
+
+      font-size: smaller;
+      width: 100%;
+
+    }
+
+  }
+
+
 }
 
-.conversation:hover{
+.conversation:hover {
   cursor: pointer;
   background-color: #dbdbdb;
 }
