@@ -23,7 +23,6 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   constructor(private service: AdminService) {
     this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
-      console.log(timetableData);
     });
   }
 
@@ -120,7 +119,6 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       this.previousSelectedHtmlEventDetails = eventsDetailsDivs.item(0);
       for(let i = 1; i < eventsDetailsDivs.length; i++){
         eventsDetailsDivs[i].classList.add('hidden');
-        console.log(eventsDetailsDivs[i]);
       }
 
       this.previousSelectedHtmlEvent = this.eventListItems.first.nativeElement.childNodes[2]

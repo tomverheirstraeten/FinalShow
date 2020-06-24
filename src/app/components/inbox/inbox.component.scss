@@ -5,18 +5,23 @@
   position: absolute;
   top: 60px;
   left: 0;
+  z-index: 11;
 }
+
 .inbox-container .conversation{
 padding: 1em 1em;
 box-sizing: border-box;
 }
 
-.inbox-container img{
-width: 40px
+.conversations{
+  background-color: #F0F0F0;  
 }
 
-.conversations{
-  background-color: #F0F0F0;
+.conversation{
+  display: flex;
+  img{
+    width: 40px;
+    }
 }
 
 .conversation:hover{
