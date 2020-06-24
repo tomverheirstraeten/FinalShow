@@ -1,6 +1,6 @@
 <ng-container *ngIf="chat$ | async as chat">
 <div class="container ">
-    <div class="messages" id="livechat-container" >
+    <div class="messages" id="livechat-container" #scrollframe>
     <article class="wrapper flex row flex-start">
       <!-- <section class="left users flex row w-30">
         <aside>
@@ -10,7 +10,7 @@
 
       <article class="">
         <div #chatBox class="chat right " id="chat" >
-          <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+          <div id="livechat-scroll" class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
             <article *ngIf="msg.hand !== true;" class="text-msg">
                   <p>
                   <span class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}  </span>
@@ -51,5 +51,8 @@
 
 
 </div>
+<script>
 
+  </script>
 </ng-container>
+

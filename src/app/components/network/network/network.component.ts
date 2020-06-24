@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
+import { InboxComponent } from '../../inbox/inbox.component';
 
 
 @Component({
@@ -47,11 +48,15 @@ export class NetworkComponent implements OnInit, OnDestroy {
   digitalMakingImage;
   generalImage;
   vrImage;
+  privateChatImage;
 
   userInfo = false;
   userInfoName: string;
   x;
   y;
+
+  @ViewChild('inbox-container')
+  inbox: ElementRef;
 
 
   constructor(public auth: AuthService,
@@ -68,7 +73,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // console.log(this.auth.userId);
+    //     // console.log(this.auth.userId);
     this.checkIfUser();
 
     let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '' }];
@@ -99,6 +104,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         this.digitalMakingImage = s.loadImage('assets/images/cluster-icons/digitalMaking.svg');
         this.generalImage = s.loadImage('assets/images/cluster-icons/generalChat.svg');
         this.vrImage = s.loadImage('assets/images/cluster-icons/vr.svg');
+        this.privateChatImage = s.loadImage('assets/images/chatIcon.svg');
       }
 
       s.setup = () => { // initial setup
@@ -113,9 +119,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         s.stroke(0);
         s.rect(0, 0, s.width, s.height);
 
-        console.log(this.closer);
-
-        if (this.playing && this.closer) { // if all the conditions to start playing are met (e.g. logged in)
+        if (this.playing && this.closer) { // if all the conditions to start playing are met (e.g. logged in, search is closed)
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
@@ -152,6 +156,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
   move(sketch) {
+    console.log(this.inbox);
+
     const x = sketch.mouseX;
     const y = sketch.mouseY;
 
@@ -207,6 +213,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.rect(x, y, this.userSize, this.userSize);
     sketch.fill(172, 182, 195);
     sketch.textSize(12);
+    sketch.textAlign('center');
     sketch.text(name, x, y + this.userSize);
     sketch.noFill();
   }
@@ -344,15 +351,18 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   showUserInfo(sketch, user) {
+    sketch.textAlign('center');
     this.getUserColor(sketch, user.role);
-    sketch.rect(user.x, user.y, 150, 150);
+    sketch.rect(user.x, user.y, 150, 190);
     sketch.fill(0);
     sketch.textSize(15);
-    sketch.text(user.name, user.x, user.y - 50);
+    sketch.text(user.name, user.x, user.y - 70);
     sketch.textSize(12);
     sketch.textAlign('left');
-    sketch.text(user.role, user.x, user.y);
-    sketch.text(user.bio, user.x, user.y, 100, 120);
+    sketch.textStyle('italic');
+    sketch.text(user.role, user.x - 60, user.y - 50);
+    sketch.textStyle('normal');
+    sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
     // console.log(user.name);
 
 
@@ -389,6 +399,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
   closeSearch() {
     this.closer = !this.closer;
-    console.log('close');
+    // console.log('close');
   }
 }

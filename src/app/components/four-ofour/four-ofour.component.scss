@@ -1,0 +1,33 @@
+#centre {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 40vh;
+  top: 30vh;
+  background: url("../../../assets/images/medialab_closeup_achetrgrond.png");
+  background-size: cover;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -o-background-clip: text;
+  background-clip: text;
+}
+
+
+
+h2 {
+
+  align-self: center;
+  font-size: 12vh;
+  color: transparent
+}
+
+h3 {
+  align-self: center;
+  font-size: 2.5vh;
+}
+
+h4 {
+  align-self: center;
+  font-size: 2vh;
+}
