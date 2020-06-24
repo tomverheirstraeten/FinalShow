@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   useragent = navigator.userAgent;
 
   constructor(private _location: Location, private router: Router) { }
-
+  toggleInbox = true;
   ngOnInit(): void {
 
   }
