@@ -28,6 +28,20 @@ export class AdmintimetableComponent implements OnInit {
     });
   }
 
+  clickActive(id){
+    this.service.setActive(id, this.timetable);
+  }
+
+  clickNotification(id){
+    const elements = document.getElementsByClassName(id);
+    const name = elements[1] as HTMLInputElement;
+    const nameVal = name.value;
+    if(confirm('Are you sure you want to send the notification for ' + nameVal + '?')){
+      this.service.sendAutomaticNotification(nameVal);
+      alert('The notification has been sent.')
+    }
+  }
+
   clickRemove(name, id){
     if(confirm('Are you sure you want to delete ' + name + '?')){
       this.service.deleteTimetableField(id);

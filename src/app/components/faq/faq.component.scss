@@ -1,54 +1,96 @@
 @import '~src/styles.scss';
 
 .pagina {
-    //height: 100vh;
+  //height: 100vh;
+  box-sizing: border-box;
+
+  h2 {
+    float: right;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  ol {
+    background-color: $white;
     box-sizing: border-box;
+    margin-top: 30px;
 
-    h2 {
-        float: right;
-    }
-    a{
-        color: #000;
-        text-decoration: underline;
-    }
-    ol {
-        background-color: $white;
-        box-sizing: border-box;
-        margin-top: 30px;
+    li {
+      margin-bottom: 30px;
 
-        li {
-            margin-bottom: 30px;
-
-            h3 {
-                margin-bottom: 10px;
-            }
-        }
+      h3 {
+        margin-bottom: 10px;
+      }
     }
+  }
 }
+
 @media only screen and (max-width: 768px) {
-    .pagina{
+  .pagina {
     width: 90%;
     margin: 80px auto 0 auto;
-    }
+  }
 }
-@media only screen and (min-width: 769px) {
-    .pagina{
-        grid-column: 2 / span 6;
-        grid-row: 4/ span 3;
-        overflow-y: scroll;
-        -ms-overflow-style: none;
-        max-height: 100%;
-        box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
-        padding: 0 1em 1em 1em;
-    }
-    .pagina::-webkit-scrollbar{
-        display:none;
-    }
 
-    #filler{
-        grid-column: 8/ span 4;
-        grid-row: 4/ span 3;
-        overflow: hidden;
-        box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
+@media only screen and (min-width: 769px) {
+  .container-grid {
+    background-image: url("../../../assets/images/onthaal.png");
+    background-size: cover;
+  }
+
+
+
+
+  .pagina {
+    grid-column: 2 / span 6;
+    grid-row: 4/ span 3;
+    direction: rtl;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    max-height: 100%;
+    padding: 0 1em 1em 4em;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
+
+    .scrollable-content {
+
+      padding: 1em 1em 1em 1em;
+      direction: ltr;
     }
+  }
+
+
+  // scrollbar styling reference: - https://stackoverflow.com/questions/50817727/change-scrollbar-height
+  //                              - https://css-tricks.com/custom-scrollbars-in-webkit/
+
+  .pagina.custom-scroll::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+  }
+
+  .pagina.custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .pagina.custom-scroll::-webkit-scrollbar-thumb {
+    background-color: grey;
+  }
+
+  .pagina.custom-scroll::-webkit-scrollbar-track-piece:end {
+    margin-bottom: 10%;
+  }
+
+  .pagina.custom-scroll::-webkit-scrollbar-track-piece:start {
+    margin-top: 10%;
+  }
+
+
+  #filler {
+    grid-column: 8/ span 4;
+    grid-row: 4/ span 3;
+    overflow: hidden;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
+  }
 }

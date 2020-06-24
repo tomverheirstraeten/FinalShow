@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnChanges, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ChatService } from 'src/app/services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -15,17 +14,14 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
 
   chat$: Observable<any>;
   newMsg: string;
-  allRooms: any[] = [];
   @ViewChild('chatBox') private myScrollContainer: ElementRef;
   disableScrollDown = false;
 
   constructor(
-    public cs: ChatService,
     private route: ActivatedRoute,
     public auth: AuthService,
     public userService: UsersService,
     public roomService: RoomsService,
-
   ) {}
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     this.scrollToBottom();
@@ -38,24 +34,25 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
     this.scrollToBottom();
   }
   ngOnInit() {
-    this.getRooms();
     const chatId = this.route.snapshot.paramMap.get('id');
     const source = this.roomService.get(chatId);
     this.chat$ = this.roomService.joinUsers(source); // .pipe(tap(v => this.scrollToBottom(v)));
     this.scrollToBottom();
   }
 
-
-
-
-
-
-
-  getRooms(){
-    this.roomService.getRooms().subscribe((rooms) => {
-      this.allRooms = rooms;
-    });
+  submitHand(chat) {
+    this.roomService.sendMessageHand(chat.id);
+    // this.updateMessageSeen(chat);
+    this.newMsg = '';
+    this.scrollToBottom();
   }
+
+  returnDate(timestamp) {
+    let date = new Date(timestamp);
+    let string = date.getHours() + ":" + date.getMinutes();
+    return string;
+  }
+
   submit(chatId) {
     if (!this.newMsg) {
       return alert('you need to enter something');
@@ -78,17 +75,17 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
     } else {
         this.disableScrollDown = true;
     }
-}
+  }
 
 
-private scrollToBottom(): void {
+  private scrollToBottom(): void {
     if (this.disableScrollDown) {
         return;
     }
     try {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch(err) { }
-}
+  }
 
 
 }
