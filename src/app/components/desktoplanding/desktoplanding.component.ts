@@ -38,6 +38,7 @@ export class DesktopLandingComponent implements OnInit {
     fablabY: -0.009189906120300283,
     entryY: -0.4470003843307495
   };
+  animationfunction = null;
 
 
   @ViewChild('render') el: ElementRef;
@@ -256,7 +257,7 @@ export class DesktopLandingComponent implements OnInit {
         }
       }
     })
-
+    this.raycaster = null
     this.scene = null
     this.camera = null
     this.renderer && this.renderer.renderLists.dispose()
@@ -280,7 +281,7 @@ export class DesktopLandingComponent implements OnInit {
   }
   // ANIMATION
   animate = () => {
-    requestAnimationFrame(this.animate);
+    this.animationfunction = requestAnimationFrame(this.animate);
     if (this.animationBool) {
       this.mixer.update(0.03);
     }
