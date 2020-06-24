@@ -14,3 +14,5 @@
 * https://alligator.io/angular/cloud-firestore-angularfire/
 * https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
 * https://www.blender.org/
+* https://netbasal.com/angular-2-security-the-domsanitizer-service-2202c83bd90#:~:text=%E2%80%9Cunsafe%20value%20used%20in%20a,that%20unsuspecting%20users%20could%20execute
+* https://www.flaticon.com/free-icon/view_709612?term=eye&page=1&position=1
