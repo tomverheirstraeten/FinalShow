@@ -24,6 +24,7 @@ import { AdminroomComponent } from './components/admin/adminroom/adminroom.compo
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
+import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 
 
 const routes: Routes = [
@@ -46,7 +47,8 @@ const routes: Routes = [
   { path: 'admin/chat/:id', component: AdminroomComponent },
   { path: 'admin/users', component: AdminusersComponent },
   { path: 'admin/notifications', component: AdminnotificationsComponent },
-  { path: 'admin/livestream', component: AdminlivestreamComponent }
+  { path: 'admin/livestream', component: AdminlivestreamComponent },
+  { path: '404', component: FourOfourComponent }
   // { path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard] },
   // { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuard] },
 ];

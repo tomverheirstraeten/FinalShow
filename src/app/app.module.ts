@@ -37,6 +37,7 @@ import { AdminnotificationsComponent } from './components/admin/adminnotificatio
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
 import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
+import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 
 @NgModule({
    declarations: [
@@ -68,7 +69,8 @@ import { RedirectComponent } from './components/redirect/redirect.component';
       AdminnotificationsComponent,
       AdminlivestreamComponent,
       DesktopeventComponent,
-      RedirectComponent
+      RedirectComponent,
+      FourOfourComponent
    ],
    imports: [
       BrowserModule,
