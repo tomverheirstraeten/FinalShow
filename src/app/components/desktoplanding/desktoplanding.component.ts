@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ɵɵresolveBody } from '@angular/core';
 import * as  THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { HemisphereLight, SpotLight } from 'three';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './desktoplanding.component.html',
   styleUrls: ['./desktoplanding.component.scss']
 })
-export class DesktopLandingComponent implements OnInit, OnDestroy {
+export class DesktopLandingComponent implements OnInit {
   gltfLoader = new GLTFLoader();
   raycaster = new THREE.Raycaster();
   percentloaded = null;
@@ -30,18 +30,13 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   mixer = null;
   clips = null;
   carint = 0;
-  animationBool = true;
-  animationsOn = 'ON';
-  animationFrame = null;
   yPos = {
     mediaY: -0.044314876198768616,
     converY: -0.044314876198768616,
     fablabY: -0.009189906120300283,
     entryY: -0.4470003843307495
   };
-  ngOnDestroy() {
-    cancelAnimationFrame(this.animationFrame);
-  }
+
 
   @ViewChild('render') el: ElementRef;
   constructor(private router: Router,) {
@@ -52,6 +47,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
     // LOAD GLTF AND ADD EVERYTHING TO SCENE
     this.gltfLoader.load('assets/3Dmodels/campus.gltf', (gltf) => {
       this.loaded = true;
+      console.log(this.loaded)
       this.scene.add(gltf.scene);
 
       this.animations = gltf.animations;
@@ -115,7 +111,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
       this.renderer.toneMapping = THREE.ReinhardToneMapping;
       this.renderer.shadowMap.enabled = true;
-      window.addEventListener('resize', this.onWindowResize, false);
+      document.addEventListener('resize', this.onWindowResize, false);
       this.renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, true);
       this.renderer.domElement.addEventListener('click', this.onDocumentMouseClick, true);
 
@@ -134,7 +130,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
           this.conversationMesh = mesh;
         } else if (mesh.name === 'ehb_logo') {
           this.logomesh = mesh;
-        } else if (mesh.name === 'speech1' || mesh.name === 'speech2' || mesh.name === 'speech3' || mesh.name === 'speech4') {
+        } else if (mesh.name === 'speech1' || mesh.name === 'speech2' || mesh.name === 'speech3') {
           this.speechmeshes.push(mesh);
         } else if (mesh.name === 'entrance') {
           this.entrancemesh = mesh;
@@ -144,6 +140,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
         speech.visible = false;
       }
       this.mixer = new THREE.AnimationMixer(this.scene);
+      // console.log(this.animations);
       setInterval(this.randomCar, 3000);
       this.mixer.clipAction(this.animations[0]).setLoop(THREE.LoopRepeat, 1);
       this.mixer.clipAction(this.animations[1]).setLoop(THREE.LoopRepeat, 1);
@@ -153,14 +150,14 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       this.mixer.clipAction(this.animations[5]).setLoop(THREE.LoopRepeat, 1);
       this.mixer.clipAction(this.animations[6]).setLoop(THREE.LoopRepeat, 1);
       this.mixer.clipAction(this.animations[7]).play();
-      this.mixer.clipAction(this.animations[8]).setLoop(THREE.LoopRepeat, 1);
-      this.mixer.clipAction(this.animations[9]).setLoop(THREE.LoopRepeat, 1);
-      this.mixer.clipAction(this.animations[10]).play()
-      this.mixer.clipAction(this.animations[11]).play()
-      this.mixer.clipAction(this.animations[12]).play()
+      this.mixer.clipAction(this.animations[8]).play();
+      this.mixer.clipAction(this.animations[9]).play();
+      this.mixer.clipAction(this.animations[10]).setLoop(THREE.LoopRepeat, 1);
+      this.mixer.clipAction(this.animations[11]).setLoop(THREE.LoopRepeat, 1);
       setInterval(this.animatePlane, 30000);
       // CALL ANIMATION FUNCTION
       this.scene.updateMatrixWorld();
+      console.log(this.entrancemesh.position.y)
       this.animate();
     }, (xhr) => {
       this.percentloaded = Math.ceil(xhr.loaded / xhr.total * 100) + "%";
@@ -168,36 +165,34 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
     })
   }
   randomCar = () => {
-    if (this.animationBool) {
 
-
-      if (this.carint === 0) {
-        this.mixer.clipAction(this.animations[0]).play();
-        this.mixer.clipAction(this.animations[0]).reset();
-      } else if (this.carint === 1) {
-        this.mixer.clipAction(this.animations[1]).play();
-        this.mixer.clipAction(this.animations[1]).reset();
-      } else if (this.carint === 2) {
-        this.mixer.clipAction(this.animations[5]).play();
-        this.mixer.clipAction(this.animations[5]).reset();
-      } else if (this.carint === 3) {
-        this.mixer.clipAction(this.animations[6]).play();
-        this.mixer.clipAction(this.animations[6]).reset();
-      }
-      else if (this.carint === 4) {
-        this.mixer.clipAction(this.animations[9]).play();
-        this.mixer.clipAction(this.animations[9]).reset();
-      }
-      this.carint += 1;
-      if (this.carint > 4) {
-        this.carint = 0;
-      }
-
+    if (this.carint === 0) {
+      this.mixer.clipAction(this.animations[0]).play();
+      this.mixer.clipAction(this.animations[0]).reset();
+    } else if (this.carint === 1) {
+      this.mixer.clipAction(this.animations[1]).play();
+      this.mixer.clipAction(this.animations[1]).reset();
+    } else if (this.carint === 2) {
+      this.mixer.clipAction(this.animations[5]).play();
+      this.mixer.clipAction(this.animations[5]).reset();
+    } else if (this.carint === 3) {
+      this.mixer.clipAction(this.animations[6]).play();
+      this.mixer.clipAction(this.animations[6]).reset();
     }
+    else if (this.carint === 4) {
+      this.mixer.clipAction(this.animations[11]).play();
+      this.mixer.clipAction(this.animations[11]).reset();
+    }
+    this.carint += 1;
+    if (this.carint > 4) {
+      this.carint = 0;
+    }
+
+
   }
   animatePlane = () => {
-    this.mixer.clipAction(this.animations[8]).play();
-    this.mixer.clipAction(this.animations[8]).reset();
+    this.mixer.clipAction(this.animations[10]).play();
+    this.mixer.clipAction(this.animations[10]).reset();
   }
   // UPDATE MOUSEPOSITION FOR RAYCASTING
   onDocumentMouseMove = (event) => {
@@ -207,29 +202,19 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   onDocumentMouseClick = () => {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children, true);
-
     // checkrooms
     if (intersects.length > 0) {
-
       if (intersects[0].object.parent.name === 'medialab') {
-        this.disposeEverything();
         this.router.navigate(['/livestream'])
 
-
       } else if (intersects[0].object.parent.name === 'fablab') {
-        this.disposeEverything();
         this.router.navigate(['/timetable'])
 
       } else if (intersects[0].object.parent.name === 'conversationroom') {
-        this.disposeEverything();
         this.router.navigate(['/network'])
 
-      } else if (intersects[0].object.parent.name === 'entrance') {
-        this.disposeEverything();
-        this.router.navigate(['/faq'])
-
       } else if (intersects[0].object.parent.name === 'ehb_logo') {
-        window.open('https://www.erasmushogeschool.be/nl/opleidingen/multimedia-communicatietechnologie', '_blank');
+        window.open('https://www.erasmushogeschool.be/nl', '_blank');
 
       } else {
 
@@ -237,81 +222,36 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
     }
   }
-  disposeEverything = () => {
-    // dispose geometries and materials in scene
-    this.scene.traverse((o) => {
-
-      if (o.geometry) {
-        o.geometry.dispose()
-
-      }
-
-      if (o.material) {
-        if (o.material.length) {
-          for (let i = 0; i < o.material.length; ++i) {
-            o.material[i].dispose()
-
-          }
-        }
-        else {
-          o.material.dispose()
-
-        }
-      }
-    })
-    this.raycaster = null;
-    this.scene = null;
-    this.camera = null;
-    this.renderer && this.renderer.renderLists.dispose();
-    this.renderer = null;
-
-  }
-
   // RESIZE DOCUMENT EVENTLISTENER
   onWindowResize = () => {
-    this.camera.aspect = this.el.nativeElement.clientWidth / this.el.nativeElement.clientHeight;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-  }
-  toggleAnimations = () => {
-    if (this.animationBool) {
-      this.animationBool = false
-      this.animationsOn = "OFF"
-    } else {
-      this.animationBool = true
-      this.animationsOn = "ON"
-    }
   }
   // ANIMATION
   animate = () => {
-    this.animationFrame = requestAnimationFrame(this.animate);
-    if (this.animationBool) {
-      this.mixer.update(0.03);
-    }
+    requestAnimationFrame(this.animate);
+    this.mixer.update(0.03);
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children, true);
     // checkrooms
     if (intersects.length > 0) {
+
       if (intersects[0].object.parent.name === 'medialab') {
         this.medialabMesh.position.y = this.yPos.mediaY + 0.2;
         this.fablabMesh.position.y = this.yPos.fablabY;
         this.conversationMesh.position.y = this.yPos.converY;
         // this.entrancemesh.position.y = this.yPos.entranceY
-        this.speechmeshes[1].visible = true;
-        this.speechmeshes[0].visible = false;
+        this.speechmeshes[0].visible = true;
+        this.speechmeshes[1].visible = false;
         this.speechmeshes[2].visible = false;
-        this.speechmeshes[3].visible = false;
         this.el.nativeElement.style.cursor = "pointer"
 
       } else if (intersects[0].object.parent.name === 'fablab') {
         this.fablabMesh.position.y = this.yPos.fablabY + 0.2;
         this.medialabMesh.position.y = this.yPos.mediaY;
         this.conversationMesh.position.y = this.yPos.converY;
-        this.speechmeshes[1].visible = false;
-        this.speechmeshes[0].visible = true;
+        this.speechmeshes[0].visible = false;
+        this.speechmeshes[1].visible = true;
         this.speechmeshes[2].visible = false;
-        this.speechmeshes[3].visible = false;
         this.entrancemesh.position.y = this.yPos.entryY
         this.el.nativeElement.style.cursor = "pointer"
       } else if (intersects[0].object.parent.name === 'conversationroom') {
@@ -322,22 +262,15 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
         this.speechmeshes[0].visible = false;
         this.speechmeshes[1].visible = false;
         this.speechmeshes[2].visible = true;
-        this.speechmeshes[3].visible = false;
         this.el.nativeElement.style.cursor = "pointer"
       } else if (intersects[0].object.parent.name === 'ehb_logo') {
         this.el.nativeElement.style.cursor = "pointer"
       } else if (intersects[0].object.parent.name === 'entrance') {
-
         this.entrancemesh.position.y = this.yPos.entryY + 0.2
         this.conversationMesh.position.y = this.yPos.converY
         this.medialabMesh.position.y = this.yPos.mediaY;
         this.fablabMesh.position.y = this.yPos.fablabY;
         this.el.nativeElement.style.cursor = "pointer"
-        this.speechmeshes[0].visible = false;
-        this.speechmeshes[1].visible = false;
-        this.speechmeshes[2].visible = false;
-        this.speechmeshes[3].visible = true;
-
       } else {
         this.entrancemesh.position.y = this.yPos.entryY
         this.medialabMesh.position.y = this.yPos.mediaY;
@@ -346,7 +279,6 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
         this.speechmeshes[0].visible = false;
         this.speechmeshes[1].visible = false;
         this.speechmeshes[2].visible = false;
-        this.speechmeshes[3].visible = false;
         this.el.nativeElement.style.cursor = "default"
       }
 
@@ -358,7 +290,6 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       this.speechmeshes[0].visible = false;
       this.speechmeshes[1].visible = false;
       this.speechmeshes[2].visible = false;
-      this.speechmeshes[3].visible = false;
       this.el.nativeElement.style.cursor = "default"
     }
     this.logomesh.rotation.y += 0.005;

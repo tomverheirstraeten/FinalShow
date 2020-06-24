@@ -1,4 +1,3 @@
-@import '~src/styles.scss';
 .wrapper {
 
   display: flex;
@@ -38,7 +37,7 @@
   p{
     background:transparent !important;
     font-style: italic;
-    font-size: 15px;
+    font-size: 11px;
     color: grey;
     text-align: right;
   }
@@ -62,8 +61,7 @@
       display: flex;
 
       p {
-        background: $red;
-        overflow-wrap: anywhere;
+        background: #F9D48A;
     }
   }
   }
@@ -88,7 +86,7 @@
   span {
     color: rgb(199, 199, 199);
     font-weight: lighter;
-    font-size: 13px;
+    font-size: 11px;
     width: 100%;
     display: block;
     text-align: left;
@@ -103,7 +101,6 @@
     min-width: 200px;
     background-color:#F0F0F0;
     text-align: left;
-    overflow-wrap: anywhere;
   }
 
   .user {
@@ -123,6 +120,7 @@
 
 .form.messagebar {
   width: 90%;
+  max-width: 1200px;
   display: flex;
   background: rgba(255, 255, 255, 1);
   position: fixed;

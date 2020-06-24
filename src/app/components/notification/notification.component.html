@@ -1,38 +1,6 @@
-<section *ngIf="liveStreamNotifications.length !== 0 " class="notification">
-    <div *ngFor="let notification of liveStreamNotifications" >
-        <div *ngIf="notification !== undefined || notification !== ''"   >
-            <p class='{{ notification.color }} ' [hidden] = '!notification.show' >{{ notification.message }}</p>
-
-        </div>
-    </div>
-</section>
+<div *ngIf="notif !== undefined || notif !== ''">
+<p class='{{notif.color}}'>{{notif.message}}</p>
+<p *ngIf="notif.permanent === true"  class='{{notif.color}} permanent'>{{notif.message}}Permanent</p>
+</div>
 
 
-
-<section *ngIf="chatroomNotifications.length !== 0" class="notification">
-    <div *ngFor="let notification of chatroomNotifications" >
-        <div *ngIf="notification !== undefined || notification !== ''" >
-            <p  *ngIf="notification.permanent === false" class='{{ notification.color }} ' [hidden]='!notification.show'>{{ notification.message }}</p>
-
-        </div>
-    </div>
-</section>
-
-
-<section *ngIf="expoNotifications.length !== 0" class="notification">
-    <div *ngFor="let notification of expoNotifications" >
-        <div *ngIf="notification !== undefined || notification !== ''"   >
-            <p class='{{ notification.color }} ' [hidden] = '!notification.show' >{{ notification.message }}</p>
-
-        </div>
-    </div>
-</section>
-
-<section *ngIf="faqNotifications.length !== 0" class="notification">
-    <div *ngFor="let notification of faqNotifications">
-        <div *ngIf="notification !== undefined || notification !== ''" >
-            <p class='{{ notification.color }} ' [hidden] = '!notification.show' >{{ notification.message }}</p>
-
-        </div>
-    </div>
-</section>

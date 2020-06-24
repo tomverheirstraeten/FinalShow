@@ -13,10 +13,8 @@
 
 
 $red : #FF6B6B;
-$pink: #f3c1c1;
 $blue : #4FCDC4;
 $yellow : #F9D48A;
-$green: #95D17B ;
 $black : #000;
 $white : #fff;
 
@@ -33,9 +31,6 @@ ul {
     list-style: none;
 }
 
-.message-content{
-  position: relative;
-}
 
 .button {
   background-color: $white;
@@ -47,50 +42,10 @@ ul {
   text-transform: uppercase;
 width: 80%;
 font-size: 15px;
-  z-index: 0;
+  z-index: 1;
   text-align: center;
   box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
   margin-top: 20px;
-}
-
-.deleteDots{
-  height: 15px;
-  opacity: 0.3;
-  align-self: center;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-
-.deleteWindow{
-  position: absolute;
-  padding: 10px 20px;
-  background-color: #000000af;
-  display: flex;
-  border-radius: 5px;
-  top: 50%;
-  transform: translateY(-100%);
-}
-
-.deleteWindow:hover{
-  background-color: #00000094;
-}
-
-#deleteText{
-  color: white;
-  margin-left: 10px;
-}
-
-.deleteWindow:hover{
-  cursor: pointer;
-}
-
-.deleteWindow img{
-  filter: invert(100%) sepia(0%) saturate(7483%) hue-rotate(219deg) brightness(110%) contrast(103%);
-  height: 15px;
-}
-
-.deleteDots:hover{
-  cursor: pointer;
 }
 
 a {
@@ -136,28 +91,14 @@ h2, h3, h4, h5, h6 {
     font-size: 13px;
 }
 
-.text-right{
-  text-align: right;
+
+.msg-deleted{
+  background:transparent !important;
+  font-style: italic;
+  font-size: 11px;
+  color: grey;
 }
 
-.seen{
-  opacity: 0.2;
-  height: 20px;
-  float: right;
-  display: none;
-}
-
-.seen-show{
-  display: block;
-}
-
-.delete:hover, .header img:hover, .profile:hover{
-  cursor: pointer;
-}
-
-.exit, .profile{
-  align-self: center;
-}
 
 // Andres css
 .flex {
