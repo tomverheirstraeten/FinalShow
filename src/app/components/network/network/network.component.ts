@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -10,7 +10,6 @@ import { RoomsService } from 'src/app/services/rooms.service';
 
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
-import { InboxComponent } from '../../inbox/inbox.component';
 
 
 @Component({
@@ -18,7 +17,7 @@ import { InboxComponent } from '../../inbox/inbox.component';
   templateUrl: './network.component.html',
   styleUrls: ['./network.component.scss']
 })
-export class NetworkComponent implements OnInit, OnDestroy {
+export class NetworkComponent implements OnInit {
   user;
   userChats$;
   myChats: any = [];
@@ -27,53 +26,28 @@ export class NetworkComponent implements OnInit, OnDestroy {
   closer = true;
 
   canvas;
+  ctx;
   users = new Array();
   myX = 0;
   myY = 0;
   easing = .05;
-  username: string;
+  username;
   playing = false;
   speed = 30;
   database;
-  myRole: string;
-  myBio;
+  myRole;
+
   roomDelay = 50; // the amount of frames you have to wait to enter a room
-  userSize = 50;
 
-  circleMask;
-
-  webImage;
-  motionImage;
-  mobileImage;
-  digitalMakingImage;
-  generalImage;
-  vrImage;
-  privateChatImage;
-
-  userInfo = false;
-  userInfoName: string;
-  x;
-  y;
-
-
-  constructor(public auth: AuthService,
-              public cs: ChatService,
-              public userService: UsersService,
-              public route: Router,
-              public interactionService: InteractionService,
-              public roomsService: RoomsService) {
+  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public route: Router, public interactionService: InteractionService, public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
   }
 
-  ngOnDestroy() {
-    this.canvas.remove();
-  }
-
   ngOnInit() {
-    //     // console.log(this.auth.userId);
+    // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '' }];
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student' }];
 
     this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
@@ -81,7 +55,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio };
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role };
         });
         count++;
       });
@@ -94,29 +68,19 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
     // start drawing the interaction room
     const sketch = s => {
-      s.preload = () => { // load the images needed
-        this.webImage = s.loadImage('assets/images/cluster-icons/web.svg');
-        this.motionImage = s.loadImage('assets/images/cluster-icons/motion.svg');
-        this.mobileImage = s.loadImage('assets/images/cluster-icons/mobile.svg');
-        this.digitalMakingImage = s.loadImage('assets/images/cluster-icons/digitalMaking.svg');
-        this.generalImage = s.loadImage('assets/images/cluster-icons/generalChat.svg');
-        this.vrImage = s.loadImage('assets/images/cluster-icons/vr.svg');
-        this.privateChatImage = s.loadImage('assets/images/chatIcon.svg');
-      }
-
       s.setup = () => { // initial setup
         s.createCanvas(s.windowWidth, s.windowHeight);
-
-        s.frameRate(20);
+        s.frameRate(15);
       };
       s.draw = () => { // updates every frame
-        s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2); // center your player
-
+        s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2);
         s.background(255);
         s.stroke(0);
         s.rect(0, 0, s.width, s.height);
 
-        if (this.playing && this.closer) { // if all the conditions to start playing are met (e.g. logged in, search is closed)
+        this.displayGroups(s);
+
+        if (this.playing) { // if all the conditions to start playing are met (e.g. logged in)
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
@@ -125,22 +89,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
             if (allUsers[i] !== undefined) {
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
-                if (allUsers[i].name !== 'undefined') {
-                  // if it's not the current user & the user hasn't been drawn already
-                  this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
-                  drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
-
-                  let dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
-
-                  if (dist < this.userSize * 2) {
-                    this.showUserInfo(s, allUsers[i]);
-                  }
-                }
+                // if it's not the current user & the user hasn't been drawn already
+                this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
+                drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
+                // check if the current user is close
+                this.checkDistance(s, this.myX, this.myY, allUsers[i].x, allUsers[i].y, allUsers[i].name, 50);
               }
             }
           }
 
-          this.displayGroups(s);
+
           this.move(s); // move the current player
         }
       };
@@ -149,76 +107,50 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.canvas = new p5(sketch);
 
     document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
+
   }
 
-
   move(sketch) {
-    let inbox = document.getElementsByClassName('inbox-container')[0];
-    console.log(inbox);
-    // console.log(window.getComputedStyle(inbox).visibility);
+    // code adapted from https://p5js.org/examples/input-easing.html
+    // this code calculates the easing in/out
+    // by always moving the user towards the mouse
+    // but only a fraction (as defined by this.easing) of the distance
+    const targetX = sketch.mouseX;
+    const dx = targetX - this.myX;
+    this.myX += dx * this.easing - 5;
 
-    const x = sketch.mouseX;
-    const y = sketch.mouseY;
-
-    const speed = 5;
-
-    let dirX = 0;
-    let dirY = 0;
-
-    if (x < sketch.width / 2 - 10) {
-      dirX = -1;
-    } else if (x > sketch.width / 2 + 10) {
-      dirX = 1;
-    }
-
-    if (y < sketch.height / 2 - 10) {
-      dirY = -1;
-    } else if (y > sketch.height / 2 + 10) {
-      dirY = 1;
-    }
+    const targetY = sketch.mouseY;
+    const dy = targetY - this.myY;
+    this.myY += dy * this.easing + 5;
 
     // outer boundaries
-    if (this.myY < 10) {
-      this.myY = 10;
+    if (this.myY < -500) {
+      this.myY = -500;
     } else if (this.myY > 1000) {
       this.myY = 1000;
     }
 
-    if (this.myX < 10) {
-      this.myX = 10;
+    if (this.myX < -500) {
+      this.myX = -500;
     } else if (this.myX > 1000) {
       this.myX = 1000;
     }
 
-    this.myX += speed * dirX;
-    this.myY += speed * dirY;
-
     this.database.ref('users/' + this.username).set({
       x: this.myX,
       y: this.myY,
-      role: this.myRole,
-      bio: this.myBio
+      role: this.myRole
     });
 
     this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
   }
 
   drawUser(sketch, x, y, name, role) {
+    const userSize = 50;
     sketch.strokeWeight(0);
 
-    this.getUserColor(sketch, role);
-
-    sketch.rectMode('center');
-    sketch.rect(x, y, this.userSize, this.userSize);
-    sketch.fill(172, 182, 195);
-    sketch.textSize(12);
-    sketch.textAlign('center');
-    sketch.text(name, x, y + this.userSize);
-    sketch.noFill();
-  }
-
-  getUserColor(sketch, role) {
     // decide the color based on the role of the user
+    console.log(role);
     switch (role) {
       case 'student':
         sketch.fill(79, 205, 196);
@@ -230,72 +162,44 @@ export class NetworkComponent implements OnInit, OnDestroy {
         sketch.fill(255, 107, 107);
         break;
       case 'bedrijf':
-        sketch.fill(149, 209, 123);
+        sketch.fill(	149, 209, 123);
         break;
       default:
         sketch.fill(249, 212, 138);
     }
+
+    sketch.ellipseMode('center');
+    sketch.ellipse(x, y, userSize, userSize);
+    sketch.fill(0);
+    sketch.textSize(12);
+    sketch.text(name, x, y + userSize);
+    sketch.noFill();
   }
 
   displayGroups(sketch) {
     // web room
-    this.displayGroup(sketch, 500, 450, 150, 'Web');
+    this.displayGroup(sketch, 500, 450, 150, 'Web Cluster');
     // motion room
-    this.displayGroup(sketch, 800, 700, 200, 'Motion');
+    this.displayGroup(sketch, 800, 700, 200, 'Motion Cluster');
     // alternate reality room
-    this.displayGroup(sketch, 400, 100, 130, 'AR');
+    this.displayGroup(sketch, 400, 100, 130, 'AR Cluster');
     // mobile room
-    this.displayGroup(sketch, 200, 700, 170, 'Mobile');
+    this.displayGroup(sketch, 200, 700, 170, 'Mobile Cluster');
     // experience room
-    this.displayGroup(sketch, 50, 400, 200, 'Digital Making');
-    // general room
-    this.displayGroup(sketch, 800, 100, 250, 'General');
+    this.displayGroup(sketch, 50, 400, 250, 'Experience Cluster')
   }
 
   displayGroup(sketch, x, y, r, name) {
-    // background
-    sketch.noStroke();
-    sketch.fill(255, 107, 107);
+    sketch.strokeWeight(3);
+    sketch.stroke(249, 212, 138);
+    sketch.noFill();
     sketch.circle(x, y, r);
-
-    // text
     sketch.fill(0);
     sketch.textAlign('center');
     sketch.strokeWeight(0);
-    sketch.textSize(25);
-    sketch.text(name, x, y - r / 3.5);
+    sketch.textSize(20);
+    sketch.text(name, x, y);
     sketch.noFill();
-
-    // image
-    let image;
-    switch (name) {
-      case 'Web':
-        image = this.webImage;
-        break;
-      case 'Motion':
-        image = this.motionImage;
-        break;
-      case 'Mobile':
-        image = this.mobileImage;
-        break;
-      case 'Digital Making':
-        image = this.digitalMakingImage;
-        break;
-      case 'AR':
-        image = this.vrImage;
-        break;
-      case 'General':
-        image = this.generalImage;
-        break;
-      default:
-        image = this.generalImage;
-        break;
-    }
-
-    sketch.imageMode('center');
-    sketch.image(image, x, y, r / 3, r / 3);
-
-    // check the distance
     this.checkDistance(sketch, this.myX, this.myY, x, y, name, r / 2);
 
     // to integrate with chat: check how many people are in this room
@@ -309,32 +213,23 @@ export class NetworkComponent implements OnInit, OnDestroy {
       // console.log(action);
       // this.playing = false;
       // to integrate with chat: place here redirect to chat based on the action
-      if ((sketch.frameCount % this.roomDelay) === 0) {
-        this.gotoRoom(sketch, action, x2, y2);
+      if ((sketch.frameCount % this.roomDelay) == 0) {
+        this.gotoRoom(action);
       }
     }
   }
 
-  gotoRoom(sketch, room, x, y) {
+  gotoRoom(room) {
     let roomName;
     switch (room) {
-      case 'Motion':
-        roomName = 'Interactive Motion';
+      case 'Motion Cluster':
+        roomName = 'Motion';
         break;
-      case 'Web':
+      case 'Web Cluster':
         roomName = 'Web';
         break;
-      case 'AR':
-        roomName = 'Alternate Reality';
-        break;
-      case 'Mobile':
-        roomName = 'Mobile Appliance';
-        break;
-      case 'Digital Making':
-        roomName = 'Digital Making';
-        break;
-      case 'General':
-        roomName = 'General';
+      default:
+        roomName = 'Dance';
         break;
     }
 
@@ -349,27 +244,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   }
 
-  showUserInfo(sketch, user) {
-    sketch.textAlign('center');
-    this.getUserColor(sketch, user.role);
-    sketch.rect(user.x, user.y, 150, 190);
-    sketch.fill(0);
-    sketch.textSize(15);
-    sketch.text(user.name, user.x, user.y - 70);
-    sketch.textSize(12);
-    sketch.textAlign('left');
-    sketch.textStyle('italic');
-    sketch.text(user.role, user.x - 60, user.y - 50);
-    sketch.textStyle('normal');
-    sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
-    // console.log(user.name);
-
-
-  }
-
-  goToPrivateRoom() {
-    console.log("clicked");
-  }
 
   async checkIfUser() {
     if (this.auth.userId) {
@@ -377,10 +251,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
       this.userService.getUsers().pipe(first()).subscribe(res => {
         for (const user of res) {
-          if (user['uid'] === this.auth.userId) {
+          if (user['uid'] == this.auth.userId) {
             this.username = user['displayName'];
             this.myRole = user['function'];
-            this.myBio = user['bio'];
           }
         }
       });
@@ -397,7 +270,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.route.navigate(['/login']);
   }
   closeSearch() {
-    this.closer = !this.closer;
-    // console.log('close');
+    this.closer = false;
+    console.log('close');
   }
 }

@@ -1,100 +1,72 @@
 import {
   Component,
   OnInit,
-  OnChanges,
-  OnDestroy
+  OnChanges
 } from '@angular/core';
 
 import {
-  FormBuilder,
-  Validators,
-  FormControl,
-  FormGroup
+  FormBuilder
 } from '@angular/forms';
 import {
-  Router, ActivatedRoute
+  Router
 } from '@angular/router';
-import {
-  AuthService
-} from 'src/app/services/auth.service';
-import {
-  UsersService
-} from 'src/app/services/users.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
+export class RegisterComponent implements OnInit, OnChanges{
   user;
-  id;
-  character;
-  registerEmailForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    website: new FormControl(''),
-    functie: new FormControl('', [Validators.required]),
-    bio: new FormControl(''),
-    gdpr: new FormControl('', [Validators.required])
-  });
-  registerGoogleForm = new FormGroup({
-    website: new FormControl(''),
-    functie: new FormControl('', [Validators.required]),
-    bio: new FormControl(''),
-    gdpr: new FormControl('', [Validators.required])
-  });
+  registerEmailForm;
+  registerGoogleForm;
   GoogleHidden = true;
-  routeSub: any;
   constructor(public auth: AuthService,
-              public userService: UsersService,
-              private formBuilder: FormBuilder,
-              public route: Router, public router: ActivatedRoute) {
+    public userService: UsersService,
+    private formBuilder: FormBuilder,
+    public route: Router) {
 
-
+    this.registerEmailForm = this.formBuilder.group({
+      name: '',
+      email: '',
+      password: '',
+      website: '',
+      functie: '',
+      bio: ''
+    });
+    this.registerGoogleForm = this.formBuilder.group({
+      website: '',
+      functie: '',
+      bio: ''
+    });
   }
 
   ngOnInit() {
-    this.routeSub = this.router.params.subscribe(params => {
-      this.id = params.id;
-    });
-    this.checkIfUser();
+  this.checkIfUser();
   }
 
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
-  }
+
 
   async checkIfUser() {
     this.user = await this.auth.getUser();
     if (this.user) {
-      if (this.id === 'livestream') {
-        this.goToLivestream();
-      } else {
-        this.goToHome();
-      }
 
+
+      this.goToHome();
     }
   }
 
   goToHome() {
     this.route.navigate(['/network']);
   }
-  goToLivestream() {
-    this.route.navigate(['/livestream']);
-  }
   EmailPasswordRegister(formVal) {
-    if (this.registerEmailForm.valid) {
-      this.auth.EmailPasswordRegister(formVal, this.id);
-    }
+    this.auth.EmailPasswordRegister(formVal);
   }
 
   GoogleRegister(formVal) {
-    console.log(this.registerGoogleForm);
-    if (this.registerGoogleForm.valid) {
-      this.auth.googleSignUp(formVal, this.id);
-    }
+  this.auth.googleSignUp(formVal);
   }
   ngOnChanges() {
     if (this.auth.userId) {
@@ -103,11 +75,7 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-  ToggleForm() {
+  ToggleForm(){
     this.GoogleHidden = !this.GoogleHidden;
-  }
-
-  setActiveCharacter(string){
-    this.character = string;
   }
 }

@@ -8,8 +8,6 @@ import{ tap, map, switchMap, first} from 'rxjs/operators';
 import {of, Subscription} from'rxjs';
 import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import { getParseErrors } from '@angular/compiler';
-import { isError } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +15,7 @@ import { isError } from 'util';
 export class AuthService {
   user$: Observable < any > ;
   userId: String = '';
-  error: Observable < any > ;
+
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router, private db: AngularFireDatabase) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -92,6 +90,34 @@ return this.afAuth.authState.pipe(
 
 
 
+  // checkIfOnline(visibility) {
+  //   const uid = this.afAuth.auth.currentUser.uid;
+  //   const userStatusFirestoreRef = this.afs.doc('/status/' + uid);
+
+  //   // Firestore uses a different server timestamp value, so we'll
+  //   // create two more constants for Firestore state.
+  //   if (visibility === 'hidden' || visibility === 'unloaded') {
+  //     const isOfflineForFirestore = {
+  //       state: 'offline',
+  //       last_changed: new Date().getTime(),
+  //     };
+  //     userStatusFirestoreRef.set(isOfflineForFirestore);
+  //   } else if (visibility === 'visible') {
+  //     const isOnlineForFirestore = {
+  //       state: 'online',
+  //       last_changed: new Date().getTime(),
+  //     };
+  //     userStatusFirestoreRef.set(isOnlineForFirestore);
+  //   } else {
+  //     const isOfflineForFirestore = {
+  //       state: 'offline',
+  //       last_changed: new Date().getTime(),
+  //     };
+  //     userStatusFirestoreRef.set(isOfflineForFirestore);
+  //   }
+  // }
+
+
 
 
 
@@ -105,45 +131,16 @@ return this.afAuth.authState.pipe(
 
 
   // !=============SIGNIN============= //
-
   // Google signin
-  googleSignIn(id) {
-
+  googleSignUp(formVal) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider, id);
+    return this.oAuthRegister(provider,formVal);
+
   }
 
-  private async oAuthLogin(provider, id) {
+  private async oAuthRegister(provider, formVal) {
     const credential = await this.afAuth.signInWithPopup(provider);
-    this.getUser().then(user => {
-
-      if (user === undefined) {
-        if (id === 'livestream') {
-          return this.router.navigate(['/register', id]);
-        } else{
-          return this.router.navigate(['/register']);
-        }
-      } else {
-        if (id === 'livestream') {
-          return this.router.navigate(['/livestream']);
-        } else {
-          return this.router.navigate(['/network']);
-        }
-      }
-    });
-  }
-
-  // !=============REGISTER============= //
-   // Google register
-   googleSignUp(formVal, id) {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthRegister(provider,formVal, id);
-
-  }
-
-  private async oAuthRegister(provider, formVal, id) {
-    const credential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserDataGoogle(credential.user, formVal, id);
+    return this.updateUserDataGoogle(credential.user, formVal);
   }
 
   private updateUserDataGoogle({
@@ -151,7 +148,7 @@ return this.afAuth.authState.pipe(
     email,
     displayName,
     photoURL
-  }, formVal, id) {
+  }, formVal) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${uid}`);
 
     const data = {
@@ -162,37 +159,57 @@ return this.afAuth.authState.pipe(
       website: formVal.website,
       function: formVal.functie,
       bio: formVal.bio,
-      admin: false,
-      gdpr: formVal.gdpr
+      admin: false
     };
 
-    userRef.set(data, {
+    return userRef.set(data, {
       merge: true
-    });
-    if (id === 'livestream') {
-      return this.router.navigate(['/livestream']);
-    } else {
-      return this.router.navigate(['/network']);
-    }
+    }), this.router.navigate(['/network']);
   }
 
-    // Email & password register
-    async EmailPasswordRegister(formVal, id) {
+  // Google signin
+  googleSignIn() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-      const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(await function(error) {
+  private async oAuthLogin(provider) {
+    const credential = await this.afAuth.signInWithPopup(provider);
+    return this.router.navigate(['/network']);
+  }
+
+
+    // Email & password sign in
+    async EmailPasswordSignIn(formVal) {
+      const credentials = await this.afAuth.signInWithEmailAndPassword(formVal.email, formVal.password).catch(function(error) {
       // Handle Errors here.
       const errorCode = error.code;
-      // this.errorMessage = error.message;
+      const errorMessage = error.message;
       // ...
-
-      this.errorMessage = error.message;
-      console.log(this.errorMessage);
+      console.log(errorCode, errorMessage);
+      return errorMessage;
     });
-    return this.updateUserDataEmail(credentials,formVal, id);
+      return this.router.navigate(['/network']);
+    }
+
+
+
+    // Email & password register
+    async EmailPasswordRegister(formVal) {
+
+      const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
+      console.log(errorCode, errorMessage);
+      return errorMessage;
+    });
+    return this.updateUserDataEmail(credentials,formVal);
     }
 
       // Update user data with email
-  private updateUserDataEmail(credentials, formVal, id) {
+  private updateUserDataEmail(credentials, formVal) {
     const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${credentials.user.uid}`);
     const data = {
       uid: credentials.user.uid,
@@ -201,19 +218,12 @@ return this.afAuth.authState.pipe(
       function: formVal.functie,
       website: formVal.website,
       bio: formVal.bio,
-      admin: false,
-      gdpr: formVal.gdpr
+      admin: false
     };
 
-    userRef.set(data, {
+    return userRef.set(data, {
       merge: true
     });
-    if(id === 'livestream'){
-      return  this.router.navigate(['/livestream']);
-    }else{
-      return this.router.navigate(['/network']);
-    }
-
   }
 
 
@@ -239,8 +249,6 @@ return this.afAuth.authState.pipe(
         merge: true
       });
     }
-
-
   async signOut() {
     await this.setPresence('offline');
     await this.afAuth.signOut();

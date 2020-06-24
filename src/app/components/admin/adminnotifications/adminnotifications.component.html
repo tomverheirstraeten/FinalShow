@@ -95,9 +95,10 @@
 
   </div>
 
+  <div *ngIf="permaNotif.length > 0">
     <hr>
 
-    <h5>Sent notifications</h5>
+    <h5>Permanent notifications</h5>
     <div class="row mt-5">
       <div class="col-1">
         <h6>Time</h6>
@@ -111,12 +112,9 @@
       <div class="col-1">
         <h6>Permanent</h6>
       </div>
-      <div class="col-1">
-        <h6>Automatic</h6>
-      </div>
     </div>
 
-    <div class="row mt-2" *ngFor="let notification of notifications">
+    <div class="row mt-2" *ngFor="let notification of permaNotif">
       <div class="col-1">
         <p>{{returnTime(notification['created_at'])}}</p>
       </div>
@@ -126,16 +124,13 @@
       <div class="col-5">
         <p>{{notification['message']}}</p>
       </div>
-      <div class="col-1">
-        <p>{{notification['permanent']}}</p>
-      </div>
       <div class="col-2">
-        <p>{{notification['automatic']}}</p>
+        <p>{{notification['permanent']}}</p>
       </div>
       <div class="col-2">
         <button class="btn btn-outline-danger" (click)="deleteNotification(notification['id'])">Delete</button>
       </div>
-
+    </div>
   </div>
 
   </div>
