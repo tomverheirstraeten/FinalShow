@@ -115,7 +115,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
       this.renderer.toneMapping = THREE.ReinhardToneMapping;
       this.renderer.shadowMap.enabled = true;
-      document.addEventListener('resize', this.onWindowResize, false);
+      window.addEventListener('resize', this.onWindowResize, false);
       this.renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, true);
       this.renderer.domElement.addEventListener('click', this.onDocumentMouseClick, true);
 
@@ -269,7 +269,10 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
   // RESIZE DOCUMENT EVENTLISTENER
   onWindowResize = () => {
+    this.camera.aspect = this.el.nativeElement.clientWidth / this.el.nativeElement.clientHeight;
     this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+
   }
   toggleAnimations = () => {
     if (this.animationBool) {
