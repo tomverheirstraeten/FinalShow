@@ -1,14 +1,42 @@
-.yellow{
-    color: yellow;
-}
-.red{
-    color: red;
-}.green{
-    color: green;
+.yellow {
+    background-color:  yellow;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    padding: 1em 1em;
+    box-sizing: border-box;
 }
 
-.notification{
-  width: 100vw;
-  height: 100px;
-  background: red;
+.red {
+    background-color: red;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    padding: 1em 1em;
+    box-sizing: border-box;
+}
+
+.green {
+    background-color: green;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    padding: 1em 1em;
+    color: white;
+    box-sizing: border-box;
+}
+
+.notification {
+    // background-color: rgb(31, 31, 31);
+    position: fixed;
+    top: 75px;
+    color: white;
+    z-index: 100;
+    width: 100%;
+    padding: 1em 1em;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 2em;
+
+}
+.notification .red{
+  color : white;
+
 }

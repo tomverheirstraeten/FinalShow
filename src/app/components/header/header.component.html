@@ -1,20 +1,21 @@
 <div class="header">
   <section class="container display flex row">
     <div class="exit">
-      <img src="assets/images/door.svg" *ngIf="back !== 'true'" [routerLink]="['/rooms']"
+      <img src="assets/images/door.svg" *ngIf="back !== 'true'" (click)="checkDevice()"
         routerLinkActive="router-link-active" alt="">
       <img src="assets/images/back.svg" *ngIf="back === 'true'" (click)="goBack()" routerLinkActive="router-link-active"
         alt="">
     </div>
-    <div class="card">
-
-      <div class="body">
-        <h1>Final Show</h1>
-        <p>Room Navigation</p>
-      </div>
-      <div class="profile">
-
-      </div>
+    <div class="card flex column" (click) = 'toggleInbox = !toggleInbox'>
+      <section class="flex row">
+        <div class="body">
+          <h1>Final Show</h1>
+          <p>{{title}}</p>
+        </div>
+        <div class="profile">
+        </div>
+      </section>
     </div>
   </section>
 </div>
+<app-inbox [hidden] = 'toggleInbox'></app-inbox>
