@@ -32,7 +32,7 @@ export class AdminService {
     const collection = this.afs.collection<any>('timetable');
     const hour = time.split(':')[0];
     const minute = time.split(':')[1];
-    collection.doc(id).set({
+    collection.doc(id).update({
       time: new Date(2020, 6, 27, hour, minute),
       name: name,
       desc: desc
