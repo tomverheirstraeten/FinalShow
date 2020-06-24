@@ -5,7 +5,7 @@
     <article class="wrapper flex row flex-start">
 
       <article class="">
-        <div #chatBox class="chat right " id="chat" (scroll)='onScroll()'>
+        <div #chatBox class="chat right " id="chat" >
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
             <article *ngIf="msg.hand !== true;" class="text-msg">
                   <p>
@@ -50,7 +50,7 @@
       </button>
     </div>
 
-  <!-- </div> -->
+
 </div>
 
 </ng-container>

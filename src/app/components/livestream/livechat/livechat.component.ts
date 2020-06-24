@@ -1,9 +1,11 @@
-import { Component, OnInit, OnChanges, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, AfterViewChecked, HostListener } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { RoomsService } from 'src/app/services/rooms.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { take, takeLast } from 'rxjs/operators';
+
 @Component({
   selector: 'app-livechat',
   templateUrl: './livechat.component.html',
@@ -13,38 +15,56 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
   chat$: Observable<any>;
   newMsg: any;
   myScrollContainer: any;
-  disableScrollDown: boolean;
+  disableScrollDown: boolean = true;
+  count = 0
+  livestreamID = "ALqUn9fy9fWieiwvEFOk";
+  // livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
 
   constructor(private route: ActivatedRoute,
               public auth: AuthService,
               public userService: UsersService,
               public roomService: RoomsService) { }
-  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
+  ngOnChanges() {
     this.scrollBottom();
   }
   ngAfterViewInit() {
-    this.scrollBottom();
+    this.scrollBottom()
+
   }
   ngAfterViewChecked() {
+this.count++;
+    if(this.count === 5){
+      if (this.disableScrollDown) {
+        this.scrollBottom();
+        this.disableScrollDown = false;
+      }
+    }
+
+
+  }
+  @HostListener('load', ['$event']) onPageLoad(event: Event) {
     this.scrollBottom();
   }
   ngOnInit() {
     this.getAllChats();
-    const source = this.roomService.get('xWsddAUZ7AFFUOVJ9Muv');
+    this.roomService.get(this.livestreamID).subscribe(res =>{
+      this.scrollBottom();
+    });
+    const source = this.roomService.get(this.livestreamID)
     this.chat$ = this.roomService.joinUsers(source);
 
-    this.scrollBottom();
+
   }
 
   getAllChats(){
-    this.roomService.get('xWsddAUZ7AFFUOVJ9Muv').subscribe(res => {
+    this.roomService.get(this.livestreamID).subscribe(res => {
       this.scrollBottom();
     });
 
   }
 
   submitHand(chat) {
-    this.roomService.sendMessageHand('xWsddAUZ7AFFUOVJ9Muv');
+    this.roomService.sendMessageHand(this.livestreamID);
     this.newMsg = '';
     this.scrollBottom();
   }
@@ -53,6 +73,7 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
 
 
   submit(chatId) {
+    console.log(this.newMsg)
     if (!this.newMsg) {
       return alert('you need to enter something');
     }
@@ -66,25 +87,18 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, Afte
   }
 
 
-  public onScroll() {
-    const element = this.myScrollContainer.nativeElement;
-    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
-    if (this.disableScrollDown && atBottom) {
-      this.disableScrollDown = false;
-    } else {
-      this.disableScrollDown = true;
-    }
-  }
 
 
 
 
   private scrollBottom() {
 
-    const chatElem = document.getElementById("livechat-container");
+    const chatElem = document.getElementById('livechat-container');
 
-    if (chatElem) {
-      setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
-    }
+      if (chatElem) {
+        setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
+      }
+
+
   }
 }
