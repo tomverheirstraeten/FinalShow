@@ -1,4 +1,4 @@
-<div *ngFor='let event of timeTable' class="pagina">
+<div *ngFor='let event of timeTable' id="desktop-event-{{event['name']}}" class="desktop-event">
 
   <app-header back="true" title="{{event['name']}}"></app-header>
 

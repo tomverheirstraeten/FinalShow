@@ -3,7 +3,7 @@
   <ul #timetableHtmlList (scroll)="showEvent()">
     <li #eventListItems *ngFor='let event of timetable' class="timetable-list-item">
       <span class="time-text">{{displayTime(event["time"]) }}</span>
-      <div class="event-div">
+      <div class="event-div event-mobile">
         <a [routerLink]="'/timetable/' + event['name']">
           <h3 class="title">{{event["name"]}}</h3>
           <div class="red-arrow"><img src="../../../assets/images/arrow-white.svg"></div>
@@ -16,5 +16,7 @@
 
     </li>
   </ul>
-  <app-event *ngIf="isDesktop"></app-event>
+  <div class="event-detail">
+    <app-desktopevent [timeTable]="timetable"></app-desktopevent>
+  </div>
 </div>

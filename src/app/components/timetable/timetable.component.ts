@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 
 @Component({
@@ -23,9 +23,9 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   constructor(private service: AdminService) {
     this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
-      console.log(timetableData);
     });
   }
+
 
   displayTime(time) {
     let date = new Date(time.seconds * 1000);
@@ -119,7 +119,6 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       this.previousSelectedHtmlEventDetails = eventsDetailsDivs.item(0);
       for (let i = 1; i < eventsDetailsDivs.length; i++) {
         eventsDetailsDivs[i].classList.add('hidden');
-        console.log(eventsDetailsDivs[i]);
       }
 
       this.previousSelectedHtmlEvent = this.eventListItems.first.nativeElement.childNodes[2]

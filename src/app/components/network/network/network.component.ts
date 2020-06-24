@@ -113,7 +113,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
         s.stroke(0);
         s.rect(0, 0, s.width, s.height);
 
-        if (this.playing) { // if all the conditions to start playing are met (e.g. logged in)
+        console.log(this.closer);
+
+        if (this.playing && this.closer) { // if all the conditions to start playing are met (e.g. logged in)
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
@@ -207,8 +209,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.textSize(12);
     sketch.text(name, x, y + this.userSize);
     sketch.noFill();
-
-    sketch
   }
 
   getUserColor(sketch, role) {
@@ -351,11 +351,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.text(user.name, user.x, user.y - 50);
     sketch.textSize(12);
     sketch.textAlign('left');
-    sketch.text(user.bio, user.x, user.y + 15, 100, 120);
+    sketch.text(user.role, user.x, user.y);
+    sketch.text(user.bio, user.x, user.y, 100, 120);
     // console.log(user.name);
+
 
   }
 
+  goToPrivateRoom() {
+    console.log("clicked");
+  }
 
   async checkIfUser() {
     if (this.auth.userId) {
@@ -383,7 +388,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.route.navigate(['/login']);
   }
   closeSearch() {
-    this.closer = false;
+    this.closer = !this.closer;
     console.log('close');
   }
 }
