@@ -154,7 +154,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   move(sketch) {
     let inbox = document.getElementsByClassName('inbox-container')[0];
-    console.log(inbox);
+    // console.log(inbox);
     // console.log(window.getComputedStyle(inbox).visibility);
 
     const x = sketch.mouseX;
