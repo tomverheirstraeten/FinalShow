@@ -7,27 +7,19 @@
 .pagina {
     //height: 100vh;
     box-sizing: border-box;
-
-    h2 {
-        float: right;
-    }
-    a{
-        color: #000;
-        text-decoration: underline;
-    }
-    ol {
-        background-color: $white;
-        box-sizing: border-box;
-        margin-top: 30px;
-
-        li {
-            margin-bottom: 30px;
-
-            h3 {
-                margin-bottom: 10px;
-            }
+    
+        label {
+          margin-bottom: 1em;
+          font-size: 0.7em;
         }
-    }
+    
+        h2 {
+          text-align: left;
+        }
+    
+        textarea {
+          margin-bottom: 1em;
+        }
     .input-form {
         display: flex;
         flex-direction: column;
@@ -46,7 +38,7 @@
         flex-direction: row;
         overflow: scroll;
         .slide-content {
-          width: 20%;
+          width: 10%;
             display: flex;
             input {
               &:checked+label {
@@ -63,18 +55,49 @@
             label {
               opacity: 0.5;
               border-radius: 3px;
-              margin-top: 3em;
+              margin-top: 1em;
               display: flex;
               align-items: center;
               justify-content: center;
-              padding: 3em;
+              padding: 1em;
               img {
-                width: 100px;
+                width: 50px;
                       }
             }
         }
       }
+      button.active {
+        border: 1px solid #F9D48A;
+      }
+      
+      button {
+        width: 100%;
+        min-width: 200px;
+        padding: 1em 2em;
+        margin-bottom: 1em;
+        text-align: center !important;
+        background-color: #fcfcfc;
+        border-radius: 2px;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.18);
+        cursor: pointer;
+        cursor: hand;
+        align-self: center;
+        transition: all 400ms ease 0s;
+        border: none;
+      }
+      .button:hover {
+        box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+        user-select: none
+      }
+      
+      .button:active {
+        box-shadow: 0 1px 1px #757575;
+        background: #F8F8F8;
+        color: #fff;
+        user-select: none
+      }
 }
+
 @media only screen and (max-width: 768px) {
     .pagina{
     width: 90%;
@@ -95,7 +118,6 @@
         display:none;
     }
 }
-
 
 #profileData {
     display: block;
