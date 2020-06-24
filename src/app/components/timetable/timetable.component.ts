@@ -105,6 +105,14 @@ export class TimetableComponent implements OnInit, AfterViewInit {
     });
   };
 
+  getCurrentActiveEvent(){
+    const activeEvent = this.timetable.find(event => event['active'] == true);
+    const activeEventInHtml = document.getElementById(activeEvent['name']);
+
+    activeEventInHtml.classList.add('currentActiveEvent');
+    return activeEvent;
+  }
+
   ngOnInit(): void {
     if (window.screen.width >= 769) {
       this.isDesktop = true;
@@ -125,6 +133,10 @@ export class TimetableComponent implements OnInit, AfterViewInit {
 
       this.previousSelectedHtmlEvent = this.eventListItems.first.nativeElement.childNodes[2]
       this.previousSelectedHtmlEvent.classList.add("selectedEvent");
+      const activeEvent = this.getCurrentActiveEvent();
+
+      // smooth scroll to current event.
+      this.timetableHtmlList.nativeElement.scrollTo({ top: activeEvent['scrollHeight'], behavior: 'smooth' });
     })
   }
 
