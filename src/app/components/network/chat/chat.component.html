@@ -42,7 +42,8 @@
                     <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
                     <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
-                  <p>{{ msg.content }}</p>
+                  <p *ngIf="!mobile">{{ msg.content }}</p>
+                  <p *ngIf="mobile" appHoldable (holdTime)="holdHandler($event)" class="holdable">{{ msg.content }}</p>
                   <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
                 <!-- <div class="user flex column">

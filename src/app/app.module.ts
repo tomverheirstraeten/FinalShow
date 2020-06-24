@@ -39,6 +39,7 @@ import { InboxComponent } from './components/inbox/inbox.component';
 import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
+import { HoldableDirective } from './holdable.directive';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { FourOfourComponent } from './components/four-ofour/four-ofour.component
       InboxComponent,
       DesktopeventComponent,
       RedirectComponent,
-      FourOfourComponent
+      FourOfourComponent,
+      HoldableDirective
    ],
    imports: [
       BrowserModule,
