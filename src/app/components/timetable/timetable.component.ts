@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
+import * as _ from "lodash";
 
 
 @Component({
