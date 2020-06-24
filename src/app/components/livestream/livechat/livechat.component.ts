@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { RoomsService } from 'src/app/services/rooms.service';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from 'src/app/app.component';
 @Component({
@@ -23,14 +23,14 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
   livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
 
   constructor(private route: ActivatedRoute,
-              public auth: AuthService,
-              public userService: UsersService,
-              public roomService: RoomsService) { }
+    public auth: AuthService,
+    public userService: UsersService,
+    public roomService: RoomsService) { }
   ngOnChanges() {
     this.scrollBottom();
   }
   ngAfterViewInit() {
-  console.log('afterView');
+    console.log('afterView');
 
   }
 
@@ -46,7 +46,7 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit() {
     this.getAllChats();
-    this.roomService.get(this.livestreamID).subscribe(res =>{
+    this.roomService.get(this.livestreamID).subscribe(res => {
       this.scrollBottom();
     });
     const source = this.roomService.get(this.livestreamID)
@@ -93,7 +93,7 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
       setTimeout(() => {
         chatElem.scrollTop = chatElem.scrollHeight;
       }
-      , 500);
+        , 500);
     }
   }
 }
