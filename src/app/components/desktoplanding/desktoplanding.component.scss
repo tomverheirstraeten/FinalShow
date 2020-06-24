@@ -5,17 +5,17 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: black
+  background-color: #4FCDC4
 }
 
 h2 {
   position: absolute;
   z-index: 3;
-  font-size: 5em;
+  font-size: 7em;
   top: 30%;
   left: 10%;
   color: #4FCDC4;
-  text-shadow: 2px 2px #f98a8a;
+  text-shadow: 2px 2px #F9D48A;
   cursor: default;
 
 }
@@ -37,19 +37,36 @@ h2 span {
 }
 
 #loadbarcontainer h3 {
-  color: white;
+  color: #FF6B6B;
+  text-shadow: 1px 1px #c26c6c;
   align-self: center;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 #loadbar {
-  background-color: white;
-  height: 20%;
+  background-color: #F9D48A;
+  height: 30%;
+  border-radius: 2em;
+  padding: 0.5em;
   justify-self: center;
   width: 0%;
 }
 
-#loadbar::after {
-  width: 100%;
-  border: 0.5px solid red;
+#animationsOn {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 75px;
+  border-radius: 2em;
+  padding: 0.5em;
+  background-color: rgb(214, 83, 83);
+  text-align: center;
+  color: white;
+  box-shadow: 1px 1px 40px rgb(214, 83, 83);
+  cursor: pointer;
+}
+
+.playanimation {
+  background-color: rgb(81, 169, 81) !important;
+  box-shadow: 1px 1px 30px rgb(158, 211, 162) !important;
 }

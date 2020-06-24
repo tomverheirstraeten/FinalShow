@@ -24,17 +24,11 @@ export class HeaderComponent implements OnInit {
 
   checkDevice = () => {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(this.useragent)) {
-      this.router.navigate(["/rooms"])
-    }
-
-
-    else if (/Chrome/i.test(this.useragent)) {
-      this.router.navigate(["/desktopLanding"])
-    }
-
-
-    else {
-      this.router.navigate(["/desktopLanding"])
+      this.router.navigate(['/rooms'])
+    } else if (/Chrome/i.test(this.useragent)) {
+      this.router.navigate(['/desktopLanding'])
+    } else {
+      this.router.navigate(['/desktopLanding'])
     }
   }
 
