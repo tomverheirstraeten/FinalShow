@@ -33,6 +33,7 @@ Enjoyy! 👏
 ### JS Library
 * [p5js](https://p5js.org/)
 * [Three.js](https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene)
+* [Lodash](https://lodash.com)
 ### Documentation
 * [Stackoverflow](https://stackoverflow.com)
 * [W3schools](https://w3schools.com)
