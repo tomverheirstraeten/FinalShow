@@ -29,6 +29,7 @@ import {
 export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   user;
   id;
+  character;
   registerEmailForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -104,5 +105,9 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
 
   ToggleForm() {
     this.GoogleHidden = !this.GoogleHidden;
+  }
+
+  setActiveCharacter(string){
+    this.character = string;
   }
 }
