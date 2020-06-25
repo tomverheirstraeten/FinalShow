@@ -68,10 +68,14 @@ export class LoginComponent implements OnInit, OnChanges, OnDestroy{
   private async checkIfUser() {
     this.user = await this.auth.getUser();
     if (this.user) {
-      if (this.id === 'livestream') {
-        this.goToLivestream();
-      } else {
-        this.goToHome();
+      if(this.user.function){
+        if (this.id === 'livestream') {
+          this.goToLivestream();
+        } else {
+          this.goToHome();
+        }
+      }else{
+        this.gotoGoogleRegister();
       }
     }
   }
@@ -98,6 +102,9 @@ export class LoginComponent implements OnInit, OnChanges, OnDestroy{
 
   goToHome() {
     this.route.navigate(['/network']);
+  }
+  gotoGoogleRegister() {
+    this.route.navigate(['/google-register']);
   }
   goToLivestream() {
     this.route.navigate(['/livestream']);

@@ -1,51 +1,25 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  OnDestroy
-} from '@angular/core';
-
-import {
-  FormBuilder,
-  Validators,
-  FormControl,
-  FormGroup
-} from '@angular/forms';
-import {
-  Router, ActivatedRoute
-} from '@angular/router';
-import {
-  AuthService
-} from 'src/app/services/auth.service';
-import {
-  UsersService
-} from 'src/app/services/users.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-googleregister',
+  templateUrl: './googleregister.component.html',
+  styleUrls: ['./googleregister.component.scss']
 })
-export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
+export class GoogleregisterComponent implements OnInit {
   user;
   id;
   character;
-  registerEmailForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    website: new FormControl(''),
-    functie: new FormControl('', [Validators.required]),
-    bio: new FormControl(''),
-    gdpr: new FormControl('', [Validators.required])
-  });
   registerGoogleForm = new FormGroup({
     website: new FormControl(''),
     functie: new FormControl('', [Validators.required]),
     bio: new FormControl(''),
     gdpr: new FormControl('', [Validators.required])
   });
-
+  GoogleHidden = true;
   routeSub: any;
   position = 0;
   positionStyle = "";
@@ -79,13 +53,8 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
 
   async checkIfUser() {
     this.user = await this.auth.getUser();
-    if (this.user) {
-      if (this.id === 'livestream') {
-        this.goToLivestream();
-      } else {
-        this.goToHome();
-      }
-
+    if (!this.user) {
+    this.goToLogin();
     }
   }
 
@@ -95,16 +64,12 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   goToLivestream() {
     this.route.navigate(['/livestream']);
   }
-  EmailPasswordRegister(formVal) {
-    if (this.registerEmailForm.valid) {
-      this.auth.EmailPasswordRegister(formVal, this.id, this.character);
-    }
-  }
+
 
   GoogleRegister(formVal) {
     console.log(this.registerGoogleForm);
     if (this.registerGoogleForm.valid) {
-      this.auth.googleSignUp(formVal, this.id, this.character);
+      this.auth.googleUpdate(formVal, this.id, this.character);
     }
   }
   ngOnChanges() {
@@ -112,6 +77,10 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
       this.goToHome();
     }
 
+  }
+
+  ToggleForm() {
+    this.GoogleHidden = !this.GoogleHidden;
   }
 
   setActiveCharacter(character){
@@ -130,6 +99,8 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
       this.position -= 100;
       this.positionStyle = this.position + "%";
     }
-
+  }
+  goToLogin() {
+    this.route.navigate(['/login']);
   }
 }

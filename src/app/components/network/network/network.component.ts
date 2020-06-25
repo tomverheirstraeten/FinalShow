@@ -213,7 +213,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       let dirX = 0;
       let dirY = 0;
 
-      if (x < sketch.width / 2 - 10) { 
+      if (x < sketch.width / 2 - 10) {
         dirX = -1;
       } else if (x > sketch.width / 2 + 10) {
         dirX = 1;
@@ -431,17 +431,20 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
   async checkIfUser() {
-    if (this.auth.userId) { // check if the user is logged in
-      this.user = await this.auth.user$;
-
-      this.userService.getUsers().pipe(first()).subscribe(res => { // if the user is logged in, get their data
+    this.user = await this.auth.getUser();
+    if (this.user) {
+      this.userService.getUsers().pipe(first()).subscribe(res => {
         for (const user of res) {
           if (user['uid'] === this.auth.userId) {
-            this.username = user['displayName'];
-            this.myRole = user['function'];
-            this.myBio = user['bio'];
-            this.myId = user['uid'];
-            this.myCharacter = user['character'];
+            if(user['function'] === '') {
+              this.goToLogin();
+            } else {
+              this.username = user['displayName'];
+              this.myRole = user['function'];
+              this.myBio = user['bio'];
+              this.myId = user['uid'];
+              this.myCharacter = user['character'];
+            }
           }
         }
       });
@@ -449,7 +452,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
       this.playing = true;
     } else {
       this.goToLogin();
-
     }
   }
 
