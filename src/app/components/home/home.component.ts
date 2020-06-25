@@ -11,9 +11,9 @@ export class HomeComponent implements OnInit {
   currentRoom = 0;
 
   roomNumbers = [0,1,2,3];
-  linkList = ['/livestream', '/faq', '/network', '/timetable'];
-  nameList = ['Livestream', 'Help Center', 'Chatrooms', 'Timetable'];
-  imageList = ['medialab.png', 'fablab.png', 'conversationroom.png', 'entrance.png']
+  linkList = ['/livestream', '/network', '/timetable', '/faq'];
+  nameList = ['Livestream' , 'Chatrooms', 'Timetable' , 'Help Center'];
+  imageList = ['medialab.png', 'conversationroom.png', 'entrance.png', 'fablab.png']
 
   currentLink = this.linkList[0];
   currentName = this.nameList[0];

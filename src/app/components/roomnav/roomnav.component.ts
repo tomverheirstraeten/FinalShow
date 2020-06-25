@@ -26,11 +26,6 @@ export class RoomnavComponent implements OnInit {
       image: 'medialab.png'
     },
     {
-      name: 'Help Center',
-      link: '/faq',
-      image: 'fablab.png'
-    },
-    {
       name: 'Chatrooms',
       link: '/network',
       image: 'conversationroom.png'
@@ -39,6 +34,11 @@ export class RoomnavComponent implements OnInit {
       name: 'Timetable',
       link: '/timetable',
       image: 'entrance.png'
+    },
+    {
+      name: 'Help Center',
+      link: '/faq',
+      image: 'fablab.png'
     }
   ];
 
