@@ -214,7 +214,6 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
     this.mouse.x = (event.offsetX / this.el.nativeElement.clientWidth) * 2 - 1;
     this.mouse.y = - (event.offsetY / this.el.nativeElement.clientHeight) * 2 + 1;
-    console.log(this.mouse.x)
   }
   onDocumentMouseClick = () => {
     this.raycaster.setFromCamera(this.mouse, this.camera);
@@ -341,7 +340,6 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       } else if (intersects[0].object.parent.name === 'ehb_logo') {
         this.el.nativeElement.style.cursor = "pointer"
       } else if (intersects[0].object.parent.name === 'entrance') {
-        console.log(intersects)
 
         this.entrancemesh.position.y = this.yPos.entryY + 0.2
         this.conversationMesh.position.y = this.yPos.converY

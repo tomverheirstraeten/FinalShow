@@ -17,6 +17,9 @@
 <app-header class="red"></app-header>
 <section id="RegisterForm" class="container-grid">
 
+  <div class="registerImage" *ngIf="!mobile">
+    <img src="../../../../assets/register.gif">
+  </div>
 
   <article class="container register-wrapper">
     <h2>Registreren</h2>
@@ -31,8 +34,8 @@
           <div class="input-form">
             <label for="Character">Character</label>
             <section class="flex row space-between">
-              <div (click)='  goleft()'>Go Left</div>
-              <div (click)='  goright()'>Go Right</div>
+              <div (click)='  goleft()' class="pointer">Naar Links</div>
+              <div (click)='  goright()' class="pointer">Naar Rechts</div>
             </section>
           <section class="slider-wrapper">
             <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">

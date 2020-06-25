@@ -30,6 +30,9 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   user;
   id;
   character;
+
+  mobile = false;
+
   registerEmailForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -55,8 +58,9 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
               public userService: UsersService,
               private formBuilder: FormBuilder,
               public route: Router, public router: ActivatedRoute) {
-
-
+                if(screen.width < 768){
+                  this.mobile = true;
+                }
   }
 
   ngOnInit() {
