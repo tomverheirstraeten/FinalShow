@@ -57,6 +57,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   x;
   y;
 
+  roomSubscribe;
 
   constructor(public auth: AuthService,
     public cs: ChatService,
@@ -69,6 +70,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
+    this.roomSubscribe.unsubscribe();
   }
 
   ngOnInit() {
@@ -77,7 +79,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
     let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '' }];
 
-    this.database.ref('users').on('value', (snapshot) => {
+    this.database.ref('users').once('value', (snapshot) => {
       let count = 0;
       snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
@@ -89,10 +91,12 @@ export class NetworkComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.roomsService.getRooms().subscribe((rooms) => {
+    this.roomSubscribe = this.roomsService.getRooms().subscribe((rooms) => {
       this.allRooms = rooms;
       // console.log(this.allRooms);
     });
+
+    this.getmyChats();
 
     // start drawing the interaction room
     const sketch = s => {
@@ -164,7 +168,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     };
     this.canvas = new p5(sketch);
 
-    document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
+    // document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
   }
 
 
@@ -393,7 +397,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
     if (this.userInfoName !== '') {
       let chatFound = false;
       // console.log(this.userInfoName);
-      this.getmyChats();
       if (this.myChats !== []) {
         for (const chat of this.myChats) {
           if (chat.displayName === this.userInfoName) {
