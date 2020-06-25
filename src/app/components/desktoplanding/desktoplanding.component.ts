@@ -83,7 +83,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line: max-line-length
       this.camera = new THREE.OrthographicCamera(this.frustumSize * this.aspect / - 2, this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, -10, 20);
 
-      const light1 = new HemisphereLight(0xf77f00, 0xd62828, 6);
+      const light1 = new HemisphereLight(0xffffaa, 0xd62828, 6);
 
 
       this.spotlight = new SpotLight(0xFFF2A6, 4);
@@ -148,13 +148,12 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
         } else if (mesh.name === 'terrain') {
           mesh.layers.disable(0)
-        } else {
-          mesh.layers.disable(0)
         }
       }
       for (const speech of this.speechmeshes) {
         speech.visible = false;
       }
+
       this.mixer = new THREE.AnimationMixer(this.scene);
       setInterval(this.randomCar, 3000);
       this.mixer.clipAction(this.animations[0]).setLoop(THREE.LoopRepeat, 1);
