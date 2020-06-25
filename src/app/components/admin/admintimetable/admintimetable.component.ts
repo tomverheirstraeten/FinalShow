@@ -25,7 +25,7 @@ export class AdmintimetableComponent implements OnInit {
     this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
       console.log(timetableData);
-    });
+    }).unsubscribe();
   }
 
   clickActive(id){

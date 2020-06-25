@@ -28,7 +28,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.getmyChats();
   }
   ngOnDestroy(): void {
-    // this.allChatSub.unsubscribe();
+    this.allChatSub.unsubscribe();
   }
 
   async getmyChats() {
@@ -78,7 +78,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         }
         this.myChats = chats;
       }
-    });
+    }).unsubscribe();
   }
 
 

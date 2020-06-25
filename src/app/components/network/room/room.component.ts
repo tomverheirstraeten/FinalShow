@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnChanges, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,7 +10,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss']
 })
-export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterViewChecked {
+export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterViewChecked, OnDestroy {
 
   chat$: Observable<any>;
   newMsg: string;
@@ -23,28 +23,40 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
     public userService: UsersService,
     public roomService: RoomsService,
   ) {}
+  @HostListener('window:load', ['$event']) onPageLoad(event: Event) {
+    // this.scrollBottom();
+
+    setTimeout(() => {
+      console.log('loaded');
+      this.scrollBottom();
+    }, 500);
+
+  }
+  ngOnDestroy(){
+
+  }
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
-    this.scrollToBottom();
+    this.scrollBottom();
   }
   ngAfterViewInit() {
-    this.scrollToBottom();
+    this.scrollBottom();
 }
   // tslint:disable-next-line: use-life-cycle-interface
   ngAfterViewChecked() {
-    this.scrollToBottom();
+    this.scrollBottom();
   }
   ngOnInit() {
     const chatId = this.route.snapshot.paramMap.get('id');
     const source = this.roomService.get(chatId);
-    this.chat$ = this.roomService.joinUsers(source); // .pipe(tap(v => this.scrollToBottom(v)));
-    this.scrollToBottom();
+    this.chat$ = this.roomService.joinUsers(source); // .pipe(tap(v => this.scrollBottom(v)));
+    this.scrollBottom();
   }
 
   submitHand(chat) {
     this.roomService.sendMessageHand(chat.id);
     // this.updateMessageSeen(chat);
     this.newMsg = '';
-    this.scrollToBottom();
+    this.scrollBottom();
   }
 
   returnDate(timestamp) {
@@ -59,7 +71,7 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
     }
     this.roomService.sendMessage(chatId, this.newMsg);
     this.newMsg = '';
-    this.scrollToBottom();
+    this.scrollBottom();
   }
 
   trackByCreated(i, msg) {
@@ -78,14 +90,14 @@ export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterVi
   }
 
 
-  private scrollToBottom(): void {
-    if (this.disableScrollDown) {
-        return;
+  private scrollBottom() {
+    const chatElem = document.getElementById('chat');
+    if (chatElem) {
+      setTimeout(() => {
+        chatElem.scrollTop = chatElem.scrollHeight;
+      }
+        , 500);
     }
-    try {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }
   }
-
 
 }

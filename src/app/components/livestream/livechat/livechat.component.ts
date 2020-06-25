@@ -1,9 +1,9 @@
-import { Component, OnInit, OnChanges, AfterViewInit, AfterViewChecked, HostListener } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, AfterViewChecked, HostListener, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { RoomsService } from 'src/app/services/rooms.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from 'src/app/app.component';
 @Component({
@@ -11,21 +11,27 @@ import { AppComponent } from 'src/app/app.component';
   templateUrl: './livechat.component.html',
   styleUrls: ['./livechat.component.scss']
 })
-export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
+export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   chat$: Observable<any>;
   newMsg: any;
   myScrollContainer: any;
   disableScrollDown = true;
   count = 0;
   container: HTMLElement;
+  allChatsSub: Subscription;
+  liveChatSub: Subscription;
 
-  //livestreamID = "ALqUn9fy9fWieiwvEFOk";
+  // livestreamID = "ALqUn9fy9fWieiwvEFOk";
   livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
 
   constructor(private route: ActivatedRoute,
     public auth: AuthService,
     public userService: UsersService,
     public roomService: RoomsService) { }
+  ngOnDestroy() {
+    this.allChatsSub.unsubscribe();
+    this.liveChatSub.unsubscribe();
+  }
   ngOnChanges() {
     this.scrollBottom();
   }
@@ -46,17 +52,17 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit() {
     this.getAllChats();
-    this.roomService.get(this.livestreamID).subscribe(res => {
+    this.liveChatSub = this.roomService.get(this.livestreamID).subscribe(res => {
       this.scrollBottom();
-    });
+    })
     const source = this.roomService.get(this.livestreamID)
     this.chat$ = this.roomService.joinUsers(source);
   }
 
   getAllChats() {
-    this.roomService.get(this.livestreamID).subscribe(res => {
+   this.allChatsSub =  this.roomService.get(this.livestreamID).subscribe(res => {
       this.scrollBottom();
-    });
+    })
   }
 
   submitHand(chat) {
@@ -81,10 +87,6 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit {
   trackByCreated(i, msg) {
     return msg.createdAt;
   }
-
-
-
-
 
 
   private scrollBottom() {

@@ -11,6 +11,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
 import { InboxComponent } from '../../inbox/inbox.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -56,7 +57,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userInfoId: string;
   x;
   y;
-
+  allChatSub: Subscription;
 
   constructor(public auth: AuthService,
     public cs: ChatService,
@@ -69,6 +70,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
+    this.allChatSub.unsubscribe();
   }
 
   ngOnInit() {
@@ -435,7 +437,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
             this.myId = user['uid'];
           }
         }
-      });
+      })
 
       // console.log(this.username);
       this.playing = true;
@@ -457,7 +459,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     const user = await this.auth.getUser();
     if (user) {
       const userId = user.uid;
-      await this.cs.getAllChats().subscribe((res) => {
+      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {
@@ -465,7 +467,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
             this.getOtherUserName(chat, chats, userId);
           }
         }
-      });
+      })
     }
   }
 
@@ -506,7 +508,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
       }
-    });
+    }).unsubscribe();
   }
 
 
