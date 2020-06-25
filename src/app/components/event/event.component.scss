@@ -48,4 +48,14 @@
         margin-top: 3%;
     }
 
+    .nominees{
+        li{
+            margin-top: 3%;
+           list-style-type: circle;
+        }
+        .bold{
+            font-weight: 400;
+        }
+    }
+
 }
