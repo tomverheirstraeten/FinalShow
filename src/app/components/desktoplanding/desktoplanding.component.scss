@@ -1,10 +1,3 @@
-#background {
-  background-color: #4fcdc572;
-  width: 100vw;
-  height: 100vh
-}
-
-
 #canvas {
   width: 100vw;
   height: 100vh;
@@ -12,34 +5,24 @@
   position: absolute;
   top: 0;
   left: 0;
+  background-color: #4FCDC4
 }
 
-img {
-  position: absolute;
-  width: 400px;
-  top: 0%;
-  left: 5%;
-  transform: skew(0deg, 6deg);
-
-}
-
-#logotext {
+h2 {
   position: absolute;
   z-index: 3;
+  font-size: 5em;
   top: 30%;
-  left: 5%;
+  left: 10%;
+  color: #4FCDC4;
+  text-shadow: 2px 2px #F9D48A;
+  cursor: default;
 
-  h2 {
-    font-size: 6em;
-    cursor: default;
-  }
-
-  p {
-    font-size: 1.5em;
-    line-height: 0;
-  }
 }
 
+h2 span {
+  line-height: 1em;
+}
 
 #loadbarcontainer {
   height: 50px;
@@ -51,19 +34,22 @@ img {
   flex-direction: column;
   justify-content: space-between;
 
-  h3 {
-    align-self: center;
-  }
 }
 
-
+#loadbarcontainer h3 {
+  color: #FF6B6B;
+  text-shadow: 1px 1px #c26c6c;
+  align-self: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
 #loadbar {
-  height: 5%;
-  padding: 0.2em;
+  background-color: #F9D48A;
+  height: 30%;
+  border-radius: 2em;
+  padding: 0.5em;
   justify-self: center;
   width: 0%;
-  background-color: black
 }
 
 #animationsOn {

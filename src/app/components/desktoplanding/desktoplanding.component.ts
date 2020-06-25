@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import * as  THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { HemisphereLight, SpotLight, ImageLoader, Vector2 } from 'three';
+import { HemisphereLight, SpotLight } from 'three';
 import { Router } from '@angular/router';
 @Component({
   selector: 'desktop-landing',
@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class DesktopLandingComponent implements OnInit, OnDestroy {
   gltfLoader = new GLTFLoader();
-  imageLoader = new ImageLoader();
   raycaster = new THREE.Raycaster();
   percentloaded = null;
   mouse = new THREE.Vector2();
@@ -19,7 +18,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   frustumSize = 7;
   aspect = null;
   loaded = false;
-  renderer = new THREE.WebGLRenderer({ alpha: true });
+  renderer = new THREE.WebGLRenderer();
   spotlight;
   medialabMesh = null;
   conversationMesh = null;
@@ -34,7 +33,6 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   animationBool = true;
   animationsOn = 'ON';
   animationFrame = null;
-  activeLayer = 1;
   yPos = {
     mediaY: -0.044314876198768616,
     converY: -0.044314876198768616,
@@ -51,11 +49,8 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-
-
     // LOAD GLTF AND ADD EVERYTHING TO SCENE
-    this.gltfLoader.load('assets/3Dmodels/campus2.gltf', (gltf) => {
+    this.gltfLoader.load('assets/3Dmodels/campus.gltf', (gltf) => {
       this.loaded = true;
       this.scene.add(gltf.scene);
 
@@ -78,13 +73,18 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
         }
       });
 
+
+      // this.clips = this.cloudmeshes[0].animatio
       // CAMERA CONFIGURATIONS + LIGHTS + RENDERER
       this.aspect = this.el.nativeElement.clientWidth / this.el.nativeElement.clientHeight;
       // tslint:disable-next-line: max-line-length
       this.camera = new THREE.OrthographicCamera(this.frustumSize * this.aspect / - 2, this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, -10, 20);
-
-      const light1 = new HemisphereLight(0xffffaa, 0xd62828, 6);
-
+      //! daylight
+      // const light1 = new HemisphereLight(0xF9D48A, 0x000088, 6);
+      //! eveninglight
+      const light1 = new HemisphereLight(0xf77f00, 0xd62828, 6);
+      //! nightlight
+      // const light1 = new HemisphereLight(0x03045e, 0x023e8a, 6);
 
       this.spotlight = new SpotLight(0xFFF2A6, 4);
       this.spotlight.castShadow = true;
@@ -100,12 +100,17 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
 
 
+      //! daylight
+      // this.scene.background = new THREE.Color(0xa7eef4);
+      //! eveninglight
+      this.scene.background = new THREE.Color(0xfcbf49);
+      //! nightlight
+      // this.scene.background = new THREE.Color(0x14213d);
 
       this.camera.position.set(-1.2978571918256083, 1.149703013863166, 1.0747605168331336);
       this.camera.rotation.x = -0.6516285699737149;
       this.camera.rotation.y = 0.6820342591363547;
       this.camera.rotation.z = 0.4481980838983481;
-
 
 
       this.renderer.toneMapping = THREE.ReinhardToneMapping;
@@ -119,41 +124,25 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
       this.el.nativeElement.appendChild(this.renderer.domElement);
 
-      this.scene.layers.disable(0)
       for (const mesh of this.scene.children[0].children) {
 
         if (mesh.name === 'medialab') {
-
           this.medialabMesh = mesh;
-
-
         } else if (mesh.name === 'fablab') {
-
           this.fablabMesh = mesh;
-
-
         } else if (mesh.name === 'conversationroom') {
-
           this.conversationMesh = mesh;
-
         } else if (mesh.name === 'ehb_logo') {
-
           this.logomesh = mesh;
-
         } else if (mesh.name === 'speech1' || mesh.name === 'speech2' || mesh.name === 'speech3' || mesh.name === 'speech4') {
           this.speechmeshes.push(mesh);
         } else if (mesh.name === 'entrance') {
           this.entrancemesh = mesh;
-
-
-        } else if (mesh.name === 'terrain') {
-          mesh.layers.disable(0)
         }
       }
       for (const speech of this.speechmeshes) {
         speech.visible = false;
       }
-
       this.mixer = new THREE.AnimationMixer(this.scene);
       setInterval(this.randomCar, 3000);
       this.mixer.clipAction(this.animations[0]).setLoop(THREE.LoopRepeat, 1);
@@ -166,9 +155,9 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       this.mixer.clipAction(this.animations[7]).play();
       this.mixer.clipAction(this.animations[8]).setLoop(THREE.LoopRepeat, 1);
       this.mixer.clipAction(this.animations[9]).setLoop(THREE.LoopRepeat, 1);
-      this.mixer.clipAction(this.animations[10]).play();
-      this.mixer.clipAction(this.animations[11]).play();
-      this.mixer.clipAction(this.animations[12]).play();
+      this.mixer.clipAction(this.animations[10]).play()
+      this.mixer.clipAction(this.animations[11]).play()
+      this.mixer.clipAction(this.animations[12]).play()
       setInterval(this.animatePlane, 30000);
       // CALL ANIMATION FUNCTION
       this.scene.updateMatrixWorld();
@@ -180,6 +169,8 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   }
   randomCar = () => {
     if (this.animationBool) {
+
+
       if (this.carint === 0) {
         this.mixer.clipAction(this.animations[0]).play();
         this.mixer.clipAction(this.animations[0]).reset();
@@ -201,6 +192,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       if (this.carint > 4) {
         this.carint = 0;
       }
+
     }
   }
   animatePlane = () => {
@@ -209,11 +201,8 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
   }
   // UPDATE MOUSEPOSITION FOR RAYCASTING
   onDocumentMouseMove = (event) => {
-    // let x = (event.offsetX / canvas.clientWidth) * 2 - 1;
-    // let y = -(event.offsetY / canvas.clientHeight) * 2 + 1;
-
-    this.mouse.x = (event.offsetX / this.el.nativeElement.clientWidth) * 2 - 1;
-    this.mouse.y = - (event.offsetY / this.el.nativeElement.clientHeight) * 2 + 1;
+    this.mouse.x = (event.clientX / this.el.nativeElement.clientWidth) * 2 - 1;
+    this.mouse.y = - (event.clientY / this.el.nativeElement.clientHeight) * 2 + 1;
   }
   onDocumentMouseClick = () => {
     this.raycaster.setFromCamera(this.mouse, this.camera);
@@ -300,8 +289,6 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
     if (this.animationBool) {
       this.mixer.update(0.03);
     }
-
-
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children, true);
     // checkrooms

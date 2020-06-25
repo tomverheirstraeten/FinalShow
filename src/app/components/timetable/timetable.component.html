@@ -1,5 +1,5 @@
 <div class="wrapper container-grid" id="wrapper">
-  <app-header title='Programma' class= "yellow"></app-header>
+  <app-header title='Programma'></app-header>
   <ul #timetableHtmlList (scroll)="showEvent()">
     <li #eventListItems *ngFor='let event of timetable' class="timetable-list-item">
       <span class="time-text">{{displayTime(event["time"]) }}</span>

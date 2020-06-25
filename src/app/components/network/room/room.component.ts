@@ -10,7 +10,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss']
 })
-export class RoomComponent implements OnInit, OnChanges, OnDestroy {
+export class RoomComponent implements OnInit, AfterViewInit , OnChanges, AfterViewChecked, OnDestroy {
 
   chat$: Observable<any>;
   newMsg: string;
@@ -38,7 +38,13 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     this.scrollBottom();
   }
-
+  ngAfterViewInit() {
+    this.scrollBottom();
+}
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewChecked() {
+    this.scrollBottom();
+  }
   ngOnInit() {
     const chatId = this.route.snapshot.paramMap.get('id');
     const source = this.roomService.get(chatId);

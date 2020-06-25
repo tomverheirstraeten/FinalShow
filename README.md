@@ -49,13 +49,7 @@ Enjoyy! 👏
 * [Stackoverflow](https://stackoverflow.com)
 * [W3schools](https://w3schools.com)
 * [Css Tricks](https://css-tricks.com/)
-* [Sketchpad Angular/p5](https://indepth.dev/creating-a-sketchpad-with-angular-and-p5js/)
-* [digitalocean](https://www.digitalocean.com/community/tutorials/angular-socket-io#project-setup)
-* [Chat start](https://github.com/AngularFirebase/144-firestore-group-chat)
-* [User Presence](https://www.youtube.com/watch?v=bL3I7Pls-1w)
-* [Angular Security](https://netbasal.com/angular-2-security-the-domsanitizer-service-2202c83bd90#:~:text=%E2%80%9Cunsafe%20value%20used%20in%20athat%20unsuspecting%20users%20could%20execute)
-* [Icons](https://www.flaticon.com/free-icon/view_709612?term=eye&page=1&position=1)
-* [Three.js](https://threejs.org/docs/#api/en/objects/Sprite)
+
 ### 3D
 * [Blender](https://www.blender.org/)
 * [Maya](https://www.autodesk.com/products/maya/overview?support=ADVANCED&plc=MAYA&term=1-YEAR&quantity=1)
