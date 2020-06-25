@@ -126,7 +126,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
 
       s.setup = () => { // initial setup
-        s.createCanvas(s.windowWidth, s.windowHeight);
+        s.createCanvas(window.innerWidth, window.innerHeight);
 
         s.frameRate(20);
       };
