@@ -26,12 +26,16 @@ Enjoyy! 👏
 * [Eye Icon](https://www.flaticon.com/free-icon/view_709612?term=eye&page=1&position=1)
 * [Dots Icon](https://www.flaticon.com/free-icon/ellipsis_1828805?term=dots&page=1&position=32)
 * [Bin Icon](https://www.flaticon.com/free-icon/trash_3096673?term=trash&page=1&position=7)
+* [Edit Icon](https://www.flaticon.com/free-icon/pencil_2919564?term=edit&page=1&position=16)
 * [Cancel Icon](https://www.flaticon.com/free-icon/cancel_748122?term=cancel&page=1&position=2)
 * [Angular Security](https://netbasal.com/angular-2-security-the-domsanitizer-service-2202c83bd90#:~:text=%E2%80%9Cunsafe%20value%20used%20in%20athat%20unsuspecting%20users%20could%20execute)
 * [Sketchpad Angular/p5](https://indepth.dev/creating-a-sketchpad-with-angular-and-p5js/)
 * [digitalocean](https://www.digitalocean.com/community/tutorials/angular-socket-io#project-setup)
 * [Chat start](https://github.com/AngularFirebase/144-firestore-group-chat)
 * [User Presence](https://www.youtube.com/watch?v=bL3I7Pls-1w)
+* [Window Resize Event](https://stackoverflow.com/questions/35527456/angular-window-resize-event)
+* [Cat Gif 1](https://www.pinterest.com/pin/797348309004920989/?nic_v1=1aO%2Fx9cTSg4KvCbdiXDhJ3B%2BJo7s19OD7bFFZUcb4q2T7xrFYVvJXOF7wtX2RbUV%2B4)
+* [Cat Gif 2](https://www.pinterest.com/pin/459507968215961347/?nic_v1=1aW%2FhWu5vUz9eV5Vr1ywY8%2BQ%2BhHvew%2BE6zjaYib1hbOXe9SII%2F1Nf1W4qKTa0jcif%2B)
 
 ### Database
 * [Firestore](https://alligator.io/angular/cloud-firestore-angularfire/)

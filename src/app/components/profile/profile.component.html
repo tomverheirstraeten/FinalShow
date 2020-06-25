@@ -7,12 +7,9 @@
       <form [formGroup]="updateProfileForm" #registerform='ngForm' novalidate
         (ngSubmit)="updateProfile(updateProfileForm.value)">
         <div class="input-form">
-          <label for="Character">Character</label>
-          <section class="flex row space-between">
-            <div (click)='  goleft()'>Naar Links</div>
-            <div (click)='  goright()'>Naar Rechts</div>
-          </section>
-          <div class="input-form">     
+          <label for="Name" >Avatar</label>
+          <div class="input-form carousselMannekes"> 
+            <div (click)='  goleft()'><img src="assets/pijlRoze.svg"></div>    
             <section class="slider-wrapper">
             <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
               <div class="slide-content" >
@@ -156,7 +153,9 @@
                 </label>
               </div>
             </article>
-          </section></div>
+          </section>
+          <div (click)='  goright()' id="right"><img src="assets/pijlRoze.svg"></div>
+        </div>
       <div class="input-form">
         <label for="Name" >Name*</label>
         <input placeholder="Name" type='text' #name id="name" formControlName="name" required value="{{user['displayName']}}">
@@ -175,13 +174,12 @@
           <option value="ouders">Ouder</option>
           <option value="bezoeker">Bezoeker</option>
         </select>
-        <div class="input-form">
-          <label for="Bio">Bio</label>
-          <textarea placeholder="Bio" type='text' id="bio" #bio formControlName="bio">{{user['bio']}}"</textarea>
-        </div>
-        <div id="opslaan"><button class="submit active" (click)="goBack()" >OPSLAAN</button></div>
-
       </div>
+      <div class="input-form">
+        <label for="Bio">Bio</label>
+        <textarea placeholder="Bio" type='text' id="bio" #bio formControlName="bio">{{user['bio']}}"</textarea>
+      </div>
+      <div id="opslaan"><button class="submit active" (click)="goBack()" >OPSLAAN</button></div>
       <div id="uiloggen"><button (click)="signOut()" >UITLOGGEN</button></div>
     </div>
   </form>
