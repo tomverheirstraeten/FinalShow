@@ -138,7 +138,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       list[i].classList.remove('seen-show');
     }
     const item = list.item(list.length - 1);
-    item.classList.add('seen-show');
+    // item.classList.add('seen-show');
   }
 
   submit(chatId) {

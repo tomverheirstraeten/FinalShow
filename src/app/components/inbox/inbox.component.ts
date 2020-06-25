@@ -18,7 +18,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   allChatSub;
   otherUsernameSub;
   seen;
-
+  user;
 
   status: any[] = [];
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
@@ -26,7 +26,14 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getmyChats();
+    this.checkIfUser();
+
+  }
+  async checkIfUser() {
+    this.user = await this.auth.getUser();
+    if (this.user) {
+      this.getmyChats();
+    }
   }
   ngOnDestroy() {
     if(this.allChatSub !== undefined){
@@ -38,15 +45,15 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
   async getmyChats() {
-    const user = await this.auth.getUser();
-    if (user) {
-      const userId = user.uid;
+
+    if (this.user) {
+      const userId = this.user.uid;
       this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {
             chats.push(chat);
-            this.getOtherUserName(chat, chats, userId);
+            this.getOtherUserName(chat);
           }
         }
       });
@@ -66,26 +73,49 @@ export class InboxComponent implements OnInit, OnDestroy {
     return checkIfSeen;
   }
 
+  async getOtherUserName(chat) {
+    console.log(this.user.uid);
+    console.log(chat.uid);
 
-  async getOtherUserName(chat, chats, userId) {
-   this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
-      for (const user of res) {
-        if (userId === chat.uid2) {
-          if (user['uid'] === chat.uid) {
-            this.displayNameOtherUser = user['displayName'];
+    if (this.user.uid === chat.uid) {
+      this.userService.getUser(chat.uid2).subscribe(otherUser => {
+        chat.displayName = otherUser['displayName'];
+        chat.character = otherUser['character'];
+        chat.function = otherUser['function']
+      });
+    } else {
+      this.userService.getUser(chat.uid).subscribe(otherUser => {
+        chat.displayName = otherUser['displayName'];
+         chat.character = otherUser['character'];
+         chat.function = otherUser["function"];
+      });
+    }
+    this.myChats.push(chat);
 
-            chat.displayName = this.displayNameOtherUser;
-          }
-        } else {
-          if (user['uid'] === chat.uid2) {
-            this.displayNameOtherUser = user['displayName'];
-            chat.displayName = this.displayNameOtherUser;
-          }
-        }
-        this.myChats = chats;
-      }
-    });
+
   }
+
+
+
+  // async getOtherUserName(chat, chats, userId) {
+  //  this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
+  //     for (const user of res) {
+  //       if (userId === chat.uid2) {
+  //         if (user['uid'] === chat.uid) {
+  //           this.displayNameOtherUser = user['displayName'];
+
+  //           chat.displayName = this.displayNameOtherUser;
+  //         }
+  //       } else {
+  //         if (user['uid'] === chat.uid2) {
+  //           this.displayNameOtherUser = user['displayName'];
+  //           chat.displayName = this.displayNameOtherUser;
+  //         }
+  //       }
+  //       this.myChats = chats;
+  //     }
+  //   });
+  // }
 
 
 
