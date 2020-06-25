@@ -1,6 +1,6 @@
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-    <app-header class="red" title="Netwerk" id="desktopHeader"></app-header>
+    <app-header class="red" back="true" title="Netwerk" id="desktopHeader"></app-header>
     <div class="container-grid">
     <app-header class="red" back='true' title="{{chat.roomName}}" id="mobileHeader"></app-header>
     <!-- <div class="top">

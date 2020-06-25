@@ -2,10 +2,9 @@
 
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-    <app-header class="red" title="Netwerk" id="desktopHeader"></app-header>
+    <app-header class="red" back='true' title="Privéchat" class="desktopHeader"></app-header>
     <div class="container-grid">
-    <app-header class="red" back='true' *ngIf="chat.uid != user.uid" title="{{user1}}" class="mobileHeader"></app-header>
-    <app-header class="red" back='true' *ngIf="chat.uid2 != user.uid" title="{{user2}}" class="mobileHeader"></app-header>
+    <app-header class="red" back='true' title="Privéchat" class="mobileHeader"></app-header>
 
     <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
@@ -18,11 +17,18 @@
         </aside>
       </section> -->
       <div class="chat-title-header">
-        <div class="group-icon"></div>
-        <div>
-        <h2>{{user2}}</h2>
-        <p>functie</p>
-      </div>
+        <div class="group-icon">
+          <img [src]="'assets/mannekes/' +user1['character']+ '.png'" *ngIf="chat.uid != user.uid">
+          <img [src]="'assets/mannekes/' +user2['character']+ '.png'" *ngIf="chat.uid2 != user.uid">
+        </div>
+        <div *ngIf="chat.uid != user.uid">
+          <h2>{{user1['displayName']}}</h2>
+          <p>{{capitalize(user['function'])}}</p>
+        </div>
+        <div *ngIf="chat.uid2 != user.uid">
+          <h2>{{user2['displayName']}}</h2>
+          <p>{{capitalize(user2['function'])}}</p>
+        </div>
       </div>
       <article class="flex column w-100 inner-wrap">
         <div #chatBox class="chat right " id="chat">
