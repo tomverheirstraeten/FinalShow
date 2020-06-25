@@ -35,7 +35,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     const user = await this.auth.getUser();
     if (user) {
       const userId = user.uid;
-      this.allChatSub =  await this.cs.getAllChats().subscribe((res) => {
+      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {

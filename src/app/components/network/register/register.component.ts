@@ -29,6 +29,7 @@ import {
 export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   user;
   id;
+  character;
   registerEmailForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -46,6 +47,10 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   });
   GoogleHidden = true;
   routeSub: any;
+  position = 0;
+  positionStyle = "";
+
+
   constructor(public auth: AuthService,
               public userService: UsersService,
               private formBuilder: FormBuilder,
@@ -59,6 +64,9 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
       this.id = params.id;
     });
     this.checkIfUser();
+
+
+
   }
 
   ngOnDestroy() {
@@ -85,14 +93,14 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   }
   EmailPasswordRegister(formVal) {
     if (this.registerEmailForm.valid) {
-      this.auth.EmailPasswordRegister(formVal, this.id);
+      this.auth.EmailPasswordRegister(formVal, this.id, this.character);
     }
   }
 
   GoogleRegister(formVal) {
     console.log(this.registerGoogleForm);
     if (this.registerGoogleForm.valid) {
-      this.auth.googleSignUp(formVal, this.id);
+      this.auth.googleSignUp(formVal, this.id, this.character);
     }
   }
   ngOnChanges() {
@@ -104,5 +112,24 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
 
   ToggleForm() {
     this.GoogleHidden = !this.GoogleHidden;
+  }
+
+  setActiveCharacter(character){
+    this.character = character;
+    console.log(this.character);
+  }
+  goleft() {
+    if(this.position < 0){
+      this.position += 100;
+      this.positionStyle = this.position + "%";
+    }
+
+  }
+  goright() {
+    if(this.position >= -300){
+      this.position -= 100;
+      this.positionStyle = this.position + "%";
+    }
+
   }
 }

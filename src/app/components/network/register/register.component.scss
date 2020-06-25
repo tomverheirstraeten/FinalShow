@@ -1,13 +1,15 @@
-
 @import '~src/styles.scss';
+
 #RegisterForm {
   text-align: left;
   margin-top: 100px;
-.google{
-  button{
-    margin-bottom: 1em;
+
+  .google {
+    button {
+      margin-bottom: 1em;
+    }
   }
-}
+
   .input-form {
     display: flex;
     flex-direction: column;
@@ -18,13 +20,18 @@
       margin-bottom: 1em;
       font-size: 0.7em;
     }
-h2{
-  text-align: left;
-}
-textarea{
-  margin-bottom: 1em;
-}
-    input, textarea, select {
+
+    h2 {
+      text-align: left;
+    }
+
+    textarea {
+      margin-bottom: 1em;
+    }
+
+    input,
+    textarea,
+    select {
       box-sizing: border-box;
       border: none;
       width: 100%;
@@ -40,9 +47,11 @@ textarea{
 
   }
 }
-.container{
+
+.container {
   text-align: left;
 }
+
 #RegisterForm {
   width: 100%;
 
@@ -70,6 +79,7 @@ textarea{
 button.active {
   border: 1px solid #F9D48A;
 }
+
 button {
   width: 100%;
   min-width: 200px;
@@ -87,10 +97,10 @@ button {
 }
 
 
-button.google-btn{
-display: flex;
-justify-content: center;
-align-items: center;
+button.google-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .google-btn .google-icon-wrapper {
@@ -127,10 +137,56 @@ align-items: center;
   user-select: none
 }
 
-#ja, #nee{
+#ja,
+#nee {
   display: flex;
-align-items: center;
-input{
-  width: 20px !important;
+  align-items: center;
+
+  input {
+    width: 20px !important;
+  }
 }
+
+
+
+
+
+.slider-wrapper{
+  width:  100%;
+  overflow: hidden;
+  margin: auto;
+}
+#characters {
+  width: 500% !important;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+  .slide-content {
+    width: 20%;
+      display: flex;
+      input {
+        &:checked+label {
+          background-color: $blue;
+          opacity: 1;
+        }
+
+        &:hover+label {
+
+          opacity: 1;
+        }
+      }
+
+      label {
+        opacity: 0.5;
+        border-radius: 3px;
+        margin-top: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3em;
+        img {
+          width: 100px;
+                }
+      }
+  }
 }

@@ -42,15 +42,21 @@
                     <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
                     <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
-                  <p>{{ msg.content }}</p>
+                  <p *ngIf="!mobile">{{ msg.content }}</p>
+                  <p *ngIf="mobile" appHoldable (holdTime)="holdHandler($event)" class="holdable">{{ msg.content }}</p>
                   <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
                     </div> -->
               </article>
-              <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
-                (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button>
+              <img src="assets/dots.svg" class="deleteDots" (click)="toggleDeleteWindow(chat.messages, msg)">
+              <div *ngIf="msg.deleteWindow" class="deleteWindow" (click)="clickedDelete(chat, msg, i)">
+                  <img src="assets/delete.svg">
+                  <span id="deleteText">Verwijder</span>
+              </div>
+              <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
+                (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button> -->
             </div>
             <!-- My MESSAGE empty  -->
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">

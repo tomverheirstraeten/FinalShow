@@ -23,8 +23,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
   source: Observable<any>;
   chatId;
 
+  deleteWindow = false;
+
   user1: string;
   user2: string;
+
+  mobile = false;
 
   constructor(
     public cs: ChatService,
@@ -37,6 +41,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.route.paramMap.subscribe(params => {
       this.ngOnInit();
     });
+    if(screen.width < 768){
+      this.mobile = true;
+    }
    }
 
   ngAfterViewInit() {
@@ -56,8 +63,30 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.scrollBottom();
   }
 
+  holdHandler(e){
+    if(e == 500){
+      console.log('longpressed');
+      //extra: vibration
+    }
+  }
+
   updateMessageSeen(chat){
     this.cs.updateMessageSeen(chat);
+  }
+
+  toggleDeleteWindow(messages, msg){
+    messages.forEach(element => {
+      if(element == msg){
+        msg.deleteWindow = !msg.deleteWindow;
+      } else{
+        element.deleteWindow = false;
+      }
+    });
+  }
+
+  clickedDelete(chat, msg, i){
+    this.deleteWindow = false;
+    this.cs.updateMessage(chat, msg, i);
   }
 
   getAllChats() {

@@ -40,6 +40,8 @@ import { DesktopeventComponent } from './components/desktopevent/desktopevent.co
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HoldableDirective } from './holdable.directive';
+
 
 @NgModule({
    declarations: [
@@ -73,7 +75,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       InboxComponent,
       DesktopeventComponent,
       RedirectComponent,
-      FourOfourComponent
+      FourOfourComponent,
+      HoldableDirective
    ],
    imports: [
       BrowserModule,

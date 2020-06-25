@@ -23,6 +23,9 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   constructor(private service: AdminService) {
     this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
+      if(this.previousSelectedHtmlEvent != null){
+        this.getCurrentActiveEvent();
+      }
     });
   }
 
@@ -53,7 +56,6 @@ export class TimetableComponent implements OnInit, AfterViewInit {
     if (this.isDesktop) {
       // scroll values
       let scrollPosition = this.timetableHtmlList.nativeElement.scrollTop;
-
       // find closest value
       // function from: https://stackoverflow.com/questions/8584902/get-closest-number-out-of-array
       var closest = this.eventPositions.reduce(function (prev, curr) {
@@ -86,7 +88,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
 
   // save nessasary scroll values
   getScrollValues() {
-    this.eventHeight = 94;
+    this.eventHeight = 110;
 
     // get event positions in the html.
     let valueCounter = 0;
@@ -102,6 +104,14 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       return value;
     });
   };
+
+  getCurrentActiveEvent(){
+    const activeEvent = this.timetable.find(event => event['active'] == true);
+    const activeEventInHtml = document.getElementById(activeEvent['name']);
+
+    activeEventInHtml.classList.add('currentActiveEvent');
+    return activeEvent;
+  }
 
   ngOnInit(): void {
     if (window.screen.width >= 769) {
@@ -123,6 +133,11 @@ export class TimetableComponent implements OnInit, AfterViewInit {
 
       this.previousSelectedHtmlEvent = this.eventListItems.first.nativeElement.childNodes[2]
       this.previousSelectedHtmlEvent.classList.add("selectedEvent");
+      const activeEvent = this.getCurrentActiveEvent();
+
+      // smooth scroll to current event.
+      // solution from: https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
+      this.timetableHtmlList.nativeElement.scrollTo({ top: activeEvent['scrollHeight'], behavior: 'smooth' });
     })
   }
 
