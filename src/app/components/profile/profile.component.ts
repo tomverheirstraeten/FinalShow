@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,10 @@ export class ProfileComponent implements OnInit {
   currentUser;
 
 
-  constructor(private auth: AuthService, private router: Router, private adminservice: AdminService) { }
+  constructor(
+    private _location: Location,
+    private auth: AuthService, private router: Router,
+    private adminservice: AdminService) { }
 
 
   ngOnInit(): void {
@@ -74,6 +78,10 @@ export class ProfileComponent implements OnInit {
       bio: new FormControl(currentUser.bio),
     });
 
+  }
+
+  goBack() {
+    this._location.back();
   }
 
   goleft() {
