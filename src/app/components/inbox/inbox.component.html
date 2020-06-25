@@ -6,16 +6,18 @@
     </div>
     <div class="conversations" *ngFor="let chats of myChats" (click)='goToChat(chats)'>
       <div *ngIf="chats.messages.length" class="conversation">
-        <img [src]="'assets/man.svg'" alt="">
+
+        <img [src]="'assets/mannekes/'+chats.character +'.png'" alt="" class={{chats.function}}>
         <div class="message-container">
           <div class="namestatus">
             <p>{{ chats.displayName | titlecase }}</p>
             <p>
-              <!-- {{ chats.function}} Student -->
+              <!-- {{ chats.function }} Student -->
             </p>
           </div>
-
-          <span class="last-message">negeer mij ni...</span>
+          <span class="last-message">
+            {{ chats.messages[chats.messages.length - 1].content }}
+          </span>
         </div>
       </div>
     </div>
