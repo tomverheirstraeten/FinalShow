@@ -1,9 +1,11 @@
 @import '~src/styles.scss';
 .wrapper {
-
   display: flex;
   align-items: center;
   margin-top: 100px;
+}
+.deleteDots {
+  padding-right: 0.5em;
 }
 
 .chat {
@@ -209,7 +211,7 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  #mobileHeader{
+  .mobileHeader{
     display: none
   }
   
@@ -234,8 +236,9 @@
     }
   }
   .inner-wrap{
-    padding: 1em;
     height: calc(100% - 60px);
+    padding: 1em 1em 1em 0;
+    justify-content: flex-end;
   }
   .backgroundImageNetwork{
       grid-column: 1/ span 12;
@@ -245,7 +248,7 @@
     direction: rtl;
     padding-bottom: 0;
   }
-  .childForScroll{
+  #childForScroll{
     direction: ltr;
   }
   .chat::-webkit-scrollbar {
@@ -267,6 +270,12 @@
     
     .chat::-webkit-scrollbar-track-piece:start {
     margin-top: 10%;
+    }
+    .wrapper{
+      width: 100%;
+    }
+    .message-content{
+      margin-left: 1em;
     }
 }
 
