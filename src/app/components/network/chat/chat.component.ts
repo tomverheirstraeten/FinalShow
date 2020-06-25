@@ -30,6 +30,12 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mobile = false;
 
+  currentChat;
+  currentMsg;
+  currentI;
+
+  showMobileDeleteWindow = false;
+
   chatSub: Subscription;
   constructor(
     public cs: ChatService,
@@ -64,11 +70,23 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scrollBottom();
   }
 
-  holdHandler(e){
+  holdHandler(e, chat, msg, i){
     if(e == 500){
       console.log('longpressed');
-      //extra: vibration
+      this.currentChat = chat;
+      this.currentMsg = msg;
+      this.currentI = i;
+
+      this.showMobileDeleteWindow = true;
     }
+  }
+
+  cancelDelete(){
+    this.showMobileDeleteWindow = false;
+  }
+
+  deleteMessage(){
+    this.cs.updateMessage(this.currentChat, this.currentMsg, this.currentI);
   }
 
   updateMessageSeen(chat){
