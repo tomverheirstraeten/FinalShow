@@ -33,7 +33,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private _location: Location,
-    private auth: AuthService, private router: Router,
+    private auth: AuthService,
+    private router: Router,
     private adminservice: AdminService) { }
 
 
@@ -99,6 +100,11 @@ export class ProfileComponent implements OnInit {
 
   }
   goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  signOut() {
+    this.auth.signOut();
     this.router.navigate(['/login']);
   }
 
