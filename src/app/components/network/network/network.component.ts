@@ -467,26 +467,28 @@ export class NetworkComponent implements OnInit, OnDestroy {
   // }
 
   async checkIfUser() {
-    if (this.auth.userId) {
-      this.user = await this.auth.user$;
-
+    this.user = await this.auth.getUser();
+    if (this.user) {
       this.userService.getUsers().pipe(first()).subscribe(res => {
         for (const user of res) {
           if (user['uid'] === this.auth.userId) {
-            this.username = user['displayName'];
-            this.myRole = user['function'];
-            this.myBio = user['bio'];
-            this.myId = user['uid'];
-            this.myCharacter = user['character'];
+            if(user['function'] === '') {
+              this.goToLogin();
+            } else {
+              this.username = user['displayName'];
+              this.myRole = user['function'];
+              this.myBio = user['bio'];
+              this.myId = user['uid'];
+              this.myCharacter = user['character'];
+            }
           }
         }
-      })
+      });
 
       // console.log(this.username);
       this.playing = true;
     } else {
       this.goToLogin();
-
     }
   }
 
