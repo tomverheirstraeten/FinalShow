@@ -58,6 +58,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   y;
 
   roomSubscribe;
+  userSubscribe;
 
   constructor(public auth: AuthService,
     public cs: ChatService,
@@ -70,11 +71,17 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
-    this.roomSubscribe.unsubscribe();
+    if (this.roomSubscribe != undefined){
+      this.roomSubscribe.unsubscribe();
+    }
+    if (this.userSubscribe != undefined) {
+      this.userSubscribe.unsubscribe();
+    }
+    this.database.ref('users').off();
   }
 
   ngOnInit() {
-    //     // console.log(this.auth.userId);
+    // console.log(this.auth.userId);
     this.checkIfUser();
 
     let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '' }];
@@ -477,7 +484,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(async res => {
+    this.userSubscribe = this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
