@@ -141,5 +141,17 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
     this.roomService.updateMessage(this.currentGroup, this.currentMsg, this.currentI);
   }
 
+  groupIcon(name){
+    switch (name) {
+      case 'Digital Making': return 'assets/images/cluster-icons/digitalMaking.svg';
+      case 'General' : return 'assets/images/cluster-icons/generalChat.svg';
+      case 'Mobile Appliance' : return 'assets/images/cluster-icons/mobile.svg';
+      case 'Interactive Motion' : return 'assets/images/cluster-icons/motion.svg';
+      case 'Alternate Reality' : return 'assets/images/cluster-icons/vr.svg';
+      case 'Web' : return 'assets/images/cluster-icons/web.svg';
+    }
+  }
 
 }
+
+ 
