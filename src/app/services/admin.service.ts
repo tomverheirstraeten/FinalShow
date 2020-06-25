@@ -106,6 +106,18 @@ export class AdminService {
       admin: adminBool
     });
   }
+  
+  updateProfile(uId, image, name, newBio, rol, newWebsite){
+    const collection = this.afs.collection('users');
+    collection.doc(uId).update({
+      function: rol,
+      website: newWebsite,
+      character: image,
+      bio: newBio,
+      displayName: name
+    });
+  }
+
 
   deleteUser(uId){
     const collection = this.afs.collection('users');
