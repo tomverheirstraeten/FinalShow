@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-inbox',
@@ -50,15 +51,38 @@ export class InboxComponent implements OnInit, OnDestroy {
       const userId = this.user.uid;
       this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
+            this.myChats = []
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {
             chats.push(chat);
-            this.getOtherUserName(chat);
+            this.getOtherUserName(chat, chats, userId);
           }
         }
       });
     }
   }
+
+  // async getOtherUserName(chat) {
+  //   console.log(this.user.uid);
+  //   console.log(chat.uid);
+
+  //   if (this.user.uid === chat.uid) {
+  //     this.userService.getUser(chat.uid2).pipe(first()).subscribe(otherUser => {
+
+  //       chat.displayName = otherUser['displayName'];
+  //       chat.character = otherUser['character'];
+  //       chat.function = otherUser['function']
+  //     });
+  //   } else {
+  //     this.userService.getUser(chat.uid).pipe(first()).subscribe(otherUser => {
+  //       chat.displayName = otherUser['displayName'];
+  //        chat.character = otherUser['character'];
+  //        chat.function = otherUser["function"];
+  //     });
+  //   }
+  //   this.myChats.push(chat);
+  // }
+
 
 
   async checkIfSeen(chat) {
@@ -73,49 +97,30 @@ export class InboxComponent implements OnInit, OnDestroy {
     return checkIfSeen;
   }
 
-  async getOtherUserName(chat) {
-    console.log(this.user.uid);
-    console.log(chat.uid);
-
-    if (this.user.uid === chat.uid) {
-      this.userService.getUser(chat.uid2).subscribe(otherUser => {
-        chat.displayName = otherUser['displayName'];
-        chat.character = otherUser['character'];
-        chat.function = otherUser['function']
-      });
-    } else {
-      this.userService.getUser(chat.uid).subscribe(otherUser => {
-        chat.displayName = otherUser['displayName'];
-         chat.character = otherUser['character'];
-         chat.function = otherUser["function"];
-      });
-    }
-    this.myChats.push(chat);
 
 
+
+
+  async getOtherUserName(chat, chats, userId) {
+   this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
+      for (const user of res) {
+        if (userId === chat.uid2) {
+          if (user['uid'] === chat.uid) {
+            this.displayNameOtherUser = user['displayName'];
+            chat.character = user['character'];
+            chat.displayName = this.displayNameOtherUser;
+          }
+        } else {
+          if (user['uid'] === chat.uid2) {
+            this.displayNameOtherUser = user['displayName'];
+            chat.character = user['character'];
+            chat.displayName = this.displayNameOtherUser;
+          }
+        }
+        this.myChats = chats;
+      }
+    });
   }
-
-
-
-  // async getOtherUserName(chat, chats, userId) {
-  //  this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
-  //     for (const user of res) {
-  //       if (userId === chat.uid2) {
-  //         if (user['uid'] === chat.uid) {
-  //           this.displayNameOtherUser = user['displayName'];
-
-  //           chat.displayName = this.displayNameOtherUser;
-  //         }
-  //       } else {
-  //         if (user['uid'] === chat.uid2) {
-  //           this.displayNameOtherUser = user['displayName'];
-  //           chat.displayName = this.displayNameOtherUser;
-  //         }
-  //       }
-  //       this.myChats = chats;
-  //     }
-  //   });
-  // }
 
 
 
