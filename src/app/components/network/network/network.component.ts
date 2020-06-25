@@ -11,6 +11,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
 import { InboxComponent } from '../../inbox/inbox.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -38,6 +39,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
   myRole: string;
   myBio;
   myId;
+  myCharacter;
+  myAva;
   roomDelay = 50; // the amount of frames you have to wait to enter a room
   userSize = 50;
 
@@ -51,12 +54,15 @@ export class NetworkComponent implements OnInit, OnDestroy {
   vrImage;
   privateChatImage;
 
+  userImages = [];
+
   userInfo: boolean;
   userInfoName: string;
   userInfoId: string;
   x;
   y;
-
+  allChatSub: Subscription;
+  getOtherUserNameSub: Subscription;
   roomSubscribe;
   userSubscribe;
 
@@ -71,6 +77,12 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
+    if (this.allChatSub !== undefined) {
+      this.allChatSub.unsubscribe();
+    }
+    if (this.getOtherUserNameSub !== undefined) {
+      this.getOtherUserNameSub.unsubscribe();
+    }
     if (this.roomSubscribe != undefined){
       this.roomSubscribe.unsubscribe();
     }
@@ -84,7 +96,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '' }];
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '', character: '', image: Image }];
 
     this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
@@ -92,7 +104,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childData.uid };
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childData.uid, character: childData.character, image: this.myAva };
           // console.log(allUsers);
         });
         count++;
@@ -104,14 +116,14 @@ export class NetworkComponent implements OnInit, OnDestroy {
       // console.log(this.allRooms);
     });
 
-    this.getmyChats();
+    // this.getmyChats();
 
     // start drawing the interaction room
     const sketch = s => {
       s.mousePressed = () => {
-        //console.log(this.userInfo);
+        // console.log(this.userInfo);
         if (s.mouseY > 120 && this.userInfo) {
-          this.goToPrivateRoom();
+          // this.goToPrivateRoom();
         }
       };
 
@@ -126,9 +138,18 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
 
       s.setup = () => { // initial setup
-        s.createCanvas(s.windowWidth, s.windowHeight);
+        s.createCanvas(window.innerWidth, window.innerHeight);
 
         s.frameRate(20);
+
+        this.myAva = s.loadImage('assets/mannekes/' + this.myCharacter + '.png');
+        for (let i = 0; i < allUsers.length; i++) {
+          if (allUsers[i].character != undefined && allUsers[i].character != ''){
+            this.userImages.push(s.loadImage('assets/mannekes/' + allUsers[i].character + '.png'));
+          } else {
+            this.userImages.push(this.myAva);
+          }
+        }
       };
       s.draw = () => { // updates every frame
         s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2); // center your player
@@ -152,7 +173,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
                 if (allUsers[i].name !== 'undefined') {
                   // if it's not the current user & the user hasn't been drawn already
-                  this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
+                  this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role, allUsers[i].character, this.userImages[i]);
                   drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
 
                   let dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
@@ -161,7 +182,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
                     this.userInfo = true;
                     this.userInfoName = allUsers[i].name;
                     this.userInfoId = allUsers[i].id;
-                    this.showUserInfo(s, allUsers[i]);
+                    this.showUserInfo(s, allUsers[i], this.userImages[i]);
                   }
                 }
               }
@@ -194,7 +215,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     if (y > 60) {
 
 
-      const speed = 5;
+      const speed = 7;
 
       let dirX = 0;
       let dirY = 0;
@@ -232,17 +253,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
         y: this.myY,
         role: this.myRole,
         bio: this.myBio,
-        id: this.myId
+        id: this.myId,
+        character: this.myCharacter
       });
     }
-    this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
+    this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole, this.myCharacter, this.myAva);
   }
 
-  drawUser(sketch, x, y, name, role) {
+  drawUser(sketch, x, y, name, role, character, image) {
     sketch.strokeWeight(0);
-
     this.getUserColor(sketch, role);
-
     sketch.rectMode('center');
     sketch.rect(x, y, this.userSize, this.userSize);
     sketch.fill(172, 182, 195);
@@ -250,6 +270,10 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.textAlign('center');
     sketch.text(name, x, y + this.userSize);
     sketch.noFill();
+    if (character !== undefined && character !== '' && image != undefined) {
+      // console.log(character);
+      sketch.image(image, x, y, this.userSize - 10, this.userSize + 10);
+    }
   }
 
   getUserColor(sketch, role) {
@@ -384,57 +408,63 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   }
 
-  showUserInfo(sketch, user) {
+  showUserInfo(sketch, user, image) {
     sketch.textAlign('center');
     this.getUserColor(sketch, user.role);
-    sketch.rect(user.x, user.y, 150, 190);
+    sketch.rect(user.x, user.y, 170, 190);
     sketch.fill(0);
     sketch.textSize(15);
-    sketch.text(user.name, user.x, user.y - 70);
+    sketch.text(user.name, user.x, user.y - 50);
     sketch.textSize(12);
     sketch.textAlign('left');
     sketch.textStyle('italic');
-    sketch.text(user.role, user.x - 60, user.y - 50);
+    sketch.text(user.role, user.x - 60, user.y - 30);
     sketch.textStyle('normal');
     if (user.bio !== '' && user.bio !== undefined) {
-      sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
+      sketch.text(user.bio, user.x - 5, user.y + 40, 110, 120);
     }
 
+    sketch.fill(255);
+    sketch.ellipseMode('center');
+    sketch.circle(user.x, user.y + 80, 30);
     sketch.image(this.privateChatImage, user.x, user.y + 80);
-    // console.log(user.name);
-  }
 
-  goToPrivateRoom() {
-    if (this.userInfoName !== '') {
-      let chatFound = false;
-      // console.log(this.userInfoName);
-      if (this.myChats !== []) {
-        for (const chat of this.myChats) {
-          if (chat.displayName === this.userInfoName) {
-            chatFound = true;
-            this.goToChat(chat);
-            // console.log(chat.displayName);
-          }
-        }
-      }
-
-      if (!chatFound && this.userInfoId !== '') {
-        console.log(this.userInfoId);
-        if (this.userInfoId !== undefined && this.userInfoId !== '') {
-          this.cs.create(this.userInfoId);
-        }
-      }
+    if (image != undefined && image != null && user.character != undefined && user.character != '') {
+      sketch.image(image, user.x + 80, user.y - 80, this.userSize - 10, this.userSize + 10);
     }
   }
 
-  goToChat(chat) {
-    this.updateMessageSeen(chat.id);
-    return this.route.navigate([`chats/${chat.id}`]);
-  }
+  // goToPrivateRoom() {
+  //   if (this.userInfoName !== '') {
+  //     let chatFound = false;
+  //     // console.log(this.userInfoName);
+  //     if (this.myChats !== []) {
+  //       for (const chat of this.myChats) {
+  //         if (chat.displayName === this.userInfoName) {
+  //           chatFound = true;
+  //           this.goToChat(chat);
+  //           // console.log(chat.displayName);
+  //         }
+  //       }
+  //     }
 
-  updateMessageSeen(chatid) {
-    this.cs.updateMessageSeenConversation(chatid);
-  }
+  //     if (!chatFound && this.userInfoId !== '') {
+  //       console.log(this.userInfoId);
+  //       if (this.userInfoId !== undefined && this.userInfoId !== '') {
+  //         this.cs.create(this.userInfoId);
+  //       }
+  //     }
+  //   }
+  // }
+
+  // goToChat(chat) {
+  //   this.updateMessageSeen(chat.id);
+  //   return this.route.navigate([`chats/${chat.id}`]);
+  // }
+
+  // updateMessageSeen(chatid) {
+  //   this.cs.updateMessageSeenConversation(chatid);
+  // }
 
   async checkIfUser() {
     if (this.auth.userId) {
@@ -447,9 +477,10 @@ export class NetworkComponent implements OnInit, OnDestroy {
             this.myRole = user['function'];
             this.myBio = user['bio'];
             this.myId = user['uid'];
+            this.myCharacter = user['character'];
           }
         }
-      });
+      })
 
       // console.log(this.username);
       this.playing = true;
@@ -471,7 +502,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     const user = await this.auth.getUser();
     if (user) {
       const userId = user.uid;
-      await this.cs.getAllChats().subscribe((res) => {
+      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {
@@ -479,12 +510,12 @@ export class NetworkComponent implements OnInit, OnDestroy {
             this.getOtherUserName(chat, chats, userId);
           }
         }
-      });
+      })
     }
   }
 
   async getOtherUserName(chat, chats, userId) {
-    this.userSubscribe = this.userService.getUsers().pipe(first()).subscribe(async res => {
+    this.getOtherUserNameSub = this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {

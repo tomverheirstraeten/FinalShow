@@ -119,7 +119,13 @@ export class RoomsService {
       }),
       map(arr => {
         console.log(arr);
-        arr.forEach(v => (joinKeys[( < any > v).uid] = v));
+        arr.forEach(v => {
+          if(v !== undefined){
+            (joinKeys[( < any > v).uid ] = v)
+          }
+
+        });
+
         chat.messages = chat.messages.map(v => {
           return {
             ...v,

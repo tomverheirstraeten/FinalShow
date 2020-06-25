@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   HostListener,
-  Input
+  Input,
+  OnDestroy
 } from '@angular/core';
 import {
   AuthService
@@ -23,12 +24,15 @@ import {
 import {
   LoginComponent
 } from '../login/login.component';
+import {
+  Subscription
+} from 'rxjs';
 @Component({
   selector: 'app-conversations',
   templateUrl: './conversations.component.html',
   styleUrls: ['./conversations.component.scss']
 })
-export class ConversationsComponent implements OnInit {
+export class ConversationsComponent implements OnInit, OnDestroy {
 
   // @Input() closer: boolean;
   closer: boolean = true;
@@ -41,14 +45,37 @@ export class ConversationsComponent implements OnInit {
   searchInput: string;
   allUsers: unknown[];
   status: any[] = [];
+  statusSub: Subscription;
+  allChatSub: Subscription;
+
+  getOtherUserNameSub: Subscription;
+  getUserSub: Subscription;
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
+
+  }
+  ngOnDestroy() {
+    if (this.allChatSub !== undefined) {
+      this.allChatSub.unsubscribe();
+    }
+    if (this.statusSub !== undefined) {
+      this.statusSub.unsubscribe();
+    }
+    if (this.getOtherUserNameSub !== undefined) {
+      this.getOtherUserNameSub.unsubscribe();
+    }
+    if (this.getUserSub !== undefined) {
+      this.getUserSub.unsubscribe();
+    }
+
+
+
+
 
   }
 
   ngOnInit() {
     this.getmyChats();
     this.getUsers();
-
   }
   updateMessageSeen(chatid) {
     this.cs.updateMessageSeenConversation(chatid);
@@ -58,7 +85,7 @@ export class ConversationsComponent implements OnInit {
     const user = await this.auth.getUser();
     if (user) {
       const userId = user.uid;
-      await this.cs.getAllChats().subscribe((res) => {
+      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
         const chats = [];
         for (const chat of res) {
           if (chat['uid'] === userId || chat['uid2'] === userId) {
@@ -66,7 +93,7 @@ export class ConversationsComponent implements OnInit {
             this.getOtherUserName(chat, chats, userId);
           }
         }
-      });
+      })
     }
   }
 
@@ -86,7 +113,7 @@ export class ConversationsComponent implements OnInit {
 
 
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(async res => {
+    this.getOtherUserNameSub = this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
@@ -160,7 +187,7 @@ export class ConversationsComponent implements OnInit {
 
 
   getUsers() {
-    this.userService.getUsers().subscribe(res => {
+    this.getUserSub = this.userService.getUsers().subscribe(res => {
       this.allUsers = res;
       this.filteredUsers = res;
       this.checkStatus();
@@ -176,7 +203,7 @@ export class ConversationsComponent implements OnInit {
   }
 
   checkStatus() {
-    this.userService.getUsersStatus().subscribe(res => {
+    this.statusSub = this.userService.getUsersStatus().subscribe(res => {
       this.status = res;
       const users = [];
       for (const user of this.allUsers) {
@@ -191,7 +218,7 @@ export class ConversationsComponent implements OnInit {
       }
 
       this.filteredUsers = _.orderBy(users, ['status'], ['desc']);
-    });
+    })
   }
 
   goToChat(chat) {

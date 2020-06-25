@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList, OnDestroy } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -8,7 +9,7 @@ import * as _ from 'lodash';
   templateUrl: './timetable.component.html',
   styleUrls: ['./timetable.component.scss']
 })
-export class TimetableComponent implements OnInit, AfterViewInit {
+export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy{
 
   timetable: Array<object>;
   isDesktop: boolean;
@@ -16,17 +17,30 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   eventPositions: Array<number>;
   previousSelectedHtmlEvent: Element;
   previousSelectedHtmlEventDetails: Element;
+  timeTableSub: Subscription;
+  eventListSub: Subscription;
 
   @ViewChild('timetableHtmlList') timetableHtmlList: ElementRef;
   @ViewChildren('eventListItems') eventListItems: QueryList<any>;
 
   constructor(private service: AdminService) {
-    this.service.getTimetable().subscribe((timetableData) => {
+    this.timeTableSub = this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
       if(this.previousSelectedHtmlEvent != null){
         this.getCurrentActiveEvent();
       }
     });
+  }
+  ngOnDestroy() {
+    if (this.timeTableSub !== undefined) {
+      this.timeTableSub.unsubscribe();
+    }
+    if (this.eventListSub !== undefined) {
+      this.eventListSub.unsubscribe();
+    }
+
+
+
   }
 
 
@@ -122,7 +136,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // executes after list load
     // solution from: https://stackoverflow.com/questions/37087864/execute-a-function-when-ngfor-finished-in-angular-2
-    this.eventListItems.changes.subscribe(t => {
+    this.eventListSub = this.eventListItems.changes.subscribe(t => {
       this.getScrollValues();
 
       const eventsDetailsDivs = document.getElementsByClassName("desktop-event");
@@ -138,7 +152,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       // smooth scroll to current event.
       // solution from: https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
       this.timetableHtmlList.nativeElement.scrollTo({ top: activeEvent['scrollHeight'], behavior: 'smooth' });
-    })
+    });
   }
 
 }

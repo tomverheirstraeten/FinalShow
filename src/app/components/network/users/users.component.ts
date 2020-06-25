@@ -1,8 +1,8 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, OnDestroy } from '@angular/core';
 
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { first, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
@@ -13,11 +13,12 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit, OnChanges {
+export class UsersComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data;
   allRooms;
   status: any = [];
-
+  userSub: Subscription;
+  userStatusSub: Subscription;
   public allUsers: any = [];
   public allUserData: any = [];
 
@@ -30,6 +31,16 @@ export class UsersComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.getUsers();
   }
+  ngOnDestroy() {
+    if (this.userSub !== undefined) {
+      this.userSub.unsubscribe();
+    }
+    if (this.userStatusSub !== undefined) {
+      this.userStatusSub.unsubscribe();
+    }
+
+
+  }
 
   getUsers() {
     this.userService.getUsers().subscribe(res => {
@@ -38,7 +49,7 @@ export class UsersComponent implements OnInit, OnChanges {
     });
   }
   checkStatus() {
-    this.userService.getUsersStatus().subscribe(res => {
+   this.userStatusSub =  this.userService.getUsersStatus().subscribe(res => {
       this.status = res;
       const users = [];
       for (const user of this.allUsers) {
@@ -65,7 +76,7 @@ export class UsersComponent implements OnInit, OnChanges {
 
     let chatId;
     // tslint:disable-next-line: no-unused-expression
-    this.cs.getAllChats().pipe(take(1)).subscribe(async (chats) => {
+    this.userSub = this.cs.getAllChats().pipe(take(1)).subscribe(async (chats) => {
       // console.log('chats', chats);
       if (!chats.length) {
         // console.log('No rooms');

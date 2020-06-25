@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -11,22 +11,47 @@ export class ProfileComponent implements OnInit {
 
   character;
 
-  user = {};
+  user: Observable < any > ;
 
-  data = {
-    name: 'jules',
-    website: 'julesdocx.be',
-    bio: 'tof',
-    rol: 'student',
-  };
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.getUser();
+
   }
 
-  setActiveCharacter(character){
+  async getUser() {
+    const currentUser = await this.auth.getUser();
+    if (currentUser) {
+      console.log(currentUser);
+      this.user = currentUser;
+      this.fillInUserData(currentUser);
+    } else {
+      console.log('nouser');
+    }
+  }
+
+  setActiveCharacter(character) {
     this.character = character;
     console.log(this.character);
+  }
+
+  fillInUserData(currentUser) {
+    const elementName = document.getElementById('name');
+    const elementWebsite = document.getElementById('website');
+    const elementFunctie = document.getElementById('function');
+    const elementBio = document.getElementById('bio');
+   // const elementAvatar = document.getElementById('avatar');
+    if (currentUser) {
+      elementName.setAttribute('value', currentUser.displayName);
+      elementWebsite.setAttribute('value', currentUser.website);
+      elementBio.innerHTML = currentUser.bio;
+      elementFunctie.setAttribute('value', 'bedrijf');
+      // elementAvatar.setAttribute('value', currentUser.di);
+    } else {
+      console.log('nouser, in ProfileComponent.fillInUserData()');
+    }
+
   }
 }

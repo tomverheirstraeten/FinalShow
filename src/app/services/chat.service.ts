@@ -192,7 +192,7 @@ export class ChatService {
     if (chat.uid === uid || chat.uid2 === uid) {
       let allMessages;
 
-      this.get(chat.id).subscribe(res => {
+    this.get(chat.id).subscribe(res => {
         allMessages = res['messages'];
 
         for (const message of allMessages) {
