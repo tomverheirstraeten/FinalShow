@@ -42,13 +42,13 @@ export class ProfileComponent implements OnInit {
     const elementWebsite = document.getElementById('website');
     const elementFunctie = document.getElementById('function');
     const elementBio = document.getElementById('bio');
-   // const elementAvatar = document.getElementById('avatar');
+    const elementAvatar: HTMLInputElement = document.getElementById(this.character) as HTMLInputElement;
     if (currentUser) {
       elementName.setAttribute('value', currentUser.displayName);
       elementWebsite.setAttribute('value', currentUser.website);
       elementBio.innerHTML = currentUser.bio;
       elementFunctie.setAttribute('value', 'bedrijf');
-      // elementAvatar.setAttribute('value', currentUser.di);
+      elementAvatar.checked = true;
     } else {
       console.log('nouser, in ProfileComponent.fillInUserData()');
     }
