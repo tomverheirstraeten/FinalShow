@@ -77,12 +77,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
-<<<<<<< HEAD
     this.allChatSub.unsubscribe();
     this.getOtherUserNameSub.unsubscribe();
-=======
-    // this.allChatSub.unsubscribe();
->>>>>>> ef875291320cf5dbc7c2dd1a86e04e1d839c083f
     if (this.roomSubscribe != undefined){
       this.roomSubscribe.unsubscribe();
     }
@@ -498,7 +494,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
     // console.log('close');
   }
 
-<<<<<<< HEAD
   async getmyChats() {
     const user = await this.auth.getUser();
     if (user) {
@@ -567,76 +562,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
     }
     return checkIfSeen;
   }
-=======
-  // async getmyChats() {
-  //   const user = await this.auth.getUser();
-  //   if (user) {
-  //     const userId = user.uid;
-  //     await this.cs.getAllChats().subscribe((res) => {
-  //       const chats = [];
-  //       for (const chat of res) {
-  //         if (chat['uid'] === userId || chat['uid2'] === userId) {
-  //           // chats.push(chat);
-  //           this.getOtherUserName(chat, chats, userId);
-  //         }
-  //       }
-  //     });
-  //   }
-  // }
-
-  // async getOtherUserName(chat, chats, userId) {
-  //   this.userSubscribe = this.userService.getUsers().pipe(first()).subscribe(async res => {
-  //     for (const user of res) {
-  //       if (userId === chat.uid2) {
-  //         if (user['uid'] === chat.uid) {
-  //           this.displayNameOtherUser = user['displayName'];
-  //           chat.displayName = this.displayNameOtherUser;
-
-
-  //           await this.checkIfSeen(chat).then(res => {
-  //             if (res) {
-
-  //             }
-  //             chat.seen = res;
-  //             chats.push(chat);
-  //           });
-
-  //         }
-  //       } else {
-  //         if (user['uid'] === chat.uid2) {
-  //           this.displayNameOtherUser = user['displayName'];
-  //           chat.displayName = this.displayNameOtherUser;
-
-  //           await this.checkIfSeen(chat).then(res => {
-  //             if (res) {
-
-  //             }
-  //             chat.seen = res;
-  //             chats.push(chat);
-  //           });
-
-  //         }
-  //       }
-  //       this.myChats = chats;
-
-
-  //     }
-  //   });
-  // }
-
-
-  // async checkIfSeen(chat) {
-  //   let checkIfSeen;
-
-  //   for (const message of chat['messages']) {
-  //     if (message.uid !== this.auth.userId && !message.seen) {
-
-  //       checkIfSeen = true;
-  //     }
-  //   }
-  //   return checkIfSeen;
-  // }
->>>>>>> ef875291320cf5dbc7c2dd1a86e04e1d839c083f
 
 }
 
