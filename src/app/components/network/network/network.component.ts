@@ -62,17 +62,17 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userSubscribe;
 
   constructor(public auth: AuthService,
-              public cs: ChatService,
-              public userService: UsersService,
-              public route: Router,
-              public interactionService: InteractionService,
-              public roomsService: RoomsService) {
+    public cs: ChatService,
+    public userService: UsersService,
+    public route: Router,
+    public interactionService: InteractionService,
+    public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
   }
 
   ngOnDestroy() {
     this.canvas.remove();
-    if (this.roomSubscribe !== undefined){
+    if (this.roomSubscribe !== undefined) {
       this.roomSubscribe.unsubscribe();
     }
     if (this.userSubscribe !== undefined) {
@@ -107,10 +107,10 @@ export class NetworkComponent implements OnInit, OnDestroy {
       // console.log(this.allRooms);
     });
 
-// START OF THE SKETCH
+    // START OF THE SKETCH
     const sketch = s => {
 
-// PRELOAD
+      // PRELOAD
       s.preload = () => { // load the images needed
         this.webImage = s.loadImage('assets/images/cluster-icons/web.svg');
         this.motionImage = s.loadImage('assets/images/cluster-icons/motion.svg');
@@ -121,7 +121,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         this.privateChatImage = s.loadImage('assets/images/chatIcon.svg');
       }
 
-// SETUP
+      // SETUP
       s.setup = () => { // initial setup
         s.createCanvas(window.innerWidth, window.innerHeight);
 
@@ -129,7 +129,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
         this.myAva = s.loadImage('assets/mannekes/' + this.myCharacter + '.png');
         for (let i = 0; i < allUsers.length; i++) {
-          if (allUsers[i].character != undefined && allUsers[i].character != ''){
+          if (allUsers[i].character != undefined && allUsers[i].character != '') {
             this.userImages.push(s.loadImage('assets/mannekes/' + allUsers[i].character + '.png'));
           } else {
             this.userImages.push(this.myAva);
@@ -137,7 +137,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         }
       };
 
-// DRAW
+      // DRAW
       s.draw = () => { // updates every frame
         s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2); // center your player
 
@@ -193,7 +193,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
 
-// MOVE FUNCTION
+  // MOVE FUNCTION
   move(sketch) {
 
     const x = sketch.mouseX;
@@ -436,7 +436,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       this.userService.getUsers().pipe(first()).subscribe(res => {
         for (const user of res) {
           if (user['uid'] === this.auth.userId) {
-            if(user['function'] === '') {
+            if (user['function'] === '') {
               this.goToLogin();
             } else {
               this.username = user['displayName'];
