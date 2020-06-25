@@ -25,6 +25,7 @@ import { AdminnotificationsComponent } from './components/admin/adminnotificatio
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'network', component: NetworkComponent },
   { path: 'faq', component: FaqComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'timetable/:event', component: EventComponent },
   { path: 'chats/:id', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminhomeComponent },
