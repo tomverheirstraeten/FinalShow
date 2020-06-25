@@ -25,114 +25,16 @@
     <article>
 
 
-      <section class="register-email" [hidden]=GoogleHidden>
+      <section class="register-email" >
         <form [formGroup]="registerEmailForm" #registerform='ngForm' novalidate
           (ngSubmit)="EmailPasswordRegister(registerEmailForm.value)">
-          <div class="input-form">
-            <label for="Name">Name*</label>
-            <input placeholder="Name" type='text' #name formControlName="name" required>
-          </div>
-          <div class="input-form">
-            <label for="Email">Email*</label>
-            <input placeholder="Email" type='email' #email formControlName="email" required>
-            <div *ngIf="registerEmailForm.get('email').hasError('required') && registerform.submitted"
-              class='alert alert-danger'>Email is required</div>
-            <div *ngIf="registerEmailForm.get('email').hasError('email') && registerform.submitted"
-              class='alert alert-danger'>
-              Please enter valid email.</div>
-          </div>
-          <div class="input-form">
-            <label for="Password">Password*</label>
-            <input placeholder="Password" type='password' #password formControlName="password" required>
-            <div *ngIf="registerEmailForm.get('password').hasError('required') && registerform.submitted"
-              class='alert alert-danger'>Password is required</div>
-            <div *ngIf="registerEmailForm.get('password').hasError('minlength') && registerform.submitted"
-              class='alert alert-danger'>Your password needs to be al least 8 characters long.</div>
-          </div>
-          <div class="input-form">
-            <label for="Website">Website</label>
-            <input placeholder="Website" type='text' #website formControlName="website">
-          </div>
-          <div class="input-form">
-            <label for="Website">Functie*</label>
-            <select #functie formControlName="functie" required>
-              <option value="student">Student</option>
-              <option value="bedrijf">Bedrijf</option>
-              <option value="docent">Docent</option>
-              <option value="alumni">Alumni</option>
-              <option value="ouders">Ouder</option>
-              <option value="bezoeker">Bezoeker</option>
-            </select>
-          </div>
-          <div *ngIf="registerEmailForm.get('functie').hasError('required') && registerform.submitted"
-            class='alert alert-danger'>Select a function.</div>
-          <div class="input-form">
-            <label for="Bio">Bio</label>
-            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
-
-          </div>
-          <div class="input-form">
-            <label for="gdpr">We hebben nog je toestemming nodig om je een e-mail te mogen sturen:</label>
-            <div id="ja">
-              <input type="radio" name="gdpr" value='ja' #gdpr formControlName='gdpr'>
-              <p>Ja, ik wil op de hoogte blijven over de opleiding.</p>
-            </div>
-            <div id="nee">
-              <input type="radio" name="gdpr" value='nee' #gdpr formControlName='gdpr'>
-              <p>Nee, deze opleiding interesseert me niet.</p>
-            </div>
-            <div *ngIf="registerEmailForm.get('gdpr').hasError('required') && registerform.submitted"
-              class='alert alert-danger'>Kies één van de bovenstaande keuzes.</div>
-          </div>
-
-          <button class="submit active">REGISTREER</button>
-        </form>
-        <button class="google-btn" (click)="ToggleForm()">
-          <div class="google-icon-wrapper">
-            <img class="google-icon-svg"
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-          </div>
-          REGISTREER MET GOOGLE
-        </button>
-      </section>
-
-      <!-- <span class="txt-light or">or</span> -->
-
-      <section class="google" [hidden]=!GoogleHidden>
-        <form class="flex column" [formGroup]="registerGoogleForm" (ngSubmit)="GoogleRegister(registerGoogleForm.value)"
-          novalidate #googleform='ngForm'>
-          <div class="input-form">
-            <label for="Website">Website</label>
-            <input placeholder="Website" type='text' #website formControlName="website">
-          </div>
-          <div class="input-form">
-            <div class="custom-select">
-              <label for="Website">Functie*</label>
-              <select #functie formControlName="functie" required>
-                <option value="student">Student</option>
-                <option value="bedrijf">Bedrijf</option>
-                <option value="docent">Docent</option>
-                <option value="alumni">Alumni</option>
-                <option value="ouders">Ouder</option>
-                <option value="bezoeker">Bezoeker</option>
-              </select>
-              <div *ngIf="registerGoogleForm.get('functie').hasError('required') && googleform.submitted"
-                class='alert alert-danger'>
-                Select a function.</div>
-            </div>
-          </div>
-          <div class="input-form">
-            <label for="Bio">Bio</label>
-            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
-          </div>
           <div class="input-form">
             <label for="Character">Character</label>
             <section class="flex row space-between">
               <div (click)='  goleft()'>Go Left</div>
               <div (click)='  goright()'>Go Right</div>
             </section>
-
-            <section class="slider-wrapper">
+          <section class="slider-wrapper">
             <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
 
 
@@ -278,16 +180,50 @@
               </div>
             </article>
           </section>
+          </div>
+          <div class="input-form">
+            <label for="Name">Name*</label>
+            <input placeholder="Name" type='text' #name formControlName="name" required>
+          </div>
+          <div class="input-form">
+            <label for="Email">Email*</label>
+            <input placeholder="Email" type='email' #email formControlName="email" required>
+            <div *ngIf="registerEmailForm.get('email').hasError('required') && registerform.submitted"
+              class='alert alert-danger'>Email is required</div>
+            <div *ngIf="registerEmailForm.get('email').hasError('email') && registerform.submitted"
+              class='alert alert-danger'>
+              Please enter valid email.</div>
+          </div>
+          <div class="input-form">
+            <label for="Password">Password*</label>
+            <input placeholder="Password" type='password' #password formControlName="password" required>
+            <div *ngIf="registerEmailForm.get('password').hasError('required') && registerform.submitted"
+              class='alert alert-danger'>Password is required</div>
+            <div *ngIf="registerEmailForm.get('password').hasError('minlength') && registerform.submitted"
+              class='alert alert-danger'>Your password needs to be al least 8 characters long.</div>
+          </div>
+          <div class="input-form">
+            <label for="Website">Website</label>
+            <input placeholder="Website" type='text' #website formControlName="website">
+          </div>
+          <div class="input-form">
+            <label for="Website">Functie*</label>
+            <select #functie formControlName="functie" required>
+              <option value="student">Student</option>
+              <option value="bedrijf">Bedrijf</option>
+              <option value="docent">Docent</option>
+              <option value="alumni">Alumni</option>
+              <option value="ouders">Ouder</option>
+              <option value="bezoeker">Bezoeker</option>
+            </select>
+          </div>
+          <div *ngIf="registerEmailForm.get('functie').hasError('required') && registerform.submitted"
+            class='alert alert-danger'>Select a function.</div>
+          <div class="input-form">
+            <label for="Bio">Bio</label>
+            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
 
-
-
-
-
-
-
-
-
-
+          </div>
           <div class="input-form">
             <label for="gdpr">We hebben nog je toestemming nodig om je een e-mail te mogen sturen:</label>
             <div id="ja">
@@ -298,20 +234,20 @@
               <input type="radio" name="gdpr" value='nee' #gdpr formControlName='gdpr'>
               <p>Nee, deze opleiding interesseert me niet.</p>
             </div>
-            <div *ngIf="registerGoogleForm.get('gdpr').hasError('required') && googleform.submitted"
+            <div *ngIf="registerEmailForm.get('gdpr').hasError('required') && registerform.submitted"
               class='alert alert-danger'>Kies één van de bovenstaande keuzes.</div>
           </div>
 
-          <button class="google-btn active">
-            <div class="google-icon-wrapper">
-              <img class="google-icon-svg"
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-            </div>
-            LOG IN MET GOOGLE
-          </button>
-          </div>
+          <button class="submit active">REGISTREER</button>
         </form>
-        <button class="submit" (click)=ToggleForm()>REGISTREER MET EMAIL</button>
+        <span class="txt-light flex align-center"> Of</span>
+        <button class="google-btn"  (click)="auth.googleSignIn(id)">
+          <div class="google-icon-wrapper">
+            <img class="google-icon-svg"
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+          </div>
+          REGISTREER MET GOOGLE
+        </button>
       </section>
     </article>
     <p>Al een account?</p>

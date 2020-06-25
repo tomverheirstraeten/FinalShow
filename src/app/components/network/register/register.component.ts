@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
     bio: new FormControl(''),
     gdpr: new FormControl('', [Validators.required])
   });
-  GoogleHidden = true;
+
   routeSub: any;
   position = 0;
   positionStyle = "";
@@ -112,10 +112,6 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
       this.goToHome();
     }
 
-  }
-
-  ToggleForm() {
-    this.GoogleHidden = !this.GoogleHidden;
   }
 
   setActiveCharacter(character){

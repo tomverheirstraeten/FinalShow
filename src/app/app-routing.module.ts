@@ -26,6 +26,8 @@ import { AdminlivestreamComponent } from './components/admin/adminlivestream/adm
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { GoogleregisterComponent } from './components/network/googleregister/googleregister.component';
+
 
 
 const routes: Routes = [
@@ -38,8 +40,10 @@ const routes: Routes = [
   { path: 'timetable', component: TimetableComponent },
   { path: 'login/:id', component: LoginComponent },
   { path: 'register/:id', component: RegisterComponent },
+  { path: 'google-register/:id', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'google-register', component: GoogleregisterComponent },
   { path: 'network', component: NetworkComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'profile', component: ProfileComponent },
