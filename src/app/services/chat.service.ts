@@ -178,7 +178,7 @@ export class ChatService {
         return ref.update({
           messages: allMessages
         });
-      }).unsubscribe();
+      });
     }
   }
 
@@ -204,7 +204,7 @@ export class ChatService {
         return ref.update({
           messages: allMessages
         });
-      }).unsubscribe();
+      });
     }
   }
 
@@ -232,7 +232,7 @@ export class ChatService {
       return ref.update({
         messages: allMessages
       });
-    }).unsubscribe();;
+    });
 
   }
 

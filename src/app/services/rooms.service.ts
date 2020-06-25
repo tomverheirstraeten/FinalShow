@@ -169,7 +169,7 @@ export class RoomsService {
         return ref.update({
           messages: allMessages
         });
-      }).unsubscribe();
+      });
     }
   }
 }
