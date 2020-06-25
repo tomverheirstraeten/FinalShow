@@ -24,6 +24,22 @@
 
 }
 
+.display-none{
+  display: none !important;
+}
+
+.profileBtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #editImg {
+    height: 20px;
+    margin-right: 5px;
+  }
+}
+
+
 //Wanneer het een ongelezen bericht is
 
 .newMessage {

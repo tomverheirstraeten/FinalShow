@@ -27,6 +27,8 @@ export class ProfileComponent implements OnInit {
   position = 0;
   positionStyle = '';
 
+  currentUser;
+
 
   constructor(private auth: AuthService, private router: Router, private adminservice: AdminService) { }
 

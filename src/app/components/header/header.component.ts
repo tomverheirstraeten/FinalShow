@@ -1,7 +1,9 @@
 import {
   Component,
   OnInit,
-  Input
+  Input,
+  HostListener,
+  ElementRef
 } from '@angular/core';
 import {
   Location
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
   @Input() title: string;
   useragent = navigator.userAgent;
   user: Observable < any > ;
-  constructor(private _location: Location, private router: Router, private auth: AuthService) {}
+  constructor(private _location: Location, private router: Router, private auth: AuthService, private eRef: ElementRef) {}
   toggleInbox = true;
   ngOnInit(): void {
     this.getUser();
@@ -70,4 +72,14 @@ export class HeaderComponent implements OnInit {
   goToGoogleRegister() {
     this.router.navigate(['/google-register']);
   }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event){
+    if(!this.eRef.nativeElement.contains(event.target)){
+      this.toggleInbox = true;
+    } else if(this.toggleInbox == false && event.target.className != 'clickInbox'){
+      this.toggleInbox = true;
+    }
+  }
+
 }
