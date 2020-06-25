@@ -149,7 +149,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
         s.stroke(0);
         s.rect(0, 0, s.width, s.height);
 
-        if (this.playing && this.closer) { // if all the conditions to start playing are met (e.g. logged in, search is closed)
+        if (this.playing) { // if all the conditions to start playing are met (e.g. logged in, search is closed)
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
@@ -199,7 +199,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
     const x = sketch.mouseX;
     const y = sketch.mouseY;
 
-    if (y > 100) { // if the mouse is not on the header
+    if (y > 100 && this.closer) {
+       // if the mouse is not on the header and the search isn't opened
       const speed = 7;
 
       // to know how to move the user,
@@ -226,16 +227,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
 
       // outer boundaries
-      if (this.myY < 10) {
-        this.myY = 10;
-      } else if (this.myY > 1000) {
-        this.myY = 1000;
+      if (this.myY < 0) {
+        this.myY = 0;
+      } else if (this.myY > 2000) {
+        this.myY = 2000;
       }
 
-      if (this.myX < 10) {
-        this.myX = 10;
-      } else if (this.myX > 1000) {
-        this.myX = 1000;
+      if (this.myX < 0) {
+        this.myX = 0;
+      } else if (this.myX > 2000) {
+        this.myX = 2000;
       }
 
       this.myX += speed * dirX;
@@ -297,17 +298,17 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   displayGroups(sketch) {
     // web room
-    this.displayGroup(sketch, 500, 450, 150, 'Web');
+    this.displayGroup(sketch, 1500, 900, 170, 'Web');
     // motion room
-    this.displayGroup(sketch, 800, 700, 200, 'Motion');
+    this.displayGroup(sketch, 400, 1300, 180, 'Motion');
     // alternate reality room
-    this.displayGroup(sketch, 400, 100, 130, 'AR');
+    this.displayGroup(sketch, 1800, 1500, 150, 'AR');
     // mobile room
-    this.displayGroup(sketch, 200, 700, 170, 'Mobile');
+    this.displayGroup(sketch, 600, 700, 170, 'Mobile');
     // experience room
-    this.displayGroup(sketch, 50, 400, 200, 'Digital Making');
+    this.displayGroup(sketch, 1000, 150, 220, 'Digital Making');
     // general room
-    this.displayGroup(sketch, 800, 100, 250, 'General');
+    this.displayGroup(sketch, 200, 200, 250, 'General');
   }
 
   displayGroup(sketch, x: number, y: number, r: number, name: string) {
