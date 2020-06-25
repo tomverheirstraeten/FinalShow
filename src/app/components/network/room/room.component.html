@@ -1,8 +1,8 @@
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
+    <app-header class="red" title="{{chat.roomName}}" id="desktopHeader"></app-header>
     <div class="container-grid">
-    <app-header class="red" back='true' title="{{chat.roomName}}"></app-header>
-
+    <app-header class="red" back='true' title="{{chat.roomName}}" id="mobileHeader"></app-header>
     <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
     </div> -->
@@ -13,9 +13,16 @@
           <app-users class="rooms"></app-users>
         </aside>
       </section> -->
-
-      <article class="flex column w-100">
+      <div class="chat-title-header">
+        <div class="group-icon"></div>
+        <div>
+        <h2>{{chat.roomName}}</h2>
+        <p>Groep</p>
+      </div>
+      </div>
+      <article class="flex column w-100 inner-wrap">
         <div #chatBox class="chat right " id="chat">
+          <div id="childForScroll">
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; let i=index; trackBy: trackByCreated">
             <!-- My MESSAGE DELETED -->
             <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
@@ -28,7 +35,7 @@
                   </div>
                   <p>{{ msg.content }}</p>
                   <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
-                </div>
+              </div>
               </article>
             </div>
             <!-- My MESSAGE  -->
@@ -67,13 +74,6 @@
 
             </div>
 
-
-
-
-
-
-
-
             <!-- OTHER MESSAGE DELETED -->
             <div *ngIf="msg.uid !== user.uid && msg.deleted === true && msg.hand !== true;"
               class="flex center row left deleted message-content">
@@ -87,9 +87,6 @@
                 </div>
               </article>
             </div>
-
-
-
             <!-- OTHER MESSAGE -->
             <div *ngIf="msg.uid !== user.uid && msg.deleted === false && msg.hand !== true;" class="flex center row left  message-content">
               <article>
@@ -106,8 +103,6 @@
 
               </article>
             </div>
-
-
               <!-- OTHER MESSAGE EM  -->
               <div *ngIf="msg.uid !== user.uid && msg.hand === true;" class="flex center row left hand message-content">
                 <article>
@@ -127,6 +122,7 @@
 
           </div>
         </div>
+        </div>
 
 
         <div class="form messagebar">
@@ -141,6 +137,7 @@
       </article>
 
     </article>
+    <div [routerLink]= "'/network'" class="backgroundImageNetwork"></div>
   </div>
   </ng-container>
 </ng-container>
