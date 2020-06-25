@@ -32,7 +32,7 @@ export class AdminusersComponent implements OnInit {
       this.users = _.orderBy(userData, 'displayName', 'asc');
       this.userLength = this.users.length;
       console.log(userData);
-    });
+    }).unsubscribe();
   }
 
   deleteUser(uId, name){
@@ -52,7 +52,7 @@ export class AdminusersComponent implements OnInit {
         })
         this.service.updateMessages(room.id, messages);
       });
-    });
+    }).unsubscribe();
   }
 
   updateUser(uId){

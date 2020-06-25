@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener, Inject, ViewChild, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,7 +16,7 @@ import { AdminService } from 'src/app/services/admin.service';
   styleUrls: ['./chat.component.scss'],
 
 })
-export class ChatComponent implements OnInit, AfterViewInit {
+export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   chat$: Observable<any>;
   newMsg: string;
   allChats: any[] = [];
@@ -36,6 +36,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   showMobileDeleteWindow = false;
 
+  chatSub: Subscription;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -46,7 +47,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   ) {
     this.route.paramMap.subscribe(params => {
       this.ngOnInit();
-    });
+    }).unsubscribe();
     if(screen.width < 768){
       this.mobile = true;
     }
@@ -108,11 +109,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   getAllChats() {
-    this.cs.getAllChats().subscribe((chats) => {
+    this.chatSub = this.cs.getAllChats().subscribe((chats) => {
       this.allChats = chats;
       this.scrollBottom();
       setTimeout(this.showLastSeen, 500);
-    });
+    })
   }
 
   capitalize(string) {
@@ -127,7 +128,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
       this.as.getUserByID(val['uid2']).subscribe(user2 => {
         this.user2 = user2['displayName'] + ' (' + this.capitalize(user2['function']) + ')';
       })
-    })
+    }).unsubscribe();
   }
 
   showLastSeen(){
@@ -174,5 +175,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
     let date = new Date(timestamp);
     let string = date.getHours() + ":" + date.getMinutes();
     return string;
+  }
+
+  ngOnDestroy(): void {
+this.chatSub.unsubscribe();
   }
 }

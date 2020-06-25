@@ -108,7 +108,6 @@ return this.afAuth.authState.pipe(
 
   // Google signin
   googleSignIn(id) {
-
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider, id);
   }

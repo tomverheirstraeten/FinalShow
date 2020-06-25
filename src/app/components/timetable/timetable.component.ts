@@ -26,7 +26,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       if(this.previousSelectedHtmlEvent != null){
         this.getCurrentActiveEvent();
       }
-    });
+    }).unsubscribe();;
   }
 
 
@@ -138,7 +138,7 @@ export class TimetableComponent implements OnInit, AfterViewInit {
       // smooth scroll to current event.
       // solution from: https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
       this.timetableHtmlList.nativeElement.scrollTo({ top: activeEvent['scrollHeight'], behavior: 'smooth' });
-    })
+    }).unsubscribe();
   }
 
 }
