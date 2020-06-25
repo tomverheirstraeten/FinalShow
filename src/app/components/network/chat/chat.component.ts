@@ -105,7 +105,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   clickedDelete(chat, msg, i){
-    this.deleteWindow = false;
+    msg.deleteWindow = false;
     this.cs.updateMessage(chat, msg, i);
   }
 
