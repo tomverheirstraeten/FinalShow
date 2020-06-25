@@ -16,6 +16,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   displayNameOtherUser;
   myChats = [];
   allChatSub;
+  otherUsernameSub;
   seen;
 
 
@@ -27,8 +28,13 @@ export class InboxComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getmyChats();
   }
-  ngOnDestroy(): void {
-    this.allChatSub.unsubscribe();
+  ngOnDestroy() {
+    if(this.allChatSub !== undefined){
+      this.allChatSub.unsubscribe();
+    }
+    if(this.otherUsernameSub !== undefined){
+    this.otherUsernameSub.unsubscribe();
+    }
   }
 
   async getmyChats() {
@@ -62,7 +68,7 @@ export class InboxComponent implements OnInit, OnDestroy {
 
 
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(async res => {
+   this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
@@ -78,7 +84,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         }
         this.myChats = chats;
       }
-    }).unsubscribe();
+    });
   }
 
 

@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
   allRooms;
   status: any = [];
   userSub: Subscription;
+  userStatusSub: Subscription;
   public allUsers: any = [];
   public allUserData: any = [];
 
@@ -30,8 +31,9 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     this.getUsers();
   }
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.userSub.unsubscribe();
+    this.userStatusSub.unsubscribe();
   }
 
   getUsers() {
@@ -41,7 +43,7 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
   checkStatus() {
-    this.userService.getUsersStatus().subscribe(res => {
+   this.userStatusSub =  this.userService.getUsersStatus().subscribe(res => {
       this.status = res;
       const users = [];
       for (const user of this.allUsers) {
@@ -56,7 +58,7 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       this.allUserData = _.orderBy(users, ['status'], ['desc']);
-    }).unsubscribe();
+    });
   }
 
 

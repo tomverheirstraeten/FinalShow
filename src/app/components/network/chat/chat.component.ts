@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   mobile = false;
 
   chatSub: Subscription;
+  getChatSub: Subscription;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -41,7 +42,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.route.paramMap.subscribe(params => {
       this.ngOnInit();
-    }).unsubscribe();
+    });
     if(screen.width < 768){
       this.mobile = true;
     }
@@ -103,14 +104,14 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getUsername(chatId){
-    this.as.getChat(chatId).subscribe(val => {
+    this.getChatSub =   this.as.getChat(chatId).subscribe(val => {
       this.as.getUserByID(val['uid']).subscribe(user1 => {
         this.user1 = user1['displayName'] + ' (' + this.capitalize(user1['function']) + ')';
       });
       this.as.getUserByID(val['uid2']).subscribe(user2 => {
         this.user2 = user2['displayName'] + ' (' + this.capitalize(user2['function']) + ')';
       })
-    }).unsubscribe();
+    });
   }
 
   showLastSeen(){
@@ -161,5 +162,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
 this.chatSub.unsubscribe();
+this.getChatSub.unsubscribe();
   }
 }

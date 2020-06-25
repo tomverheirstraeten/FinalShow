@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { environment } from 'src/environments/environment';
 
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { env } from 'process';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-adminusers',
   templateUrl: './adminusers.component.html',
   styleUrls: ['./adminusers.component.scss']
 })
-export class AdminusersComponent implements OnInit {
+export class AdminusersComponent implements OnInit, OnDestroy {
 
   users: Array<object>;
   userLength = 0;
-
+  allUsersSub: Subscription;
+  deleteMessageSub: Subscription;
   constructor(private service: AdminService, private router: Router) {
     if(sessionStorage.getItem('password') != environment.credentials.password){
       this.router.navigate(['admin'])
     }
     this.getUsers();
+  }
+  ngOnDestroy() {
+    this.allUsersSub.unsubscribe();
+    this.deleteMessageSub.unsubscribe();
   }
 
   ngOnChanges() {
@@ -28,11 +34,11 @@ export class AdminusersComponent implements OnInit {
   }
 
   getUsers(){
-    this.service.getAllUsers().subscribe((userData) => {
+    this.allUsersSub = this.service.getAllUsers().subscribe((userData) => {
       this.users = _.orderBy(userData, 'displayName', 'asc');
       this.userLength = this.users.length;
       console.log(userData);
-    }).unsubscribe();
+    });
   }
 
   deleteUser(uId, name){
@@ -44,7 +50,7 @@ export class AdminusersComponent implements OnInit {
   }
 
   deleteUserMessages(uId){
-    this.service.getRooms().subscribe((rooms) => {
+   this.deleteMessageSub =  this.service.getRooms().subscribe((rooms) => {
       rooms.forEach(room => {
         let messages = room['messages'];
         _.remove(messages, function(e){
@@ -52,7 +58,7 @@ export class AdminusersComponent implements OnInit {
         })
         this.service.updateMessages(room.id, messages);
       });
-    }).unsubscribe();
+    });
   }
 
   updateUser(uId){

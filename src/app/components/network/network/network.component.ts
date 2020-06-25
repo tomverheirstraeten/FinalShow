@@ -58,7 +58,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   x;
   y;
   allChatSub: Subscription;
-
+  getOtherUserNameSub: Subscription;
   roomSubscribe;
   userSubscribe;
 
@@ -74,6 +74,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.canvas.remove();
     this.allChatSub.unsubscribe();
+    this.getOtherUserNameSub.unsubscribe();
     if (this.roomSubscribe != undefined){
       this.roomSubscribe.unsubscribe();
     }
@@ -487,7 +488,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(async res => {
+    this.getOtherUserNameSub = this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
@@ -523,7 +524,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
       }
-    }).unsubscribe();
+    });
   }
 
 

@@ -45,14 +45,18 @@ export class ConversationsComponent implements OnInit, OnDestroy{
   status: any[] = [];
   statusSub: Subscription;
   allChatSub: Subscription;
-  usersSub: Subscription;
+
+  getOtherUserNameSub: Subscription;
+  getUserSub: Subscription;
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
 
   }
   ngOnDestroy(){
     this.allChatSub.unsubscribe();
     this.statusSub.unsubscribe();
-    this.usersSub.unsubscribe();
+
+    this.getOtherUserNameSub.unsubscribe();
+    this.getUserSub.unsubscribe();
   }
 
   ngOnInit() {
@@ -95,7 +99,7 @@ export class ConversationsComponent implements OnInit, OnDestroy{
 
 
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(async res => {
+   this.getOtherUserNameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
@@ -139,7 +143,7 @@ export class ConversationsComponent implements OnInit, OnDestroy{
 
 
       }
-    }).unsubscribe();
+    });
   }
 
 
@@ -169,11 +173,11 @@ export class ConversationsComponent implements OnInit, OnDestroy{
 
 
   getUsers() {
-    this.userService.getUsers().subscribe(res => {
+    this.getUserSub = this.userService.getUsers().subscribe(res => {
       this.allUsers = res;
       this.filteredUsers = res;
       this.checkStatus();
-    }).unsubscribe();
+    });
   }
 
   toggleConversation() {
