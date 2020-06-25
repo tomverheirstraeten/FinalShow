@@ -89,7 +89,6 @@
     color: rgb(199, 199, 199);
     font-weight: lighter;
     font-size: 13px;
-    width: 100%;
     display: block;
     text-align: left;
   }
@@ -210,9 +209,13 @@
   #mobileHeader{
     display: none
   }
+  .deletedMsg{
+    margin-right: 35px;
+  }
   
   .form.messagebar {
     width: 100%;
+    padding-left: 1em;
   }
   .chat-title-header{
     height: 60px;
@@ -248,7 +251,7 @@
     direction: ltr;
   }
   .message-content{
-    margin-left: 0.5em;
+    margin-left: 35px;
   }
   .chat::-webkit-scrollbar {
     display: block;

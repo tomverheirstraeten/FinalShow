@@ -82,7 +82,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  cancelDelete(){
+  cancelDelete() {
     this.showMobileDeleteWindow = false;
   }
 

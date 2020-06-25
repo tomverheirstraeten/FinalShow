@@ -94,7 +94,6 @@
     color: rgb(199, 199, 199);
     font-weight: lighter;
     font-size: 13px;
-    width: 100%;
     display: block;
     text-align: left;
   }
@@ -217,6 +216,7 @@
   
   .form.messagebar {
     width: 100%;
+    padding-left: 1em;
   }
   .chat-title-header{
     height: 60px;
@@ -275,7 +275,7 @@
       width: 100%;
     }
     .message-content{
-      margin-left: 1em;
+      margin-left: 35px;
     }
 }
 
