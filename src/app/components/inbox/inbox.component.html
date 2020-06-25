@@ -1,5 +1,9 @@
 <ng-container *ngIf="auth.user$ | async as user">
   <div class="inbox-container">
+    <div class="conversation profileBtn" routerLink='/profile' [routerLinkActive]="['display-none']">
+      <img src="assets/edit.svg" alt="" id="editImg">
+      <p>Bewerk profiel</p>
+    </div>
     <div class="conversations" *ngFor="let chats of myChats" (click)='goToChat(chats)'>
       <div *ngIf="chats.messages.length" class="conversation">
         <img [src]="'assets/man.svg'" alt="">

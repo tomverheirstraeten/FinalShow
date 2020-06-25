@@ -15,10 +15,10 @@
         </div>
         <div class="profile" *ngIf="user" class="{{user['function']}}">
           <div *ngIf="user['character']">
-            <img [src]="'assets/mannekes/' +user['character']+ '.png'" alt="">
+            <img [src]="'assets/mannekes/' +user['character']+ '.png'" alt="" class="clickInbox">
           </div>
           <div *ngIf="!user['character']">
-            <img [src]="'assets/mannekes/' +user['character']+ '.png'" alt="">
+            <img [src]="'assets/mannekes/' +user['character']+ '.png'" alt="" class="clickInbox">
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
-<app-header></app-header>
-<app-header></app-header>
+<app-header title="Profiel" back='true'></app-header>
+
 <div class="container-grid">
 <div class="pagina">
   <div class="container profilecontainer">
@@ -9,8 +9,8 @@
         <div class="input-form">
           <label for="Character">Character</label>
           <section class="flex row space-between">
-            <div (click)='  goleft()'>Go Left</div>
-            <div (click)='  goright()'>Go Right</div>
+            <div (click)='  goleft()'>Naar Links</div>
+            <div (click)='  goright()'>Naar Rechts</div>
           </section>
           <div class="input-form">     
             <section class="slider-wrapper">
@@ -159,11 +159,11 @@
           </section></div>
       <div class="input-form">
         <label for="Name" >Name*</label>
-        <input placeholder="Name" type='text' #name id="name" formControlName="name" required >
+        <input placeholder="Name" type='text' #name id="name" formControlName="name" required value="{{user['displayName']}}">
       </div>
       <div class="input-form">
         <label for="Website">Website</label>
-        <input placeholder="Website" type='text' id="website" #website formControlName="website">
+        <input placeholder="Website" type='text' id="website" #website formControlName="website" value="{{user['website']}}">
       </div>
       <div class="input-form">
         <label for="Website">Functie*</label>
@@ -177,7 +177,7 @@
         </select>
         <div class="input-form">
           <label for="Bio">Bio</label>
-          <textarea placeholder="Bio" type='text' id="bio" #bio formControlName="bio"></textarea>
+          <textarea placeholder="Bio" type='text' id="bio" #bio formControlName="bio">{{user['bio']}}"</textarea>
         </div>
         <div id="opslaan"><button class="submit active" >OPSLAAN</button></div>
 

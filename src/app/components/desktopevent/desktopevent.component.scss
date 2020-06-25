@@ -14,7 +14,9 @@
     justify-content: center;
     margin-bottom: 3%;
     img{
-        max-height: 80%;
+        height: 60%;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 }
 
@@ -34,5 +36,8 @@
      li{
          margin-top: 3%;
         list-style-type: circle;
+     }
+     .bold{
+         font-weight: 400;
      }
  }

@@ -8,7 +8,12 @@
   <div class="tekst-event">
     <h1 class="subtititle">{{event['name']}}</h1>
     <p>{{event['desc']}}</p>
-    <h2 class="subtititle">credits to:</h2>
+    <div *ngIf="event['nominees']">
+      <h2 class="subtititle">credits to:</h2>
+      <ul class="nominees" *ngFor="let nominee of  event['nominees']">
+        <li><span class="bold">{{nominee['course']}}</span> {{nominee['desc']}}</li>
+      </ul>
+    </div>
   </div>
   <p id="time" class="subtititle">{{displayTime(event['time'])}}</p>
 </div>
