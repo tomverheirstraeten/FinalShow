@@ -40,7 +40,7 @@ a {
 }
 
 .currentActiveEvent{
-  background-color: $yellow;
+  background-color: $blue;
 }
 
 
@@ -84,10 +84,15 @@ a {
     justify-content: space-between;
     scroll-snap-align: start;
     scroll-snap-stop: normal;
+    background-color: white;
 
     h3 {
       margin-left: 1em;
     }
+  }
+
+  .currentActiveEvent{
+    background-color: $blue;
   }
 
   .event-detail {

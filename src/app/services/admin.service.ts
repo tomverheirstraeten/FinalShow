@@ -107,7 +107,7 @@ export class AdminService {
     });
   }
   
-  updateProfile(uId, image, name, newBio, rol, newWebsite){
+  updateProfile(uId, image, name, newBio, rol, newWebsite) {
     const collection = this.afs.collection('users');
     collection.doc(uId).update({
       function: rol,
