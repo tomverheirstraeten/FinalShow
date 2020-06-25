@@ -16,22 +16,28 @@
     .room {
       scroll-snap-align: start;
       scroll-snap-stop: normal;
+      margin-left: 5vw;
+      padding-left: 5vw;
       display: flex;
-      width: 100vw;
-      height: 50%;
+      width: 75vw;
+      height: 70%;
       justify-content: space-between;
-      align-items: center;
+      align-items: left;
       flex-direction: column;
       position: relative;
       h2 {
         text-transform: uppercase;
         font-size: 1.8em;
+        margin: 0;
       }
 
       img {
-        width: 70%;
+        width: 100%;
         object-fit: contain;
-        position: relative;
+      }
+      .button {
+        width: 100%;
+        margin: 0;
       }
     }
   }

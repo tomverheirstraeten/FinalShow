@@ -71,6 +71,7 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
+    this.user.unsubscribe();
   }
 
   async checkIfUser() {

@@ -11,6 +11,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
 import { InboxComponent } from '../../inbox/inbox.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -60,6 +61,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userInfoId: string;
   x;
   y;
+  allChatSub: Subscription;
 
   roomSubscribe;
   userSubscribe;
@@ -75,7 +77,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
-    if (this.roomSubscribe != undefined) {
+    // this.allChatSub.unsubscribe();
+    if (this.roomSubscribe != undefined){
       this.roomSubscribe.unsubscribe();
     }
     if (this.userSubscribe != undefined) {
@@ -472,7 +475,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
             this.myCharacter = user['character'];
           }
         }
-      });
+      })
 
       // console.log(this.username);
       this.playing = true;

@@ -24,8 +24,8 @@ export class EventComponent implements OnInit {
       this.service.getEventByName(this.eventName).subscribe(val => {
         this.data = val;
         console.log(val);
-      })
-    });
+      }).unsubscribe();
+    }).unsubscribe();
 
     if (window.screen.width >= 769) {
       this.isDesktop = true;

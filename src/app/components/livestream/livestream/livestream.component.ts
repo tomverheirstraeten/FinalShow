@@ -22,7 +22,7 @@ export class LivestreamComponent implements OnInit {
     this.as.getStreamUrl().subscribe(val => {
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(val['url']);
       console.log(this.url);
-    })
+    }).unsubscribe();
     this.as.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
       this.showCurrentActivity();

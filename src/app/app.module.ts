@@ -41,6 +41,7 @@ import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HoldableDirective } from './holdable.directive';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { HoldableDirective } from './holdable.directive';
       DesktopeventComponent,
       RedirectComponent,
       FourOfourComponent,
-      HoldableDirective
+      HoldableDirective,
+      ProfileComponent
    ],
    imports: [
       BrowserModule,
