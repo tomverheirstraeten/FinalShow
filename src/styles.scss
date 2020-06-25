@@ -278,6 +278,13 @@ h2, h3, h4, h5, h6 {
   max-width: 1200px;
   margin: auto;
 }
+app-notification{
+  width: 100vw;
+  height: 60px;
+  position: fixed;
+  top: 60px;
+  z-index: 9;
+}
 }
 
 // desktop specific css
@@ -295,6 +302,13 @@ h2, h3, h4, h5, h6 {
     column-gap: 1%;
     row-gap: 0;
   }
+  // styles notifications
+
+app-notification{
+  grid-column: 1 / span 12;
+  grid-row: 2/ span 1;
+}
 
 }
+
 

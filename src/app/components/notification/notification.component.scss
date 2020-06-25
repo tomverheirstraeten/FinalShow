@@ -1,40 +1,36 @@
+@import '~src/styles.scss';
 .yellow {
-    background-color:  yellow;
-    margin-bottom: 1em;
-    border-radius: 5px;
-    padding: 1em 1em;
+    background-color: $yellow;
     box-sizing: border-box;
 }
 
 .red {
-    background-color: red;
-    margin-bottom: 1em;
-    border-radius: 5px;
-    padding: 1em 1em;
+    background-color: $red;
     box-sizing: border-box;
 }
 
 .green {
-    background-color: green;
-    margin-bottom: 1em;
-    border-radius: 5px;
-    padding: 1em 1em;
+    background-color: $blue;
     color: white;
     box-sizing: border-box;
 }
 
 .notification {
-    // background-color: rgb(31, 31, 31);
-    position: fixed;
-    top: 75px;
-    color: white;
-    z-index: 100;
+    position: relative;
     width: 100%;
-    padding: 1em 1em;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin-bottom: 2em;
+    height: 100%;
+    color: white;
+    div{
+        height: 100%;
+        div{
 
+        }
+        div p{
+            padding: 16px 0 16px 8.41%;
+            width: 100%;
+            height: 100%;
+        }
+    }
 }
 .notification .red{
   color : white;

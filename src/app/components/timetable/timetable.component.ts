@@ -28,7 +28,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy{
   constructor(private service: AdminService, private ns: NotificationService) {
     this.timeTableSub = this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
-      if(this.previousSelectedHtmlEvent != null){
+      if (this.previousSelectedHtmlEvent != null){
         this.getCurrentActiveEvent();
       }
     });
