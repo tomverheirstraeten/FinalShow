@@ -17,18 +17,19 @@ export class ProfileComponent implements OnInit {
 
   id;
 
+  updateProfileForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    website: new FormControl(''),
+    functie: new FormControl('' , [Validators.required]),
+    bio: new FormControl(''),
+  });
+
   position = 0;
   positionStyle = '';
 
 
   constructor(private auth: AuthService, private router: Router, private adminservice: AdminService) { }
 
-  updateProfileForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    website: new FormControl(''),
-    functie: new FormControl('', [Validators.required]),
-    bio: new FormControl(''),
-  });
 
   ngOnInit(): void {
     this.getUser();
@@ -44,8 +45,9 @@ export class ProfileComponent implements OnInit {
       this.goToLogin();
     }
   }
-  
+
   updateProfile(formVal) {
+    console.log(this.id, this.character, formVal.name, formVal.bio, formVal.functie, formVal.website);
     if (this.updateProfileForm.valid) {
     this.adminservice.updateProfile(this.id, this.character, formVal.name, formVal.bio, formVal.functie, formVal.website);
     }
@@ -60,17 +62,15 @@ export class ProfileComponent implements OnInit {
 
   fillInUserData(currentUser) {
     this.id = currentUser.uid;
-    const elementName: HTMLInputElement = document.getElementById('name') as HTMLInputElement;
-    const elementWebsite: HTMLInputElement = document.getElementById('website') as HTMLInputElement;
-    const elementFunctie: HTMLInputElement = document.getElementById('function') as HTMLInputElement;
-    const elementBio: HTMLInputElement = document.getElementById('bio') as HTMLInputElement;
+    this.character = currentUser.character;
     const elementAvatar: HTMLInputElement = document.getElementById(currentUser.character) as HTMLInputElement;
-
-    elementName.value = currentUser.displayName;
-    elementWebsite.value = currentUser.website;
-    elementBio.value = currentUser.bio;
-    elementFunctie.value = currentUser.function;
     elementAvatar.checked = true;
+    this.updateProfileForm = new FormGroup({
+      name: new FormControl(currentUser.displayName, [Validators.required]),
+      website: new FormControl(currentUser.website),
+      functie: new FormControl(currentUser.function , [Validators.required]),
+      bio: new FormControl(currentUser.bio),
+    });
 
   }
 
