@@ -61,8 +61,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userInfoId: string;
   x;
   y;
-  allChatSub: Subscription;
-  getOtherUserNameSub: Subscription;
   roomSubscribe;
   userSubscribe;
 
@@ -77,12 +75,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
-    if (this.allChatSub !== undefined) {
-      this.allChatSub.unsubscribe();
-    }
-    if (this.getOtherUserNameSub !== undefined) {
-      this.getOtherUserNameSub.unsubscribe();
-    }
     if (this.roomSubscribe != undefined){
       this.roomSubscribe.unsubscribe();
     }
@@ -115,8 +107,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
       this.allRooms = rooms;
       // console.log(this.allRooms);
     });
-
-    // this.getmyChats();
 
     // start drawing the interaction room
     const sketch = s => {
@@ -205,9 +195,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
   move(sketch) {
-    // let inbox = document.getElementsByClassName('inbox-container')[0];
-    // console.log(inbox);
-    // console.log(window.getComputedStyle(inbox).visibility);
 
     const x = sketch.mouseX;
     const y = sketch.mouseY;
@@ -434,38 +421,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
     }
   }
 
-  // goToPrivateRoom() {
-  //   if (this.userInfoName !== '') {
-  //     let chatFound = false;
-  //     // console.log(this.userInfoName);
-  //     if (this.myChats !== []) {
-  //       for (const chat of this.myChats) {
-  //         if (chat.displayName === this.userInfoName) {
-  //           chatFound = true;
-  //           this.goToChat(chat);
-  //           // console.log(chat.displayName);
-  //         }
-  //       }
-  //     }
-
-  //     if (!chatFound && this.userInfoId !== '') {
-  //       console.log(this.userInfoId);
-  //       if (this.userInfoId !== undefined && this.userInfoId !== '') {
-  //         this.cs.create(this.userInfoId);
-  //       }
-  //     }
-  //   }
-  // }
-
-  // goToChat(chat) {
-  //   this.updateMessageSeen(chat.id);
-  //   return this.route.navigate([`chats/${chat.id}`]);
-  // }
-
-  // updateMessageSeen(chatid) {
-  //   this.cs.updateMessageSeenConversation(chatid);
-  // }
-
   async checkIfUser() {
     if (this.auth.userId) {
       this.user = await this.auth.user$;
@@ -497,75 +452,4 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.closer = !this.closer;
     // console.log('close');
   }
-
-  async getmyChats() {
-    const user = await this.auth.getUser();
-    if (user) {
-      const userId = user.uid;
-      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
-        const chats = [];
-        for (const chat of res) {
-          if (chat['uid'] === userId || chat['uid2'] === userId) {
-            // chats.push(chat);
-            this.getOtherUserName(chat, chats, userId);
-          }
-        }
-      })
-    }
-  }
-
-  async getOtherUserName(chat, chats, userId) {
-    this.getOtherUserNameSub = this.userService.getUsers().pipe(first()).subscribe(async res => {
-      for (const user of res) {
-        if (userId === chat.uid2) {
-          if (user['uid'] === chat.uid) {
-            this.displayNameOtherUser = user['displayName'];
-            chat.displayName = this.displayNameOtherUser;
-
-
-            await this.checkIfSeen(chat).then(res => {
-              if (res) {
-
-              }
-              chat.seen = res;
-              chats.push(chat);
-            });
-
-          }
-        } else {
-          if (user['uid'] === chat.uid2) {
-            this.displayNameOtherUser = user['displayName'];
-            chat.displayName = this.displayNameOtherUser;
-
-            await this.checkIfSeen(chat).then(res => {
-              if (res) {
-
-              }
-              chat.seen = res;
-              chats.push(chat);
-            });
-
-          }
-        }
-        this.myChats = chats;
-
-
-      }
-    });
-  }
-
-
-  async checkIfSeen(chat) {
-    let checkIfSeen;
-
-    for (const message of chat['messages']) {
-      if (message.uid !== this.auth.userId && !message.seen) {
-
-        checkIfSeen = true;
-      }
-    }
-    return checkIfSeen;
-  }
-
 }
-
