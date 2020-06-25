@@ -19,10 +19,10 @@ import { AdminService } from 'src/app/services/admin.service';
 export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   chat$: Observable<any>;
   newMsg: string;
-  allChats: any[] = [];
+  allChats;
   source: Observable<any>;
   chatId;
-
+  useragent = navigator.userAgent;
   deleteWindow = false;
 
   user1;
@@ -59,18 +59,23 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getAllChats();
+
     this.chatId = this.route.snapshot.paramMap.get('id');
+    this.getAllChats();
     const source = this.cs.get(this.chatId);
     this.chat$ = this.cs.joinUsers(source);
      // .pipe(tap(v => this.scrollBottom(v)));
     this.getUsername(this.chatId);
   }
 
-  @HostListener('load', ['$event']) onPageLoad(event: Event) {
-    this.scrollBottom();
-  }
+  @HostListener('window:load', ['$event']) onPageLoad(event: Event) {
+    // this.scrollBottom();
+    console.log('loaded');
+    setTimeout(() => {
 
+      this.scrollBottom();
+    }, 500);
+  }
   holdHandler(e, chat, msg, i){
     if(e == 500){
       console.log('longpressed');
@@ -110,7 +115,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getAllChats() {
-    this.chatSub = this.cs.getAllChats().subscribe((chats) => {
+    this.chatSub = this.cs.getUniqueChats(this.chatId).subscribe((chats) => {
       this.allChats = chats;
       this.scrollBottom();
       setTimeout(this.showLastSeen, 500);
@@ -162,14 +167,19 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private scrollBottom() {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(this.useragent)) {
 
-    // const chatElem = document.getElementById("chat");
+      setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
+    } else {
+      const chatElem = document.getElementById('chat');
+      if (chatElem) {
+        setTimeout(() => {
+          chatElem.scrollTop = chatElem.scrollHeight;
+        }
+          , 300);
+      }
+    }
 
-    // if (chatElem) {
-    //   setTimeout(() => chatElem.scrollTop = chatElem.scrollHeight, 500);
-    // }
-
-    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 200);
   }
 
   returnDate(timestamp) {

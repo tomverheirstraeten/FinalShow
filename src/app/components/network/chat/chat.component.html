@@ -30,9 +30,9 @@
         </div>
       </div>
       <article class="flex column w-100 inner-wrap">
-        <div #chatBox class="chat right " id="chat">
+        <div #chatBox class="chat right "   id="chat">
           <div id="childForScroll">
-          <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; let i=index; trackBy: trackByCreated">
+          <div class="msg animated zoomInUp" *ngFor="let msg of allChats.messages; let i=index; trackBy: trackByCreated">
             <!-- My MESSAGE DELETED -->
             <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
               class="flex center row right deleted message-content">
@@ -70,7 +70,7 @@
               </div>
               <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
                 (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button> -->
-            </div>  
+            </div>
             <!-- My MESSAGE empty  -->
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
               <article>

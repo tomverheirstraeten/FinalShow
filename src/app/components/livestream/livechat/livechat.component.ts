@@ -55,8 +55,7 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     setTimeout(() => {
       console.log('loaded');
       this.scrollBottom();
-    }, 2000);
-
+    }, 500);
   }
 
   ngOnInit() {
@@ -109,5 +108,5 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
         , 500);
     }
   }
-  
+
 }

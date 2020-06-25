@@ -51,10 +51,10 @@ export class HeaderComponent implements OnInit {
   async getUser() {
     const user = await this.auth.getUser();
     if (user) {
-      if(user.function == ''){
+      if(user.function === ''){
         this.goToGoogleRegister();
       }else{
-        console.log(user);
+
         this.user = user;
       }
     } else {

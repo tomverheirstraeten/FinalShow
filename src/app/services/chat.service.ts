@@ -74,6 +74,10 @@ export class ChatService {
         })
       );
   }
+  getUniqueChats(chatId) {
+    return this.afs.collection < any > ('chats/').doc(chatId).valueChanges();
+
+  }
 
 
 
