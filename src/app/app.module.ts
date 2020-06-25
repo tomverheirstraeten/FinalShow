@@ -39,6 +39,7 @@ import { InboxComponent } from './components/inbox/inbox.component';
 import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HoldableDirective } from './holdable.directive';
 
 
@@ -82,7 +83,8 @@ import { HoldableDirective } from './holdable.directive';
       AppRoutingModule,
       AngularFireModule.initializeApp(environment.firebaseConfig),
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      BrowserAnimationsModule
    ],
    providers: [],
    bootstrap: [
