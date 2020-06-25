@@ -3,10 +3,10 @@
 <app-header class= "green" title="Livestream"></app-header>
 <div class="page-wrap container-grid">
 
-<div class="video-container">
+<div class="video-container" id="video">
    <iframe [src]="url" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
 </div>
-<div class="head">
+<div class="head" id="head">
    <div class="status">
      <ng-container *ngIf="live == true">
       <div class="statelive"></div>
@@ -24,8 +24,11 @@
     </div>
    </ng-container>
  </div>
-<div class="chat">
+<div class="chat" id="chat" *ngIf='!mobile'>
    <app-livechat></app-livechat>
+</div>
+<div class="chat" id="chatMobile" *ngIf='mobile'>
+  <app-livechat></app-livechat>
 </div>
 
 

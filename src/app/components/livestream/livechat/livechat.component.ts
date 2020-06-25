@@ -22,12 +22,14 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   liveChatSub: Subscription;
 
   // livestreamID = "ALqUn9fy9fWieiwvEFOk";
-  livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
+  // livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
+  livestreamID = 'w496ZugdV52nd8HPPixA';
 
   constructor(private route: ActivatedRoute,
     public auth: AuthService,
     public userService: UsersService,
-    public roomService: RoomsService) { }
+    public roomService: RoomsService) {
+     }
   ngOnDestroy() {
     if(this.allChatsSub !== undefined){
       this.allChatsSub.unsubscribe();
@@ -38,12 +40,13 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
 
 
   }
+
   ngOnChanges() {
     this.scrollBottom();
   }
   ngAfterViewInit() {
     console.log('afterView');
-
+    this.scrollBottom();
   }
 
   @HostListener('window:load', ['$event']) onPageLoad(event: Event) {
@@ -52,7 +55,7 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     setTimeout(() => {
       console.log('loaded');
       this.scrollBottom();
-    }, 500);
+    }, 2000);
 
   }
 
@@ -97,11 +100,14 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
 
   private scrollBottom() {
     const chatElem = document.getElementById('livechat-container');
+    console.log(chatElem);
     if (chatElem) {
       setTimeout(() => {
+        console.log('scroll');
         chatElem.scrollTop = chatElem.scrollHeight;
       }
         , 500);
     }
   }
+  
 }
