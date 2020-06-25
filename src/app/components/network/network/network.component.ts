@@ -79,13 +79,14 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
     let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '' }];
 
-    this.database.ref('users').once('value', (snapshot) => {
+    this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
       snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
           allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childData.uid };
+          // console.log(allUsers);
         });
         count++;
       });
@@ -169,11 +170,14 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.canvas = new p5(sketch);
 
     // document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
+    if (document.getElementById('defaultCanvas0') != null) {
+      document.getElementById('defaultCanvas0').remove();
+    }
   }
 
 
   move(sketch) {
-    let inbox = document.getElementsByClassName('inbox-container')[0];
+    // let inbox = document.getElementsByClassName('inbox-container')[0];
     // console.log(inbox);
     // console.log(window.getComputedStyle(inbox).visibility);
 
