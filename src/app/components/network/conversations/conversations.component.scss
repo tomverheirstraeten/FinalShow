@@ -72,3 +72,35 @@ input{
 
   }
 }
+
+@media only screen and (min-width: 769px) {
+    .conv-rooms{
+      direction: rtl;
+      overflow: scroll;
+      max-height: calc(100vh - 120px - 80px)
+    }
+    #childForScroll{
+      direction: ltr;
+    }
+    .conv-rooms::-webkit-scrollbar {
+      display: block;
+      width: 5px;
+      }
+      
+    .conv-rooms::-webkit-scrollbar-track {
+      background: transparent;
+      }
+      
+    .conv-rooms::-webkit-scrollbar-thumb {
+      background-color: $red;
+      }
+      
+    .conv-rooms::-webkit-scrollbar-track-piece:end {
+      margin-bottom: 10%;
+      }
+      
+    .conv-rooms::-webkit-scrollbar-track-piece:start {
+      margin-top: 10%;
+      }
+}
+

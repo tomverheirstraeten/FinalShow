@@ -14,6 +14,16 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
 
   chat$: Observable<any>;
   newMsg: string;
+
+  mobile = false;
+
+  currentGroup;
+  currentMsg;
+  currentI;
+
+  showMobileDeleteWindow = false;
+
+
   @ViewChild('chatBox') private myScrollContainer: ElementRef;
   disableScrollDown = false;
 
@@ -22,7 +32,11 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
     public auth: AuthService,
     public userService: UsersService,
     public roomService: RoomsService,
-  ) {}
+  ) {
+    if(screen.width < 768){
+      this.mobile = true;
+    }
+  }
   @HostListener('window:load', ['$event']) onPageLoad(event: Event) {
     // this.scrollBottom();
 
@@ -44,6 +58,17 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
     const source = this.roomService.get(chatId);
     this.chat$ = this.roomService.joinUsers(source); // .pipe(tap(v => this.scrollBottom(v)));
     this.scrollBottom();
+  }
+
+  holdHandler(e, chat, msg, i){
+    if(e == 500){
+      console.log('longpressed');
+      this.currentGroup = chat;
+      this.currentMsg = msg;
+      this.currentI = i;
+
+      this.showMobileDeleteWindow = true;
+    }
   }
 
   submitHand(chat) {
@@ -93,5 +118,28 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
         , 500);
     }
   }
+
+  toggleDeleteWindow(messages, msg){
+    messages.forEach(element => {
+      if(element == msg){
+        msg.deleteWindow = !msg.deleteWindow;
+      } else{
+        element.deleteWindow = false;
+      }
+    });
+  }
+  cancelDelete() {
+    this.showMobileDeleteWindow = false;
+  }
+
+  clickedDelete(chat, msg, i){
+    msg.deleteWindow = false;
+    this.roomService.updateMessage(chat, msg, i);
+  }
+
+  deleteMessage(){
+    this.roomService.updateMessage(this.currentGroup, this.currentMsg, this.currentI);
+  }
+
 
 }

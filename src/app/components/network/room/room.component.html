@@ -1,6 +1,6 @@
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-    <app-header class="red" back="true" title="Netwerk" id="desktopHeader"></app-header>
+    <app-header class="red" back="false" title="Netwerk" id="desktopHeader"></app-header>
     <div class="container-grid">
     <app-header class="red" back='true' title="{{chat.roomName}}" id="mobileHeader"></app-header>
     <!-- <div class="top">
@@ -27,7 +27,7 @@
             <!-- My MESSAGE DELETED -->
             <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
               class="flex center row right deleted message-content">
-              <article>
+              <article class="deletedMsg">
                 <div>
                   <div class="flex space-between">
                     <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
@@ -46,15 +46,21 @@
                     <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
                     <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
-                  <p>{{ msg.content }}</p>
+                  <p *ngIf="!mobile">{{ msg.content }}</p>
+                  <p *ngIf="mobile" appHoldable (holdTime)="holdHandler($event, chat, msg, i)" class="holdable">{{ msg.content }}</p>
                   <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
                     </div> -->
               </article>
-              <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
-                (click)="roomService.updateMessage(chat, msg, i)"> &#9249;</button>
+              <img *ngIf="!mobile" src="assets/dots.svg" class="deleteDots" (click)="toggleDeleteWindow(chat.messages, msg)">
+              <div *ngIf="msg.deleteWindow" class="deleteWindow" (click)="clickedDelete(chat, msg, i)">
+                  <img src="assets/delete.svg">
+                  <span id="deleteText">Verwijder</span>
+              </div>
+              <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
+                (click)="roomService.updateMessage(chat, msg, i)"> &#9249;</button> -->
             </div>
             <!-- My MESSAGE empty  -->
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
@@ -133,6 +139,18 @@
             <button (click)="submit(chat.id)" class="send" [disabled]="!newMsg"><img
                 src="assets/images/send.svg"></button>
           </section>
+        </div>
+        <div class="mobileDeleteWindow" *ngIf="showMobileDeleteWindow">
+          <div class="mobileDelete" (click)="deleteMessage()">
+            <img src="assets/delete.svg">
+            <p>Verwijder</p>
+          </div>
+          <div class="line">
+          </div>
+          <div class="mobileCancel" (click)="cancelDelete()">
+            <img src="assets/close.svg">
+            <p>Annuleer</p>
+          </div>
         </div>
       </article>
 

@@ -2,7 +2,7 @@
 
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-    <app-header class="red" back='true' title="Privéchat" class="desktopHeader"></app-header>
+    <app-header class="red" back='false' title="Privéchat" class="desktopHeader"></app-header>
     <div class="container-grid">
     <app-header class="red" back='true' title="Privéchat" class="mobileHeader"></app-header>
 
@@ -71,7 +71,7 @@
               </div>
               <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
                 (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button> -->
-            </div>
+            </div>  
             <!-- My MESSAGE empty  -->
             <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
               <article>

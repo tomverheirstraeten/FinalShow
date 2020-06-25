@@ -12,7 +12,7 @@
     <div *ngIf="event['nominees']">
       <h2 class="subtititle">credits to:</h2>
       <ul class="nominees" *ngFor="let nominee of  event['nominees']">
-        <li>{{nominee}}</li>
+        <li><span class="bold">{{nominee['course']}}</span> {{nominee['desc']}}</li>
       </ul>
     </div>
   </div>
