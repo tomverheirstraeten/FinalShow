@@ -22,7 +22,9 @@ export class AdmintimetableComponent implements OnInit, OnDestroy {
     this.getTimetable();
   }
   ngOnDestroy() {
-    this.timetableSub.unsubscribe();
+    if(this.timetableSub !== undefined){
+      this.timetableSub.unsubscribe();
+      }
   }
 
   getTimetable(){

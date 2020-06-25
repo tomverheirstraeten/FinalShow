@@ -32,8 +32,14 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
     this.getUsers();
   }
   ngOnDestroy() {
-    this.userSub.unsubscribe();
-    this.userStatusSub.unsubscribe();
+    if (this.userSub !== undefined) {
+      this.userSub.unsubscribe();
+    }
+    if (this.userStatusSub !== undefined) {
+      this.userStatusSub.unsubscribe();
+    }
+
+
   }
 
   getUsers() {

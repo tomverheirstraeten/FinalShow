@@ -25,8 +25,14 @@ export class AdminusersComponent implements OnInit, OnDestroy {
     this.getUsers();
   }
   ngOnDestroy() {
-    this.allUsersSub.unsubscribe();
-    this.deleteMessageSub.unsubscribe();
+    if(this.allUsersSub !== undefined){
+      this.allUsersSub.unsubscribe();
+      }
+      if(this.deleteMessageSub !== undefined){
+        this.deleteMessageSub.unsubscribe();
+        }
+
+
   }
 
   ngOnChanges() {

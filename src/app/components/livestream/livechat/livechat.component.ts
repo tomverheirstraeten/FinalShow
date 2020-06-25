@@ -29,8 +29,14 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     public userService: UsersService,
     public roomService: RoomsService) { }
   ngOnDestroy() {
-    this.allChatsSub.unsubscribe();
-    this.liveChatSub.unsubscribe();
+    if(this.allChatsSub !== undefined){
+      this.allChatsSub.unsubscribe();
+      }
+      if(this.liveChatSub !== undefined){
+        this.liveChatSub.unsubscribe();
+        }
+
+
   }
   ngOnChanges() {
     this.scrollBottom();

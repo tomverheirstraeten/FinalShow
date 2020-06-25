@@ -57,8 +57,13 @@ export class LoginComponent implements OnInit, OnChanges, OnDestroy{
     this.checkIfUser();
   }
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
-    this.user.unsubscribe();
+    if (this.routeSub !== undefined) {
+      this.routeSub.unsubscribe();
+    }
+    if (this.user !== undefined) {
+      this.user.unsubscribe();
+    }
+
   }
 
 

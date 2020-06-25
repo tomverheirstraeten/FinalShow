@@ -23,7 +23,10 @@ export class AdminlivestreamComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.liveStreamUrlSub.unsubscribe();
+    if(this.liveStreamUrlSub !== undefined){
+      this.liveStreamUrlSub
+    }
+
   }
 
   updateUrl(){

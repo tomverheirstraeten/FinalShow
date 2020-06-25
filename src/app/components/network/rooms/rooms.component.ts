@@ -24,7 +24,10 @@ roomsSub: Subscription;
     this.getRooms();
   }
   ngOnDestroy() {
-    this.roomsSub.unsubscribe();
+
+    if (this.roomsSub !== undefined) {
+      this.roomsSub.unsubscribe();
+    }
   }
   getRooms(){
     this.roomsSub = this.cs.getRooms().subscribe((rooms) => {

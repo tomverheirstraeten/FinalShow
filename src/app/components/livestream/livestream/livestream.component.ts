@@ -31,8 +31,14 @@ export class LivestreamComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
-    this.LiveStreamUrlSub.unsubscribe();
-    this.timeTableSub.unsubscribe();
+    if(this.LiveStreamUrlSub !== undefined){
+      this.LiveStreamUrlSub.unsubscribe();
+      }
+      if(this.timeTableSub !== undefined){
+        this.timeTableSub.unsubscribe();
+        }
+
+
   }
 
   showCurrentActivity(){

@@ -17,7 +17,10 @@ export class EventComponent implements OnInit, OnDestroy {
   eventSub: Subscription;
   constructor(private route: ActivatedRoute, public service: AdminService) {  }
   ngOnDestroy() {
-    this.eventSub.unsubscribe();
+
+    if(this.eventSub !== undefined){
+      this.eventSub.unsubscribe();
+      }
   }
 
   ngOnInit(): void {

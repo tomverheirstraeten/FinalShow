@@ -77,8 +77,12 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
-    this.allChatSub.unsubscribe();
-    this.getOtherUserNameSub.unsubscribe();
+    if (this.allChatSub !== undefined) {
+      this.allChatSub.unsubscribe();
+    }
+    if (this.getOtherUserNameSub !== undefined) {
+      this.getOtherUserNameSub.unsubscribe();
+    }
     if (this.roomSubscribe != undefined){
       this.roomSubscribe.unsubscribe();
     }

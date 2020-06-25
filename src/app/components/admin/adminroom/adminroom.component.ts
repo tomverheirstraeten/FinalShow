@@ -24,7 +24,10 @@ export class AdminroomComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
-    this.getMessagesSub.unsubscribe()
+    if(this.getMessagesSub !== undefined){
+      this.getMessagesSub.unsubscribe();
+      }
+
   }
 
   ngOnInit() {

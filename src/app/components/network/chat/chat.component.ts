@@ -179,7 +179,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-this.chatSub.unsubscribe();
-this.getChatSub.unsubscribe();
+    if(this.chatSub !== undefined){
+      this.chatSub.unsubscribe();
+      }
+      if(this.getChatSub !== undefined){
+        this.getChatSub.unsubscribe();
+        }
+
+
   }
 }

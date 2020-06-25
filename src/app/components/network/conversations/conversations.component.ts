@@ -24,13 +24,15 @@ import {
 import {
   LoginComponent
 } from '../login/login.component';
-import { Subscription } from 'rxjs';
+import {
+  Subscription
+} from 'rxjs';
 @Component({
   selector: 'app-conversations',
   templateUrl: './conversations.component.html',
   styleUrls: ['./conversations.component.scss']
 })
-export class ConversationsComponent implements OnInit, OnDestroy{
+export class ConversationsComponent implements OnInit, OnDestroy {
 
   // @Input() closer: boolean;
   closer: boolean = true;
@@ -51,12 +53,24 @@ export class ConversationsComponent implements OnInit, OnDestroy{
   constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
 
   }
-  ngOnDestroy(){
-    this.allChatSub.unsubscribe();
-    this.statusSub.unsubscribe();
+  ngOnDestroy() {
+    if (this.allChatSub !== undefined) {
+      this.allChatSub.unsubscribe();
+    }
+    if (this.statusSub !== undefined) {
+      this.statusSub.unsubscribe();
+    }
+    if (this.getOtherUserNameSub !== undefined) {
+      this.getOtherUserNameSub.unsubscribe();
+    }
+    if (this.getUserSub !== undefined) {
+      this.getUserSub.unsubscribe();
+    }
 
-    this.getOtherUserNameSub.unsubscribe();
-    this.getUserSub.unsubscribe();
+
+
+
+
   }
 
   ngOnInit() {
@@ -99,7 +113,7 @@ export class ConversationsComponent implements OnInit, OnDestroy{
 
 
   async getOtherUserName(chat, chats, userId) {
-   this.getOtherUserNameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
+    this.getOtherUserNameSub = this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {

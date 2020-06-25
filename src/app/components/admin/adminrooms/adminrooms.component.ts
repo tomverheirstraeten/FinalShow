@@ -22,7 +22,9 @@ export class AdminroomsComponent implements OnInit, OnDestroy {
     this.getRooms();
   }
   ngOnDestroy() {
-    this.roomSub.unsubscribe();
+    if(this.roomSub !== undefined){
+      this.roomSub.unsubscribe();
+      }
   }
   ngOnInit() {
     this.getRooms();

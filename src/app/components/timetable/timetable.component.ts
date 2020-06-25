@@ -32,8 +32,14 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy{
     });
   }
   ngOnDestroy() {
-    this.timeTableSub.unsubscribe();
-    this.eventListSub.unsubscribe();
+    if (this.timeTableSub !== undefined) {
+      this.timeTableSub.unsubscribe();
+    }
+    if (this.eventListSub !== undefined) {
+      this.eventListSub.unsubscribe();
+    }
+
+
 
   }
 

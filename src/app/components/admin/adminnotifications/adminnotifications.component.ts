@@ -21,7 +21,9 @@ export class AdminnotificationsComponent implements OnInit, OnDestroy{
     this.getNotifications();
   }
   ngOnDestroy(): void {
+    if(this.notificationSub !== undefined){
     this.notificationSub.unsubscribe();
+    }
   }
 
   getNotifications(){
