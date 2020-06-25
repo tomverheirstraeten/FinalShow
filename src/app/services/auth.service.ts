@@ -16,13 +16,19 @@ import { isError } from 'util';
 })
 export class AuthService {
   user$: Observable < any > ;
-  userId: String = '';
+  userId;
+  userEmail: String = '';
+  userDisplayName: String = '';
+  userPhotoURL: String = '';
   error: Observable < any > ;
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router, private db: AngularFireDatabase) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
           this.userId = user.uid;
+          this.userEmail = user.email;
+          this.userDisplayName = user.displayName;
+          this.userPhotoURL = user.photoURL;
           // this.updateOnUser().subscribe();
           // this.updateOnDisconnect().subscribe();
           // this.updateOnAway();
@@ -118,9 +124,11 @@ return this.afAuth.authState.pipe(
 
       if (user === undefined) {
         if (id === 'livestream') {
-          return this.router.navigate(['/register', id]);
+          this.updateUserDataGoogleSignIn(credential.user, id);
+
         } else{
-          return this.router.navigate(['/register']);
+          this.updateUserDataGoogleSignIn(credential.user, id);
+
         }
       } else {
         if (id === 'livestream') {
@@ -132,6 +140,36 @@ return this.afAuth.authState.pipe(
     });
   }
 
+  private updateUserDataGoogleSignIn({
+    uid,
+    email,
+    displayName,
+    photoURL,
+  }, id) {
+    const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${uid}`);
+
+    const data = {
+      uid,
+      email,
+      displayName,
+      photoURL,
+      website: '',
+      function: '',
+      bio: '',
+      admin: false,
+      gdpr: '',
+      character: 'character2'
+    };
+
+    userRef.set(data, {
+      merge: true
+    });
+    if (id === 'livestream') {
+      return this.router.navigate(['/google-register', id]);
+    } else {
+      return this.router.navigate(['/google-register']);
+    }
+  }
   // !=============REGISTER============= //
    // Google register
    googleSignUp(formVal, id, character) {
@@ -241,6 +279,56 @@ return this.afAuth.authState.pipe(
       });
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// ! UPDATE USER
+    // Google Update
+    public googleUpdate(formVal, id, character) {
+      const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${this.userId}`);
+
+      const data = {
+        uid: this.userId ,
+        email:  this.userEmail,
+        displayName: this.userDisplayName,
+        photoURL: this.userPhotoURL,
+        website: formVal.website,
+        function: formVal.functie,
+        bio: formVal.bio,
+        admin: false,
+        gdpr: formVal.gdpr,
+        character
+      };
+
+      userRef.set(data, {
+        merge: true
+      });
+      if (id === 'livestream') {
+        return this.router.navigate(['/livestream']);
+      } else {
+        return this.router.navigate(['/network']);
+      }
+    }
+  // profile Update
+  public updateProfile(formVal){
+    const collection = this.afs.collection('users');
+    collection.doc(this.userId).update({
+      displayName: formVal.displayName,
+      website: formVal.website,
+      function: formVal.functie,
+      bio: formVal.bio,
+      character:  formVal.character,
+    });
+  }
 
   async signOut() {
     await this.setPresence('offline');

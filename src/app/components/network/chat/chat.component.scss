@@ -9,9 +9,12 @@
 .chat {
   width: 100%;
   color: #222222;
-  border-radius: 5px;
+  //border-radius: 5px;
   // overflow: scroll;
   // height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 100%;
   padding-bottom: 80px;
   // max-height: calc(100vh - 200px);
 }
@@ -122,10 +125,9 @@
 }
 
 .form.messagebar {
-  width: 90%;
   display: flex;
   background: rgba(255, 255, 255, 1);
-  position: fixed;
+  //position: fixed;
   bottom: 0em;
   padding-bottom: 1em;
 
@@ -172,7 +174,7 @@
   // background: rgb(193, 193, 193);
   // color: white !important;
   height: 25px;
-  color: rgba(255, 0, 0, 0.687) !important;
+  color: $red !important;
   box-shadow: none;
   font-size: 30px;
   display: flex;
@@ -193,4 +195,93 @@
     display: flex;
     align-items: center;
   }
+}
+
+//desktop
+@media only screen and (min-width: 769px) {
+  .container {
+    grid-column: 8 / span 4;
+    grid-row: 4/ span 3;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #mobileHeader{
+    display: none
+  }
+  
+  .form.messagebar {
+    width: 100%;
+  }
+  .chat-title-header{
+    height: 60px;
+    background-color: $red;
+    width: 100%;
+    padding-left: 1em;;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    h2{
+      font-weight: normal;
+      font-size: 16px;
+    }
+    .group-icon{
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .inner-wrap{
+    padding: 1em;
+    height: calc(100% - 60px);
+  }
+  .backgroundImageNetwork{
+      grid-column: 1/ span 12;
+      grid-row: 2/ span 6;
+  }
+  .chat{
+    direction: rtl;
+    padding-bottom: 0;
+  }
+  .childForScroll{
+    direction: ltr;
+  }
+  .chat::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+    }
+    
+    .chat::-webkit-scrollbar-track {
+    background: transparent;
+    }
+    
+    .chat::-webkit-scrollbar-thumb {
+    background-color:$red;
+    }
+    
+    .chat::-webkit-scrollbar-track-piece:end {
+    margin-bottom: 10%;
+    }
+    
+    .chat::-webkit-scrollbar-track-piece:start {
+    margin-top: 10%;
+    }
+}
+
+//mobile
+@media only screen and (max-width: 768px) {
+.form.messagebar {
+  position: fixed;
+  width: 90%;
+}
+
+#desktopHeader, .chat-title-header{
+  display: none;
+}
+.backgroundImageNetwork{
+    display:none;
+}
+
 }

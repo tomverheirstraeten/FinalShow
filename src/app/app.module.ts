@@ -42,6 +42,8 @@ import { FourOfourComponent } from './components/four-ofour/four-ofour.component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HoldableDirective } from './holdable.directive';
 import { ProfileComponent } from './components/profile/profile.component';
+import { GoogleregisterComponent } from './components/network/googleregister/googleregister.component';
+
 
 
 @NgModule({
@@ -78,7 +80,8 @@ import { ProfileComponent } from './components/profile/profile.component';
       RedirectComponent,
       FourOfourComponent,
       HoldableDirective,
-      ProfileComponent
+      ProfileComponent,
+      GoogleregisterComponent
    ],
    imports: [
       BrowserModule,
