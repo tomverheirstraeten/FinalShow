@@ -57,6 +57,8 @@ export class NetworkComponent implements OnInit, OnDestroy {
   x;
   y;
 
+  roomSubscribe;
+  userSubscribe;
 
   constructor(public auth: AuthService,
     public cs: ChatService,
@@ -69,10 +71,17 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
+    if (this.roomSubscribe != undefined){
+      this.roomSubscribe.unsubscribe();
+    }
+    if (this.userSubscribe != undefined) {
+      this.userSubscribe.unsubscribe();
+    }
+    this.database.ref('users').off();
   }
 
   ngOnInit() {
-    //     // console.log(this.auth.userId);
+    // console.log(this.auth.userId);
     this.checkIfUser();
 
     let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '' }];
@@ -84,15 +93,18 @@ export class NetworkComponent implements OnInit, OnDestroy {
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
           allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childData.uid };
+          // console.log(allUsers);
         });
         count++;
       });
     });
 
-    this.roomsService.getRooms().subscribe((rooms) => {
+    this.roomSubscribe = this.roomsService.getRooms().subscribe((rooms) => {
       this.allRooms = rooms;
       // console.log(this.allRooms);
     });
+
+    this.getmyChats();
 
     // start drawing the interaction room
     const sketch = s => {
@@ -164,12 +176,15 @@ export class NetworkComponent implements OnInit, OnDestroy {
     };
     this.canvas = new p5(sketch);
 
-    document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
+    // document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
+    if (document.getElementById('defaultCanvas0') != null) {
+      document.getElementById('defaultCanvas0').remove();
+    }
   }
 
 
   move(sketch) {
-    let inbox = document.getElementsByClassName('inbox-container')[0];
+    // let inbox = document.getElementsByClassName('inbox-container')[0];
     // console.log(inbox);
     // console.log(window.getComputedStyle(inbox).visibility);
 
@@ -393,7 +408,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
     if (this.userInfoName !== '') {
       let chatFound = false;
       // console.log(this.userInfoName);
-      this.getmyChats();
       if (this.myChats !== []) {
         for (const chat of this.myChats) {
           if (chat.displayName === this.userInfoName) {
@@ -470,7 +484,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
 
   async getOtherUserName(chat, chats, userId) {
-    this.userService.getUsers().pipe(first()).subscribe(async res => {
+    this.userSubscribe = this.userService.getUsers().pipe(first()).subscribe(async res => {
       for (const user of res) {
         if (userId === chat.uid2) {
           if (user['uid'] === chat.uid) {
