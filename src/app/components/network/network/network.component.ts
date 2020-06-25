@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 import { RoomsService } from 'src/app/services/rooms.service';
-
+import { NotificationService } from 'src/app/services/notification.service';
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
 
@@ -23,6 +23,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   allRooms: any = [];
   displayNameOtherUser = '';
   closer = true;
+  room = 'chatrooms';
 
   canvas;
   users = new Array();
@@ -66,7 +67,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     public userService: UsersService,
     public route: Router,
     public interactionService: InteractionService,
-    public roomsService: RoomsService) {
+    public roomsService: RoomsService, ns: NotificationService) {
     this.database = interactionService.getDatabase();
   }
 

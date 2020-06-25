@@ -12,8 +12,8 @@
 <section *ngIf="chatroomNotifications.length !== 0" class="notification">
     <div *ngFor="let notification of chatroomNotifications" >
         <div *ngIf="notification !== undefined || notification !== ''" >
-            <p  *ngIf="notification.permanent === false" class='{{ notification.color }} ' [hidden]='!notification.show'>{{ notification.message }}</p>
-
+            <p   class='{{ notification.color }} ' [hidden]='!notification.show'>{{ notification.message }}</p>
+            <!-- *ngIf="notification.permanent === false" -->
         </div>
     </div>
 </section>
@@ -22,7 +22,7 @@
 <section *ngIf="expoNotifications.length !== 0" class="notification">
     <div *ngFor="let notification of expoNotifications" >
         <div *ngIf="notification !== undefined || notification !== ''"   >
-            <p class='{{ notification.color }} ' [hidden] = '!notification.show' >{{ notification.message }}</p>
+            <p  class='{{ notification.color }} ' [hidden] = '!notification.show' >{{ notification.message }}</p>
 
         </div>
     </div>

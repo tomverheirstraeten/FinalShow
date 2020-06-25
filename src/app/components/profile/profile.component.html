@@ -179,10 +179,10 @@
           <label for="Bio">Bio</label>
           <textarea placeholder="Bio" type='text' id="bio" #bio formControlName="bio">{{user['bio']}}"</textarea>
         </div>
-        <div id="opslaan"><button class="submit active" >OPSLAAN</button></div>
+        <div id="opslaan"><button class="submit active" (click)="goBack()" >OPSLAAN</button></div>
 
       </div>
-      <div id="uiloggen"><button>UITLOGGEN</button></div>
+      <div id="uiloggen"><button (click)="signOut()" >UITLOGGEN</button></div>
     </div>
   </form>
    

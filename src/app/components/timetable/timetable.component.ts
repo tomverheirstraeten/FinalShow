@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, 
 import { AdminService } from 'src/app/services/admin.service';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -19,14 +20,15 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy{
   previousSelectedHtmlEventDetails: Element;
   timeTableSub: Subscription;
   eventListSub: Subscription;
+  room = 'expo';
 
   @ViewChild('timetableHtmlList') timetableHtmlList: ElementRef;
   @ViewChildren('eventListItems') eventListItems: QueryList<any>;
 
-  constructor(private service: AdminService) {
+  constructor(private service: AdminService, private ns: NotificationService) {
     this.timeTableSub = this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
-      if(this.previousSelectedHtmlEvent != null){
+      if (this.previousSelectedHtmlEvent != null){
         this.getCurrentActiveEvent();
       }
     });
