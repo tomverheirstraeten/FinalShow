@@ -225,6 +225,10 @@ h2, h3, h4, h5, h6 {
   transform: scale(1.4);
 }
 
+.group-icon img{
+  max-height: 100%;
+}
+
 // Andres css
 .flex {
   display: flex;

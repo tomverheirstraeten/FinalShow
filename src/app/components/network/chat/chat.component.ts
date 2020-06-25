@@ -25,8 +25,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   deleteWindow = false;
 
-  user1: string;
-  user2: string;
+  user1;
+  user2;
 
   mobile = false;
 
@@ -124,10 +124,10 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   getUsername(chatId){
     this.getChatSub =   this.as.getChat(chatId).subscribe(val => {
       this.as.getUserByID(val['uid']).subscribe(user1 => {
-        this.user1 = user1['displayName'] + ' (' + this.capitalize(user1['function']) + ')';
+        this.user1 = user1;
       });
       this.as.getUserByID(val['uid2']).subscribe(user2 => {
-        this.user2 = user2['displayName'] + ' (' + this.capitalize(user2['function']) + ')';
+        this.user2 = user2;
       })
     });
   }
