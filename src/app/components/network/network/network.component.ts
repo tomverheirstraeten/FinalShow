@@ -57,11 +57,11 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
 
   constructor(public auth: AuthService,
-              public cs: ChatService,
-              public userService: UsersService,
-              public route: Router,
-              public interactionService: InteractionService,
-              public roomsService: RoomsService) {
+    public cs: ChatService,
+    public userService: UsersService,
+    public route: Router,
+    public interactionService: InteractionService,
+    public roomsService: RoomsService) {
     this.database = interactionService.getDatabase();
   }
 
@@ -192,7 +192,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
     this.myX += speed * dirX;
     this.myY += speed * dirY;
-
+    //! wajow !//
     this.database.ref('users/' + this.username).set({
       x: this.myX,
       y: this.myY,
