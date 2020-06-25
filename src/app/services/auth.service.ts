@@ -16,7 +16,7 @@ import { isError } from 'util';
 })
 export class AuthService {
   user$: Observable < any > ;
-  userId: String = '';
+  userId;
   userEmail: String = '';
   userDisplayName: String = '';
   userPhotoURL: String = '';
@@ -319,29 +319,16 @@ return this.afAuth.authState.pipe(
       }
     }
   // profile Update
-  private updateProfile(formVal, character) {
-    const userRef: AngularFirestoreDocument < any > = this.afs.doc(`users/${this.userId}`);
-
-    const data = {
-      uid: this.userId ,
-      email:  this.user$['email'],
-      displayName:this.user$['displayName'],
-      photoURL: this.user$['photoURL'],
+  public updateProfile(formVal){
+    const collection = this.afs.collection('users');
+    collection.doc(this.userId).update({
+      displayName: formVal.displayName,
       website: formVal.website,
       function: formVal.functie,
       bio: formVal.bio,
-      admin: false,
-      gdpr: formVal.gdpr,
-      character
-    };
-
-    userRef.set(data, {
-      merge: true
+      character:  formVal.character,
     });
-    return this.router.navigate(['/profile']);
-
   }
-
 
   async signOut() {
     await this.setPresence('offline');
