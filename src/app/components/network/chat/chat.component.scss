@@ -245,7 +245,8 @@
       grid-column: 1/ span 12;
       grid-row: 2/ span 6;
       background-image: url('../../../../assets/images/background.png');
-        z-index: -1;
+      z-index: 0;
+      cursor: pointer;
   }
   .chat{
     direction: rtl;
@@ -276,6 +277,7 @@
     }
     .wrapper{
       width: 100%;
+      z-index: 1;
     }
     .message-content{
       margin-left: 35px;
