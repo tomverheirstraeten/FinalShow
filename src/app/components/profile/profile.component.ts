@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,14 +13,25 @@ export class ProfileComponent implements OnInit {
 
   character;
 
-  user: Observable < any > ;
+  user = {};
+
+  id;
+
+  position = 0;
+  positionStyle = '';
 
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router, private adminservice: AdminService) { }
+
+  updateProfileForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    website: new FormControl(''),
+    functie: new FormControl('', [Validators.required]),
+    bio: new FormControl(''),
+  });
 
   ngOnInit(): void {
     this.getUser();
-
   }
 
   async getUser() {
@@ -28,21 +41,29 @@ export class ProfileComponent implements OnInit {
       this.user = currentUser;
       this.fillInUserData(currentUser);
     } else {
-      console.log('nouser');
+      this.goToLogin();
+    }
+  }
+  
+  updateProfile(formVal) {
+    if (this.updateProfileForm.valid) {
+    this.adminservice.updateProfile(this.id, this.character, formVal.name, formVal.bio, formVal.functie, formVal.website);
     }
   }
 
+
   setActiveCharacter(character) {
     this.character = character;
-    console.log(this.character);
   }
 
   fillInUserData(currentUser) {
+    console.log(currentUser.displayName);
+    this.id = currentUser.uid;
     const elementName = document.getElementById('name');
     const elementWebsite = document.getElementById('website');
     const elementFunctie = document.getElementById('function');
     const elementBio = document.getElementById('bio');
-    const elementAvatar: HTMLInputElement = document.getElementById(this.character) as HTMLInputElement;
+    const elementAvatar: HTMLInputElement = document.getElementById(currentUser.character) as HTMLInputElement;
     if (currentUser) {
       elementName.setAttribute('value', currentUser.displayName);
       elementWebsite.setAttribute('value', currentUser.website);
@@ -50,8 +71,28 @@ export class ProfileComponent implements OnInit {
       elementFunctie.setAttribute('value', 'bedrijf');
       elementAvatar.checked = true;
     } else {
-      console.log('nouser, in ProfileComponent.fillInUserData()');
+      this.goToLogin();
     }
 
   }
+
+  goleft() {
+    if (this.position < 0){
+      this.position += 100;
+      this.positionStyle = this.position + '%';
+    }
+
+  }
+  goright() {
+    if (this.position >= -300){
+      this.position -= 100;
+      this.positionStyle = this.position + '%';
+    }
+
+  }
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+
 }
