@@ -1,7 +1,7 @@
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-
-    <app-header class="yellow" back='true' title="{{chat.roomName}}"></app-header>
+    <div class="container-grid">
+    <app-header class="red" back='true' title="{{chat.roomName}}"></app-header>
 
     <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
@@ -14,7 +14,7 @@
         </aside>
       </section> -->
 
-      <article class="flex column w-100 ">
+      <article class="flex column w-100">
         <div #chatBox class="chat right " id="chat">
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; let i=index; trackBy: trackByCreated">
             <!-- My MESSAGE DELETED -->
@@ -141,5 +141,6 @@
       </article>
 
     </article>
+  </div>
   </ng-container>
 </ng-container>

@@ -1,5 +1,5 @@
 
-<section id='login'>
+<section id='login' class ='container-grid'>
   <app-header class="red"></app-header>
   <article class="container login-wrapper">
     <h2>Je bent nog niet ingelogd.</h2>
@@ -27,7 +27,7 @@
                 </div>
                 <div >{{errorMessages}}</div>
                 <div class="input-form flex column">
-                  <button class="submit active" type="submit">LOGIN</button>
+                  <button class="submit active" type="submit">LOG IN</button>
                 </div>
               </section>
             </form>
@@ -45,7 +45,7 @@
         </article>
 
     <p>Nog geen account?</p>
-    <button *ngIf="id === 'livestream'" [routerLink]="['/register',id]" type="button" class="txt-light">REGISTREER</button>
-    <button *ngIf="id !== 'livestream'"[routerLink]="['/register']" type="button" class="txt-light">REGISTREER</button>
+    <button *ngIf="id === 'livestream'" [routerLink]="['/register',id]" type="button" class="">REGISTREER</button>
+    <button *ngIf="id !== 'livestream'"[routerLink]="['/register']" type="button" class="">REGISTREER</button>
   </article>
 </section>
