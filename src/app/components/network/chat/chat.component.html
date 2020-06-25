@@ -1,10 +1,11 @@
-<app-header class="yellow" back='true'></app-header>
+<app-header class="red" back='true'></app-header>
 
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-
-    <app-header class="red" back='true' *ngIf="chat.uid != user.uid" title="{{user1}}"></app-header>
-    <app-header class="red" back='true' *ngIf="chat.uid2 != user.uid" title="{{user2}}"></app-header>
+    <app-header class="red" title="Netwerk" id="desktopHeader"></app-header>
+    <div class="container-grid">
+    <app-header class="red" back='true' *ngIf="chat.uid != user.uid" title="{{user1}}" class="mobileHeader"></app-header>
+    <app-header class="red" back='true' *ngIf="chat.uid2 != user.uid" title="{{user2}}" class="mobileHeader"></app-header>
 
     <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
@@ -16,9 +17,16 @@
           <app-users class="rooms"></app-users>
         </aside>
       </section> -->
-
-      <article class="flex column w-100 ">
+      <div class="chat-title-header">
+        <div class="group-icon"></div>
+        <div>
+        <h2>{{user2}}</h2>
+        <p>functie</p>
+      </div>
+      </div>
+      <article class="flex column w-100 inner-wrap">
         <div #chatBox class="chat right " id="chat">
+          <div id="childForScroll">
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; let i=index; trackBy: trackByCreated">
             <!-- My MESSAGE DELETED -->
             <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
@@ -42,14 +50,15 @@
                     <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
                     <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
                   </div>
-                  <p>{{ msg.content }}</p>
+                  <p *ngIf="!mobile">{{ msg.content }}</p>
+                  <p *ngIf="mobile" appHoldable (holdTime)="holdHandler($event, chat, msg, i)" class="holdable">{{ msg.content }}</p>
                   <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
                 <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
                     </div> -->
               </article>
-              <img src="assets/dots.svg" class="deleteDots" (click)="toggleDeleteWindow(chat.messages, msg)">
+              <img *ngIf="!mobile" src="assets/dots.svg" class="deleteDots" (click)="toggleDeleteWindow(chat.messages, msg)">
               <div *ngIf="msg.deleteWindow" class="deleteWindow" (click)="clickedDelete(chat, msg, i)">
                   <img src="assets/delete.svg">
                   <span id="deleteText">Verwijder</span>
@@ -135,6 +144,7 @@
 
           </div>
         </div>
+        </div>
 
 
         <div class="form messagebar">
@@ -146,8 +156,24 @@
                 src="assets/images/send.svg"></button>
           </section>
         </div>
+
+        <div class="mobileDeleteWindow" *ngIf="showMobileDeleteWindow">
+          <div class="mobileDelete" (click)="deleteMessage()">
+            <img src="assets/delete.svg">
+            <p>Verwijder</p>
+          </div>
+          <div class="line">
+          </div>
+          <div class="mobileCancel" (click)="cancelDelete()">
+            <img src="assets/close.svg">
+            <p>Annuleer</p>
+          </div>
+        </div>
+
       </article>
 
     </article>
+    <div [routerLink]= "'/network'" class="backgroundImageNetwork"></div>
+  </div>
   </ng-container>
 </ng-container>

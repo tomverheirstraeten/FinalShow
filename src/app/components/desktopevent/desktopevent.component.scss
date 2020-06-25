@@ -6,14 +6,27 @@
 }
 
 .red-square{
-    background-color: $blue;
+    background-color: $yellow;
     height: 40%;
     width: 48.5vw;
     display: flex;
     align-content: space-around;
     justify-content: center;
+    position: relative;
+    margin-bottom: 3%;
     img{
         max-height: 80%;
+    }
+    .eventIcon{
+        position: absolute;
+        right: -4vw;
+        bottom: -4vh;
+    }
+    .eventImage{
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 80%;
+        object-fit: cover;
     }
 }
 

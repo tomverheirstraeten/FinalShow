@@ -1,29 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-adminnotifications',
   templateUrl: './adminnotifications.component.html',
   styleUrls: ['./adminnotifications.component.scss']
 })
-export class AdminnotificationsComponent implements OnInit {
+export class AdminnotificationsComponent implements OnInit, OnDestroy{
 
   notifications;
-
+  notificationSub: Subscription;
   constructor(private service: AdminService, private router: Router) {
     if(sessionStorage.getItem('password') != environment.credentials.password){
       this.router.navigate(['admin'])
     }
     this.getNotifications();
   }
+  ngOnDestroy(): void {
+    if(this.notificationSub !== undefined){
+    this.notificationSub.unsubscribe();
+    }
+  }
 
   getNotifications(){
-    this.service.getNotifications().subscribe((val) => {
+    this.notificationSub = this.service.getNotifications().subscribe((val) => {
       this.notifications = _.orderBy(val, 'created_at', 'desc');
-    })
+    });
   }
 
   deleteNotification(id){

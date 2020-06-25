@@ -1,28 +1,34 @@
-import { Component, OnInit, Inject, OnChanges } from '@angular/core';
+import { Component, OnInit, Inject, OnChanges, OnDestroy } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { DOCUMENT } from '@angular/common';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-timetable',
   templateUrl: './admintimetable.component.html',
   styleUrls: ['./admintimetable.component.scss']
 })
-export class AdmintimetableComponent implements OnInit {
+export class AdmintimetableComponent implements OnInit, OnDestroy {
 
   timetable: Array<object>;
-
+  timetableSub: Subscription;
   constructor(private service: AdminService, @Inject(DOCUMENT) document, private router: Router) {
     if(sessionStorage.getItem('password') != environment.credentials.password){
       this.router.navigate(['admin'])
     }
     this.getTimetable();
   }
+  ngOnDestroy() {
+    if(this.timetableSub !== undefined){
+      this.timetableSub.unsubscribe();
+      }
+  }
 
   getTimetable(){
-    this.service.getTimetable().subscribe((timetableData) => {
+  this.timetableSub =  this.service.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
       console.log(timetableData);
     });

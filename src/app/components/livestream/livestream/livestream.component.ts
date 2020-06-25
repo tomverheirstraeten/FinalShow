@@ -1,32 +1,44 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit, SecurityContext, OnDestroy } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AdminService } from 'src/app/services/admin.service';
 import { formatDate, CommonModule } from '@angular/common';
 import * as _ from 'lodash';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-livestream',
   templateUrl: './livestream.component.html',
   styleUrls: ['./livestream.component.scss']
 })
-export class LivestreamComponent implements OnInit {
+export class LivestreamComponent implements OnInit, OnDestroy {
 
   room = 'live stream';
   currentActivity = 'Offline';
   live = false;
   timetable;
   url;
-
+  LiveStreamUrlSub: Subscription;
+  timeTableSub: Subscription;
   constructor(private ns: NotificationService, private as: AdminService, private sanitizer: DomSanitizer) {
-    this.as.getStreamUrl().subscribe(val => {
+    this.LiveStreamUrlSub =  this.as.getStreamUrl().subscribe(val => {
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(val['url']);
       console.log(this.url);
-    })
-    this.as.getTimetable().subscribe((timetableData) => {
+    });
+    this.timeTableSub = this.as.getTimetable().subscribe((timetableData) => {
       this.timetable = _.orderBy(timetableData, 'time', 'asc');
       this.showCurrentActivity();
     });
+  }
+  ngOnDestroy() {
+    if(this.LiveStreamUrlSub !== undefined){
+      this.LiveStreamUrlSub.unsubscribe();
+      }
+      if(this.timeTableSub !== undefined){
+        this.timeTableSub.unsubscribe();
+        }
+
+
   }
 
   showCurrentActivity(){

@@ -64,6 +64,7 @@ font-size: 15px;
 .deleteWindow{
   position: absolute;
   padding: 10px 20px;
+  right: 0;
   background-color: #000000af;
   display: flex;
   border-radius: 5px;
@@ -93,8 +94,57 @@ font-size: 15px;
   cursor: pointer;
 }
 
+.holdable{
+  -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.mobileDeleteWindow{
+  position: fixed;
+  height: 100px;
+  width: 100vw;
+  background-color: #F0F0F0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.mobileDelete, .mobileCancel{
+  width: 48%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.line{
+  height: 30%;
+  width: 2px;
+  background-color: rgb(122, 122, 122);
+}
+
+.mobileDeleteWindow img{
+  height: 25px;
+}
+
+.mobileDeleteWindow img, .mobileDeleteWindow p{
+  margin: 5px 0;
+}
+
 a {
     color: $blue
+}
+
+canvas{
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: block;
 }
 
 // a:visited {

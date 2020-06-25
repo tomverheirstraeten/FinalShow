@@ -22,12 +22,15 @@ import {
   RoomsService
 } from 'src/app/services/rooms.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnChanges, OnDestroy{
+  componentDestroyed$ : Subject<boolean> = new Subject();
   user;
   errorMessages;
   id;
@@ -54,17 +57,25 @@ export class LoginComponent implements OnInit, OnChanges, OnDestroy{
     this.checkIfUser();
   }
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
+    if (this.routeSub !== undefined) {
+      this.routeSub.unsubscribe();
+    }
+
+
   }
 
 
   private async checkIfUser() {
     this.user = await this.auth.getUser();
     if (this.user) {
-      if (this.id === 'livestream') {
-        this.goToLivestream();
-      } else {
-        this.goToHome();
+      if(this.user.function){
+        if (this.id === 'livestream') {
+          this.goToLivestream();
+        } else {
+          this.goToHome();
+        }
+      }else{
+        this.gotoGoogleRegister();
       }
     }
   }
@@ -91,6 +102,9 @@ export class LoginComponent implements OnInit, OnChanges, OnDestroy{
 
   goToHome() {
     this.route.navigate(['/network']);
+  }
+  gotoGoogleRegister() {
+    this.route.navigate(['/google-register']);
   }
   goToLivestream() {
     this.route.navigate(['/livestream']);

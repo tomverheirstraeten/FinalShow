@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { first } from 'rxjs/operators';
@@ -10,7 +9,6 @@ import { RoomsService } from 'src/app/services/rooms.service';
 
 import { InteractionService } from 'src/app/services/interaction.service';
 import * as p5 from 'p5';
-import { InboxComponent } from '../../inbox/inbox.component';
 
 
 @Component({
@@ -37,6 +35,9 @@ export class NetworkComponent implements OnInit, OnDestroy {
   database;
   myRole: string;
   myBio;
+  myId;
+  myCharacter;
+  myAva;
   roomDelay = 50; // the amount of frames you have to wait to enter a room
   userSize = 50;
 
@@ -50,11 +51,15 @@ export class NetworkComponent implements OnInit, OnDestroy {
   vrImage;
   privateChatImage;
 
-  userInfo = false;
+  userImages = [];
+
+  userInfo: boolean;
   userInfoName: string;
+  userInfoId: string;
   x;
   y;
-
+  roomSubscribe;
+  userSubscribe;
 
   constructor(public auth: AuthService,
     public cs: ChatService,
@@ -67,33 +72,45 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.canvas.remove();
+    if (this.roomSubscribe !== undefined) {
+      this.roomSubscribe.unsubscribe();
+    }
+    if (this.userSubscribe !== undefined) {
+      this.userSubscribe.unsubscribe();
+    }
+    this.database.ref('users').off();
   }
 
   ngOnInit() {
-    //     // console.log(this.auth.userId);
+    // console.log(this.auth.userId);
     this.checkIfUser();
 
-    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '' }];
+    // template allUsers object
+    let allUsers = [{ x: -100, y: -100, name: 'test', role: 'student', bio: '', id: '', character: '', image: Image }];
 
+    // fill the allUsers object with information from the database
     this.database.ref('users').on('value', (snapshot) => {
       let count = 0;
       snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         this.database.ref('users/' + childKey).once('value', (dataSnapshot) => {
           const childData = dataSnapshot.val();
-          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio };
+          // tslint:disable-next-line: max-line-length
+          allUsers[count] = { x: childData.x, y: childData.y, name: childKey, role: childData.role, bio: childData.bio, id: childData.uid, character: childData.character, image: this.myAva };
         });
         count++;
       });
     });
 
-    this.roomsService.getRooms().subscribe((rooms) => {
+    this.roomSubscribe = this.roomsService.getRooms().subscribe((rooms) => {
       this.allRooms = rooms;
       // console.log(this.allRooms);
     });
 
-    // start drawing the interaction room
+    // START OF THE SKETCH
     const sketch = s => {
+
+      // PRELOAD
       s.preload = () => { // load the images needed
         this.webImage = s.loadImage('assets/images/cluster-icons/web.svg');
         this.motionImage = s.loadImage('assets/images/cluster-icons/motion.svg');
@@ -104,13 +121,29 @@ export class NetworkComponent implements OnInit, OnDestroy {
         this.privateChatImage = s.loadImage('assets/images/chatIcon.svg');
       }
 
+      // SETUP
       s.setup = () => { // initial setup
-        s.createCanvas(s.windowWidth, s.windowHeight);
+        s.createCanvas(window.innerWidth, window.innerHeight);
 
         s.frameRate(20);
+
+        this.myAva = s.loadImage('assets/mannekes/' + this.myCharacter + '.png');
+        for (let i = 0; i < allUsers.length; i++) {
+          if (allUsers[i].character != undefined && allUsers[i].character != '') {
+            this.userImages.push(s.loadImage('assets/mannekes/' + allUsers[i].character + '.png'));
+          } else {
+            this.userImages.push(this.myAva);
+          }
+        }
       };
+
+      // DRAW
       s.draw = () => { // updates every frame
         s.translate(-this.myX + s.width / 2, -this.myY + s.height / 2); // center your player
+
+        this.userInfo = false;
+        this.userInfoName = '';
+        this.userInfoId = '';
 
         s.background(255);
         s.stroke(0);
@@ -120,20 +153,25 @@ export class NetworkComponent implements OnInit, OnDestroy {
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
+
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < allUsers.length; i++) { // display all of the users
             if (allUsers[i] !== undefined) {
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
                 if (allUsers[i].name !== 'undefined') {
-                  // if it's not the current user & the user hasn't been drawn already
-                  this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role); // draw the user
+                  // if it's not the current user & the user hasn't been drawn already, draw the user
+                  // tslint:disable-next-line: max-line-length
+                  this.drawUser(s, allUsers[i].x, allUsers[i].y, allUsers[i].name, allUsers[i].role, allUsers[i].character, this.userImages[i]);
                   drawnUsers.push(allUsers[i].name); // and add it to the list of users drawn this frame
 
-                  let dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
+                  const dist = s.dist(this.myX, this.myY, allUsers[i].x, allUsers[i].y);
 
                   if (dist < this.userSize * 2) {
-                    this.showUserInfo(s, allUsers[i]);
+                    this.userInfo = true;
+                    this.userInfoName = allUsers[i].name;
+                    this.userInfoId = allUsers[i].id;
+                    this.showUserInfo(s, allUsers[i], this.userImages[i]);
                   }
                 }
               }
@@ -148,76 +186,96 @@ export class NetworkComponent implements OnInit, OnDestroy {
     };
     this.canvas = new p5(sketch);
 
-    document.getElementById('defaultCanvas0').style.display = 'none'; // workaround so it doesn't display it twice..
+    // delete the unwanted second canvas
+    if (document.getElementById('defaultCanvas0') != null) {
+      document.getElementById('defaultCanvas0').remove();
+    }
   }
 
 
+  // MOVE FUNCTION
   move(sketch) {
-    let inbox = document.getElementsByClassName('inbox-container')[0];
-    console.log(inbox);
-    // console.log(window.getComputedStyle(inbox).visibility);
 
     const x = sketch.mouseX;
     const y = sketch.mouseY;
 
-    const speed = 5;
+    if (y > 100) { // if the mouse is not on the header
+      const speed = 7;
 
-    let dirX = 0;
-    let dirY = 0;
+      // to know how to move the user,
+      // we calculate the direction in x and y
+      // based on the position of the mouse
+      // and then multiply the direction with the speed
 
-    if (x < sketch.width / 2 - 10) {
-      dirX = -1;
-    } else if (x > sketch.width / 2 + 10) {
-      dirX = 1;
+      // negative x is to the left, positive x to the right
+      // negative y is to the top, positive y to the bottom
+
+      let dirX = 0;
+      let dirY = 0;
+
+      if (x < sketch.width / 2 - 10) {
+        dirX = -1;
+      } else if (x > sketch.width / 2 + 10) {
+        dirX = 1;
+      }
+
+      if (y < sketch.height / 2 - 10) {
+        dirY = -1;
+      } else if (y > sketch.height / 2 + 10) {
+        dirY = 1;
+      }
+
+      // outer boundaries
+      if (this.myY < 10) {
+        this.myY = 10;
+      } else if (this.myY > 1000) {
+        this.myY = 1000;
+      }
+
+      if (this.myX < 10) {
+        this.myX = 10;
+      } else if (this.myX > 1000) {
+        this.myX = 1000;
+      }
+
+      this.myX += speed * dirX;
+      this.myY += speed * dirY;
+
+      // save the data of the current user to the realtime database
+      this.database.ref('users/' + this.username).set({
+        x: this.myX,
+        y: this.myY,
+        role: this.myRole,
+        bio: this.myBio,
+        id: this.myId,
+        character: this.myCharacter
+      });
     }
 
-    if (y < sketch.height / 2 - 10) {
-      dirY = -1;
-    } else if (y > sketch.height / 2 + 10) {
-      dirY = 1;
-    }
-
-    // outer boundaries
-    if (this.myY < 10) {
-      this.myY = 10;
-    } else if (this.myY > 1000) {
-      this.myY = 1000;
-    }
-
-    if (this.myX < 10) {
-      this.myX = 10;
-    } else if (this.myX > 1000) {
-      this.myX = 1000;
-    }
-
-    this.myX += speed * dirX;
-    this.myY += speed * dirY;
-    //! wajow !//
-    this.database.ref('users/' + this.username).set({
-      x: this.myX,
-      y: this.myY,
-      role: this.myRole,
-      bio: this.myBio
-    });
-
-    this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole);
+    this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole, this.myCharacter, this.myAva);
   }
 
-  drawUser(sketch, x, y, name, role) {
+  drawUser(sketch, x, y, name, role, character, image) {
+    // background square
     sketch.strokeWeight(0);
-
     this.getUserColor(sketch, role);
-
     sketch.rectMode('center');
     sketch.rect(x, y, this.userSize, this.userSize);
+
+    // name
     sketch.fill(172, 182, 195);
     sketch.textSize(12);
     sketch.textAlign('center');
     sketch.text(name, x, y + this.userSize);
+
+    // avatar image
     sketch.noFill();
+    if (character !== undefined && character !== '' && image != undefined) {
+      sketch.image(image, x, y, this.userSize - 10, this.userSize + 10);
+    }
   }
 
-  getUserColor(sketch, role) {
+  getUserColor(sketch, role: string) {
     // decide the color based on the role of the user
     switch (role) {
       case 'student':
@@ -252,7 +310,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.displayGroup(sketch, 800, 100, 250, 'General');
   }
 
-  displayGroup(sketch, x, y, r, name) {
+  displayGroup(sketch, x: number, y: number, r: number, name: string) {
     // background
     sketch.noStroke();
     sketch.fill(255, 107, 107);
@@ -298,25 +356,19 @@ export class NetworkComponent implements OnInit, OnDestroy {
     // check the distance
     this.checkDistance(sketch, this.myX, this.myY, x, y, name, r / 2);
 
-    // to integrate with chat: check how many people are in this room
-    // and display their color (as in the design)
-
   }
 
-  checkDistance(sketch, x1, y1, x2, y2, action, radius) {
+  checkDistance(sketch, x1: number, y1: number, x2: number, y2: number, action: string, radius: number) {
     let d = sketch.dist(x1, y1, x2, y2);
     if (d < radius) {
-      // console.log(action);
-      // this.playing = false;
-      // to integrate with chat: place here redirect to chat based on the action
       if ((sketch.frameCount % this.roomDelay) === 0) {
-        this.gotoRoom(sketch, action, x2, y2);
+        this.gotoRoom(action);
       }
     }
   }
 
-  gotoRoom(sketch, room, x, y) {
-    let roomName;
+  gotoRoom(room: string) {
+    let roomName: string;
     switch (room) {
       case 'Motion':
         roomName = 'Interactive Motion';
@@ -340,7 +392,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
     for (const kamer of this.allRooms) {
       if (kamer.roomName === roomName) {
-        // console.log(roomName);
         if (kamer.id !== undefined) {
           window.location.href = '/room/' + kamer.id;
         }
@@ -349,47 +400,58 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   }
 
-  showUserInfo(sketch, user) {
+  showUserInfo(sketch, user, image) {
+    // background rectangle
     sketch.textAlign('center');
     this.getUserColor(sketch, user.role);
-    sketch.rect(user.x, user.y, 150, 190);
+    sketch.rect(user.x, user.y, 170, 190);
+
+    // name
     sketch.fill(0);
     sketch.textSize(15);
-    sketch.text(user.name, user.x, user.y - 70);
+    sketch.text(user.name, user.x, user.y - 50);
+
+    // role
     sketch.textSize(12);
     sketch.textAlign('left');
     sketch.textStyle('italic');
-    sketch.text(user.role, user.x - 60, user.y - 50);
+    sketch.text(user.role, user.x - 60, user.y - 30);
+
+    // biography
     sketch.textStyle('normal');
-    sketch.text(user.bio, user.x - 5, user.y + 20, 110, 120);
-    // console.log(user.name);
+    if (user.bio !== '' && user.bio !== undefined) {
+      sketch.text(user.bio, user.x - 5, user.y + 40, 110, 120);
+    }
 
-
+    // avatar
+    if (image != undefined && image != null && user.character != undefined && user.character != '') {
+      sketch.image(image, user.x + 70, user.y - 80, this.userSize - 10, this.userSize + 10);
+    }
   }
 
-  goToPrivateRoom() {
-    console.log("clicked");
-  }
 
   async checkIfUser() {
-    if (this.auth.userId) {
-      this.user = await this.auth.user$;
-
+    this.user = await this.auth.getUser();
+    if (this.user) {
       this.userService.getUsers().pipe(first()).subscribe(res => {
         for (const user of res) {
           if (user['uid'] === this.auth.userId) {
-            this.username = user['displayName'];
-            this.myRole = user['function'];
-            this.myBio = user['bio'];
+            if (user['function'] === '') {
+              this.goToLogin();
+            } else {
+              this.username = user['displayName'];
+              this.myRole = user['function'];
+              this.myBio = user['bio'];
+              this.myId = user['uid'];
+              this.myCharacter = user['character'];
+            }
           }
         }
       });
 
-      // console.log(this.username);
       this.playing = true;
     } else {
       this.goToLogin();
-
     }
   }
 
@@ -398,6 +460,5 @@ export class NetworkComponent implements OnInit, OnDestroy {
   }
   closeSearch() {
     this.closer = !this.closer;
-    // console.log('close');
   }
 }

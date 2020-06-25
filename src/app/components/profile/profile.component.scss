@@ -1,0 +1,127 @@
+@import '~src/styles.scss';
+
+.header { 
+    background-color: #F3C1C1;
+}
+
+.pagina {
+    //height: 100vh;
+    box-sizing: border-box;
+    
+        label {
+          margin-bottom: 1em;
+          font-size: 0.7em;
+        }
+    
+        h2 {
+          text-align: left;
+        }
+    
+        textarea {
+          margin-bottom: 1em;
+        }
+    .input-form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1em;
+        text-align: left;
+    }
+
+    .slider-wrapper{
+        width:  100%;
+        overflow: hidden;
+        margin: auto;
+      }
+      #characters {
+        width: 500% !important;
+        display: flex;
+        flex-direction: row;
+        overflow: scroll;
+        .slide-content {
+          width: 10%;
+            display: flex;
+            input {
+              &:checked+label {
+                background-color: $blue;
+                opacity: 1;
+              }
+      
+              &:hover+label {
+      
+                opacity: 1;
+              }
+            }
+      
+            label {
+              opacity: 0.5;
+              border-radius: 3px;
+              margin-top: 1em;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 1em;
+              img {
+                width: 50px;
+                      }
+            }
+        }
+      }
+      button.active {
+        border: 1px solid #F9D48A;
+      }
+      
+      button {
+        width: 100%;
+        min-width: 200px;
+        padding: 1em 2em;
+        margin-bottom: 1em;
+        text-align: center !important;
+        background-color: #fcfcfc;
+        border-radius: 2px;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.18);
+        cursor: pointer;
+        cursor: hand;
+        align-self: center;
+        transition: all 400ms ease 0s;
+        border: none;
+      }
+      .button:hover {
+        box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+        user-select: none
+      }
+      
+      .button:active {
+        box-shadow: 0 1px 1px #757575;
+        background: #F8F8F8;
+        color: #fff;
+        user-select: none
+      }
+}
+
+@media only screen and (max-width: 768px) {
+    .pagina{
+    width: 90%;
+    margin: 80px auto 0 auto;
+    }
+}
+@media only screen and (min-width: 769px) {
+    .pagina{
+        grid-column: 3 / span 8;
+        grid-row: 4/ span 3;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        max-height: 100%;
+        box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
+        padding: 0 1em 1em 1em;
+    }
+    .pagina::-webkit-scrollbar{
+        display:none;
+    }
+}
+
+#profileData {
+    display: block;
+}
+.profilecontainer {
+    margin-top: 60px;
+}

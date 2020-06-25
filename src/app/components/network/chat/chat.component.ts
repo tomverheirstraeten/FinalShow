@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener, Inject, ViewChild, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,7 +16,7 @@ import { AdminService } from 'src/app/services/admin.service';
   styleUrls: ['./chat.component.scss'],
 
 })
-export class ChatComponent implements OnInit, AfterViewInit {
+export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   chat$: Observable<any>;
   newMsg: string;
   allChats: any[] = [];
@@ -28,6 +28,16 @@ export class ChatComponent implements OnInit, AfterViewInit {
   user1: string;
   user2: string;
 
+  mobile = false;
+
+  currentChat;
+  currentMsg;
+  currentI;
+
+  showMobileDeleteWindow = false;
+
+  chatSub: Subscription;
+  getChatSub: Subscription;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -39,6 +49,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.route.paramMap.subscribe(params => {
       this.ngOnInit();
     });
+    if(screen.width < 768){
+      this.mobile = true;
+    }
    }
 
   ngAfterViewInit() {
@@ -58,6 +71,25 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.scrollBottom();
   }
 
+  holdHandler(e, chat, msg, i){
+    if(e == 500){
+      console.log('longpressed');
+      this.currentChat = chat;
+      this.currentMsg = msg;
+      this.currentI = i;
+
+      this.showMobileDeleteWindow = true;
+    }
+  }
+
+  cancelDelete(){
+    this.showMobileDeleteWindow = false;
+  }
+
+  deleteMessage(){
+    this.cs.updateMessage(this.currentChat, this.currentMsg, this.currentI);
+  }
+
   updateMessageSeen(chat){
     this.cs.updateMessageSeen(chat);
   }
@@ -73,16 +105,16 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   clickedDelete(chat, msg, i){
-    this.deleteWindow = false;
+    msg.deleteWindow = false;
     this.cs.updateMessage(chat, msg, i);
   }
 
   getAllChats() {
-    this.cs.getAllChats().subscribe((chats) => {
+    this.chatSub = this.cs.getAllChats().subscribe((chats) => {
       this.allChats = chats;
       this.scrollBottom();
       setTimeout(this.showLastSeen, 500);
-    });
+    })
   }
 
   capitalize(string) {
@@ -90,14 +122,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   getUsername(chatId){
-    this.as.getChat(chatId).subscribe(val => {
+    this.getChatSub =   this.as.getChat(chatId).subscribe(val => {
       this.as.getUserByID(val['uid']).subscribe(user1 => {
         this.user1 = user1['displayName'] + ' (' + this.capitalize(user1['function']) + ')';
       });
       this.as.getUserByID(val['uid2']).subscribe(user2 => {
         this.user2 = user2['displayName'] + ' (' + this.capitalize(user2['function']) + ')';
       })
-    })
+    });
   }
 
   showLastSeen(){
@@ -144,5 +176,16 @@ export class ChatComponent implements OnInit, AfterViewInit {
     let date = new Date(timestamp);
     let string = date.getHours() + ":" + date.getMinutes();
     return string;
+  }
+
+  ngOnDestroy(): void {
+    if(this.chatSub !== undefined){
+      this.chatSub.unsubscribe();
+      }
+      if(this.getChatSub !== undefined){
+        this.getChatSub.unsubscribe();
+        }
+
+
   }
 }

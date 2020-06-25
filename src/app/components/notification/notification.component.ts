@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  Input
+  Input,
+  OnDestroy
 } from '@angular/core';
 import {
   NotificationService
@@ -9,19 +10,21 @@ import {
 import {
   map
 } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss']
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent implements OnInit, OnDestroy {
   @Input() notif;
   liveStreamNotifications = [];
   chatroomNotifications = [];
   expoNotifications = [];
   faqNotifications = [];
   show = false;
-  notifIds = []
+  notifIds = [];
+  notifSub: Subscription;
   constructor(private ns: NotificationService) {}
 
   ngOnInit() {
@@ -33,9 +36,15 @@ export class NotificationComponent implements OnInit {
       this.notifIds = JSON.parse(ids);
     }
   }
+  ngOnDestroy(): void {
+
+    if (this.notifSub !== undefined) {
+      this.notifSub.unsubscribe();
+    }
+  }
 
   getNotifications() {
-    this.ns.getNotifiation().subscribe(res => {
+    this.notifSub = this.ns.getNotifiation().subscribe(res => {
       this.liveStreamNotifications = [];
       this.chatroomNotifications = [];
       this.expoNotifications = [];
@@ -138,7 +147,7 @@ export class NotificationComponent implements OnInit {
         }
       });
 
-    });
+    })
 
   }
   makeNotificationDissapear(notification) {

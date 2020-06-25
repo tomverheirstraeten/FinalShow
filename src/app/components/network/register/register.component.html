@@ -7,15 +7,15 @@
   </div>
 </div> -->
 
-  <!-- {{ goToHome() }} -->
+<!-- {{ goToHome() }} -->
 <!-- </div> -->
 
 
-  <!-- <input placeholder="Username" type='text' #username>
+<!-- <input placeholder="Username" type='text' #username>
  <button class="button" (click)="auth.AnonymousSignIn(username.value)">Login with Username</button>
   <span class="txt-light">or</span> -->
-  <app-header class="red"></app-header>
-  <section id="RegisterForm">
+<app-header class="red"></app-header>
+<section id="RegisterForm" class="container-grid">
 
 
   <article class="container register-wrapper">
@@ -25,9 +25,162 @@
     <article>
 
 
-      <section class="register-email" [hidden]=GoogleHidden>
+      <section class="register-email" >
         <form [formGroup]="registerEmailForm" #registerform='ngForm' novalidate
           (ngSubmit)="EmailPasswordRegister(registerEmailForm.value)">
+          <div class="input-form">
+            <label for="Character">Character</label>
+            <section class="flex row space-between">
+              <div (click)='  goleft()'>Go Left</div>
+              <div (click)='  goright()'>Go Right</div>
+            </section>
+          <section class="slider-wrapper">
+            <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
+
+
+              <div class="slide-content" >
+                <input type="radio" id="char2" name="char" hidden checked>
+                <label for="char2" (click)='setActiveCharacter("character2")'>
+                  <img src="assets/mannekes/character2.png" alt="" >
+                </label>
+              </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char3" name="char" hidden>
+                <label for="char3" (click)='setActiveCharacter("character3")'>
+                  <img src="assets/mannekes/character3.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char4" name="char" hidden>
+                <label for="char4" (click)='setActiveCharacter("character4")'>
+                  <img src="assets/mannekes/character4.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char5" name="char" hidden>
+                <label for="char5" (click)='setActiveCharacter("character5")'>
+                  <img src="assets/mannekes/character5.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char6" name="char" hidden>
+                <label for="char6" (click)='setActiveCharacter("character6")'>
+                  <img src="assets/mannekes/character6.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char7" name="char" hidden>
+                <label for="char7" (click)='setActiveCharacter("character7")'>
+                  <img src="assets/mannekes/character7.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char8" name="char" hidden>
+                <label for="char8" (click)='setActiveCharacter("character8")'>
+                  <img src="assets/mannekes/character8.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char9" name="char" hidden>
+                <label for="char9" (click)='setActiveCharacter("character9")'>
+                  <img src="assets/mannekes/character9-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char10" name="char" hidden>
+                <label for="char10" (click)='setActiveCharacter("character10-f")'>
+                  <img src="assets/mannekes/character10-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char11" name="char" hidden checked>
+                <label for="char11" (click)='setActiveCharacter("character11-f")'>
+                  <img src="assets/mannekes/character11-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char12" name="char" hidden>
+                <label for="char12" (click)='setActiveCharacter("character12-f")'>
+                  <img src="assets/mannekes/character12-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char13" name="char" hidden>
+                <label for="char13" (click)='setActiveCharacter("character13-f")'>
+                  <img src="assets/mannekes/character13-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char14" name="char" hidden>
+                <label for="char14" (click)='setActiveCharacter("character14-f")'>
+                  <img src="assets/mannekes/character14-f.png" alt="">
+                </label>
+                </div>
+
+
+              <div class="slide-content">
+                <input type="radio" id="char15" name="char" hidden>
+                <label for="char15" (click)='setActiveCharacter("character15-f")'>
+                  <img src="assets/mannekes/character15-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char16" name="char" hidden>
+                <label for="char16" (click)='setActiveCharacter("character16-f")'>
+                  <img src="assets/mannekes/character16-f.png" alt="">
+                </label>
+                </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char17" name="char" hidden>
+                <label for="char17" (click)='setActiveCharacter("character17-f")'>
+                  <img src="assets/mannekes/character17-f.png" alt="">
+                </label>
+              </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char18" name="char" hidden>
+                <label for="char18" (click)='setActiveCharacter("character18-f")'>
+                  <img src="assets/mannekes/character18-f.png" alt="">
+                </label>
+              </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char19" name="char" hidden>
+                <label for="char19" (click)='setActiveCharacter("dino1")'>
+                  <img src="assets/mannekes/dino1.png" alt="">
+                </label>
+              </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char20" name="char" hidden>
+                <label for="char20" (click)='setActiveCharacter("dino2")'>
+                  <img src="assets/mannekes/dino2.png" alt="">
+                </label>
+              </div>
+
+              <div class="slide-content">
+                <input type="radio" id="char21" name="char" hidden>
+                <label for="char21" (click)='setActiveCharacter("robot1")'>
+                  <img src="assets/mannekes/robot1.png" alt="">
+                </label>
+              </div>
+            </article>
+          </section>
+          </div>
           <div class="input-form">
             <label for="Name">Name*</label>
             <input placeholder="Name" type='text' #name formControlName="name" required>
@@ -87,7 +240,8 @@
 
           <button class="submit active">REGISTREER</button>
         </form>
-        <button class="google-btn" (click)="ToggleForm()">
+        <span class="txt-light flex align-center"> Of</span>
+        <button class="google-btn"  (click)="auth.googleSignIn(id)">
           <div class="google-icon-wrapper">
             <img class="google-icon-svg"
               src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
@@ -95,62 +249,10 @@
           REGISTREER MET GOOGLE
         </button>
       </section>
-
-      <!-- <span class="txt-light or">or</span> -->
-
-      <section class="google" [hidden]=!GoogleHidden>
-        <form class="flex column" [formGroup]="registerGoogleForm" (ngSubmit)="GoogleRegister(registerGoogleForm.value)"
-          novalidate #googleform='ngForm'>
-          <div class="input-form">
-            <label for="Website">Website</label>
-            <input placeholder="Website" type='text' #website formControlName="website">
-          </div>
-          <div class="input-form">
-            <div class="custom-select">
-              <label for="Website">Functie*</label>
-              <select #functie formControlName="functie" required>
-                <option value="student">Student</option>
-                <option value="bedrijf">Bedrijf</option>
-                <option value="docent">Docent</option>
-                <option value="alumni">Alumni</option>
-                <option value="ouders">Ouder</option>
-                <option value="bezoeker">Bezoeker</option>
-              </select>
-              <div *ngIf="registerGoogleForm.get('functie').hasError('required') && googleform.submitted"
-                class='alert alert-danger'>
-                Select a function.</div>
-            </div>
-          </div>
-          <div class="input-form">
-            <label for="Bio">Bio</label>
-            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
-          </div>
-          <div class="input-form">
-            <label for="gdpr">We hebben nog je toestemming nodig om je een e-mail te mogen sturen:</label>
-            <div id="ja">
-              <input type="radio" name="gdpr" value='ja' #gdpr formControlName='gdpr'>
-              <p>Ja, ik wil op de hoogte blijven over de opleiding.</p>
-            </div>
-            <div id="nee">
-              <input type="radio" name="gdpr" value='nee' #gdpr formControlName='gdpr'>
-              <p>Nee, deze opleiding interesseert me niet.</p>
-            </div>
-            <div *ngIf="registerGoogleForm.get('gdpr').hasError('required') && googleform.submitted"
-              class='alert alert-danger'>Kies één van de bovenstaande keuzes.</div>
-          </div>
-          <button class="google-btn active">
-            <div class="google-icon-wrapper">
-              <img class="google-icon-svg"
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-            </div>
-            LOG IN MET GOOGLE
-          </button>
-        </form>
-        <button class="submit" (click)=ToggleForm()>REGISTREER MET EMAIL</button>
-      </section>
     </article>
     <p>Al een account?</p>
     <button *ngIf="id === 'livestream'" [routerLink]="['/login',id]" type="button" class="txt-light">LOGIN</button>
-    <button *ngIf="id !== 'livestream'"[routerLink]="['/login']" type="button" class="txt-light">LOGIN</button>
+    <button *ngIf="id !== 'livestream'" [routerLink]="['/login']" type="button" class="txt-light">LOGIN</button>
   </article>
+
 </section>

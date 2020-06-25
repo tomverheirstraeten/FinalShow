@@ -192,7 +192,7 @@ export class ChatService {
     if (chat.uid === uid || chat.uid2 === uid) {
       let allMessages;
 
-      this.get(chat.id).subscribe(res => {
+    this.get(chat.id).subscribe(res => {
         allMessages = res['messages'];
 
         for (const message of allMessages) {
@@ -254,7 +254,12 @@ export class ChatService {
         return userDocs.length ? combineLatest(userDocs) : of ([]);
       }),
       map(arr => {
-        arr.forEach(v => (joinKeys[( < any > v).uid] = v));
+        arr.forEach(v => {
+          if (v !== undefined) {
+            (joinKeys[( <any> v).uid ] = v);
+          }
+
+        });
         chat.messages = chat.messages.map(v => {
           return {
             ...v,

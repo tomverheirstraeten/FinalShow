@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AdminService } from '../../../services/admin.service';
 import { environment } from 'src/environments/environment';
 
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './adminroom.component.html',
   styleUrls: ['./adminroom.component.scss']
 })
-export class AdminroomComponent implements OnInit {
+export class AdminroomComponent implements OnInit, OnDestroy {
 
   roomId;
   roomName = '';
@@ -17,14 +17,20 @@ export class AdminroomComponent implements OnInit {
   messages = new Array();
   users;
   autoscroll = true;
-
+  getMessagesSub: Subscription;
   constructor(private route: ActivatedRoute, private service: AdminService, private router: Router) {
     if (sessionStorage.getItem('password') != environment.credentials.password) {
       this.router.navigate([''])
     }
   }
+  ngOnDestroy() {
+    if(this.getMessagesSub !== undefined){
+      this.getMessagesSub.unsubscribe();
+      }
 
-  ngOnInit(): void {
+  }
+
+  ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.getMessages();
     this.scrollBottom();
@@ -35,7 +41,7 @@ export class AdminroomComponent implements OnInit {
   }
 
   getMessages() {
-    this.service.getRoom(this.roomId).subscribe((roomData) => {
+   this.getMessagesSub = this.service.getRoom(this.roomId).subscribe((roomData) => {
       this.room = roomData;
       this.roomName = roomData['roomName'] + ' Room';
       this.messages = this.service.getUsers(roomData['messages']);

@@ -1,45 +1,60 @@
 .inbox-container {
   background-color: white;
   width: 100vw;
-  height: 100vh;
+
   position: absolute;
   top: 60px;
   left: 0;
-  z-index: 11;
+  z-index: 1;
+
 }
 
+// .inbox-container:first-child {
+//   padding-top: 0.5em;
+//   background-color: #F0F0F0;
+// }
+
 .inbox-container .conversation {
-  padding: 1em 1em;
+  padding: 0em 1em;
   box-sizing: border-box;
 }
 
 .conversations {
   background-color: #F0F0F0;
 
-  .newMessage {
-    color: #FFFF;
+}
+
+//Wanneer het een ongelezen bericht is
+
+.newMessage {
+  background-color: #ffffff;
+
+  p {
+    font-weight: 400;
   }
 }
 
+
 .conversation {
   display: flex;
-
+  height: 10vh;
 
   img {
-    width: 40px;
+    width: 10%;
     margin: 0em 1em 0em 0em;
   }
 
   .message-container {
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
 
     .namestatus {
       width: 100%;
 
-      p {
-        // font-weight: 400;
-      }
+      // p {
+      //   font-weight: 400;
+      // }
     }
 
     span {
@@ -57,4 +72,26 @@
 .conversation:hover {
   cursor: pointer;
   background-color: #dbdbdb;
+}
+
+//mobile
+@media only screen and (max-width: 768px) {
+  .inbox-container {
+    height: 100vh;
+  }
+}
+
+//desktop
+@media only screen and (min-width: 768px) {
+
+  .inbox-container {
+    width: 20%;
+    box-shadow: 0px 0.5em 0.5em 0px #7b7b7b4d;
+    max-height: 50vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-left: 71.55%;
+  }
+
+
 }

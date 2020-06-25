@@ -22,6 +22,16 @@ Enjoyy! 👏
 ## Used resources
 * [Victorzhou](https://victorzhou.com/blog/build-an-io-game-part-1/)
 * [Github game-io](https://github.com/vzhou842/example-.io-game)
+* [Long Hold Directive](https://www.youtube.com/watch?v=kl-UMCHpEsw)
+* [Eye Icon](https://www.flaticon.com/free-icon/view_709612?term=eye&page=1&position=1)
+* [Dots Icon](https://www.flaticon.com/free-icon/ellipsis_1828805?term=dots&page=1&position=32)
+* [Bin Icon](https://www.flaticon.com/free-icon/trash_3096673?term=trash&page=1&position=7)
+* [Cancel Icon](https://www.flaticon.com/free-icon/cancel_748122?term=cancel&page=1&position=2)
+* [Angular Security](https://netbasal.com/angular-2-security-the-domsanitizer-service-2202c83bd90#:~:text=%E2%80%9Cunsafe%20value%20used%20in%20athat%20unsuspecting%20users%20could%20execute)
+* [Sketchpad Angular/p5](https://indepth.dev/creating-a-sketchpad-with-angular-and-p5js/)
+* [digitalocean](https://www.digitalocean.com/community/tutorials/angular-socket-io#project-setup)
+* [Chat start](https://github.com/AngularFirebase/144-firestore-group-chat)
+* [User Presence](https://www.youtube.com/watch?v=bL3I7Pls-1w)
 
 ### Database
 * [Firestore](https://alligator.io/angular/cloud-firestore-angularfire/)
@@ -34,6 +44,7 @@ Enjoyy! 👏
 * [p5js](https://p5js.org/)
 * [Three.js](https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene)
 * [Lodash](https://lodash.com)
+
 ### Documentation
 * [Stackoverflow](https://stackoverflow.com)
 * [W3schools](https://w3schools.com)
@@ -47,4 +58,5 @@ Enjoyy! 👏
 * [Three.js](https://threejs.org/docs/#api/en/objects/Sprite)
 ### 3D
 * [Blender](https://www.blender.org/)
+* [Maya](https://www.autodesk.com/products/maya/overview?support=ADVANCED&plc=MAYA&term=1-YEAR&quantity=1)
 

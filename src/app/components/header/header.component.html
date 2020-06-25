@@ -11,8 +11,15 @@
         <div class="body">
           <h1>Final Show</h1>
           <p>{{title}}</p>
+
         </div>
-        <div class="profile">
+        <div class="profile" *ngIf="user" class="{{user['function']}}">
+          <div *ngIf="user['character']">
+            <img [src]="'assets/mannekes/' +user['character']+ '.png'" alt="">
+          </div>
+          <div *ngIf="!user['character']">
+            <img [src]="'assets/mannekes/' +user['character']+ '.png'" alt="">
+          </div>
         </div>
       </section>
     </div>
