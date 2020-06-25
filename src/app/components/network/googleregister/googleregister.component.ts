@@ -24,12 +24,15 @@ export class GoogleregisterComponent implements OnInit {
   position = 0;
   positionStyle = "";
 
+  mobile = false;
 
   constructor(public auth: AuthService,
               public userService: UsersService,
               private formBuilder: FormBuilder,
               public route: Router, public router: ActivatedRoute) {
-
+                if(screen.width < 768){
+                  this.mobile = true;
+                }
 
   }
 

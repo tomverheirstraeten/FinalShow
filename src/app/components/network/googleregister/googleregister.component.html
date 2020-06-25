@@ -1,5 +1,10 @@
   <app-header class="red"></app-header>
   <section id="RegisterForm" class="container-grid">
+
+    <div class="registerImage" *ngIf="!mobile">
+      <img src="../../../../assets/register.gif">
+    </div>
+
     <article class="container register-wrapper">
       <h2>Je bent er bijna. </h2>
       <p>Om met andere mensen te kunnen chatten hebben we iets meer informatie nodig. Zo kunnen andere mensen zien wie je bent en kan jij dus ook zien met wie je aan het praten bent. Deze informatie wordt vernietigd na het evenement.</p>
@@ -10,8 +15,8 @@
             <div class="input-form">
               <label for="Character">Character</label>
               <section class="flex row space-between">
-                <div (click)='  goleft()'>Go Left</div>
-                <div (click)='  goright()'>Go Right</div>
+                <div (click)='  goleft()' class="pointer">Naar Links</div>
+                <div (click)='  goright()' class="pointer">Naar Rechts</div>
               </section>
             <section class="slider-wrapper">
               <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
