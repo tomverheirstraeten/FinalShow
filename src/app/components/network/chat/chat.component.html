@@ -2,9 +2,10 @@
 
 <ng-container *ngIf="chat$ | async as chat">
   <ng-container *ngIf=" auth.user$ | async as user">
-
-    <app-header class="red" back='true' *ngIf="chat.uid != user.uid" title="{{user1}}"></app-header>
-    <app-header class="red" back='true' *ngIf="chat.uid2 != user.uid" title="{{user2}}"></app-header>
+    <app-header class="red" title="Netwerk" id="desktopHeader"></app-header>
+    <div class="container-grid">
+    <app-header class="red" back='true' *ngIf="chat.uid != user.uid" title="{{user1}}" class="mobileHeader"></app-header>
+    <app-header class="red" back='true' *ngIf="chat.uid2 != user.uid" title="{{user2}}" class="mobileHeader"></app-header>
 
     <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
@@ -16,9 +17,16 @@
           <app-users class="rooms"></app-users>
         </aside>
       </section> -->
-
+      <div class="chat-title-header">
+        <div class="group-icon"></div>
+        <div>
+        <h2>{{user2}}</h2>
+        <p>functie</p>
+      </div>
+      </div>
       <article class="flex column w-100 ">
         <div #chatBox class="chat right " id="chat">
+          <div id="childForScroll">
           <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; let i=index; trackBy: trackByCreated">
             <!-- My MESSAGE DELETED -->
             <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
@@ -136,6 +144,7 @@
 
           </div>
         </div>
+        </div>
 
 
         <div class="form messagebar">
@@ -164,6 +173,7 @@
       </article>
 
     </article>
-
+    <div [routerLink]= "'/network'" class="backgroundImageNetwork"></div>
+  </div>
   </ng-container>
 </ng-container>
