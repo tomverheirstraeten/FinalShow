@@ -24,7 +24,15 @@
 
 .tekst-event{
     margin-left: 5%;
+    margin-right: 5%;
 }
  h1, p, h2{
      margin-top: 1em;
+ }
+
+ .nominees{
+     li{
+         margin-top: 3%;
+        list-style-type: circle;
+     }
  }
