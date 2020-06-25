@@ -118,7 +118,7 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-  setActiveCharacter(character){
+  setActiveCharacter(character) {
     this.character = character;
     console.log(this.character);
   }

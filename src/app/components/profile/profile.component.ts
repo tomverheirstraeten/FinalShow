@@ -51,28 +51,26 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
-  setActiveCharacter(character) {
-    this.character = character;
+  setActiveCharacter(newCharacter) {
+    this.character = newCharacter;
+    console.log(this.character);
+    const clickedAvatar: HTMLInputElement = document.getElementById(newCharacter) as HTMLInputElement;
+    clickedAvatar.checked = true;
   }
 
   fillInUserData(currentUser) {
-    console.log(currentUser.displayName);
     this.id = currentUser.uid;
-    const elementName = document.getElementById('name');
-    const elementWebsite = document.getElementById('website');
-    const elementFunctie = document.getElementById('function');
-    const elementBio = document.getElementById('bio');
+    const elementName: HTMLInputElement = document.getElementById('name') as HTMLInputElement;
+    const elementWebsite: HTMLInputElement = document.getElementById('website') as HTMLInputElement;
+    const elementFunctie: HTMLInputElement = document.getElementById('function') as HTMLInputElement;
+    const elementBio: HTMLInputElement = document.getElementById('bio') as HTMLInputElement;
     const elementAvatar: HTMLInputElement = document.getElementById(currentUser.character) as HTMLInputElement;
-    if (currentUser) {
-      elementName.setAttribute('value', currentUser.displayName);
-      elementWebsite.setAttribute('value', currentUser.website);
-      elementBio.innerHTML = currentUser.bio;
-      elementFunctie.setAttribute('value', 'bedrijf');
-      elementAvatar.checked = true;
-    } else {
-      this.goToLogin();
-    }
+
+    elementName.value = currentUser.displayName;
+    elementWebsite.value = currentUser.website;
+    elementBio.value = currentUser.bio;
+    elementFunctie.value = currentUser.function;
+    elementAvatar.checked = true;
 
   }
 
