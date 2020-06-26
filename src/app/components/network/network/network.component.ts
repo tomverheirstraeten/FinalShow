@@ -323,7 +323,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.textAlign('center');
     sketch.strokeWeight(0);
     sketch.textSize(25);
-    sketch.text(name, x, y - r / 3.5);
+    sketch.text(name, x, y - r / 8);
     sketch.noFill();
 
     // image
@@ -353,7 +353,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     }
 
     sketch.imageMode('center');
-    sketch.image(image, x, y, r / 3, r / 3);
+    sketch.image(image, x, y + r / 8, r / 3, r / 3);
 
     // check the distance
     this.checkDistance(sketch, this.myX, this.myY, x, y, name, r / 2);
