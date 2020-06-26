@@ -29,11 +29,11 @@
 }
 
 .tooltipTop {
-  min-width:50px;
-  top:-20px;
-  left:50%;
+  min-width:60px;
+  top:-5px;
+  left:15%;
   transform:translate(-50%, -100%);
-  padding:10px 20px;
+  padding:6px 14px;
   color:#EEEEEE;
   background-color:#555555;
   font-weight:normal;
@@ -42,8 +42,10 @@
   position:absolute;
   z-index:99999999;
   box-sizing:border-box;
-  box-shadow:0 1px 8px rgba(0,0,0,0.5);
   display:none;
+  p{
+    color:white;
+  }
 }
 
 
@@ -51,7 +53,7 @@
 .tooltipTop i {
   position:absolute;
   top:100%;
-  left:50%;
+  left:30%;
   margin-left:-12px;
   width:24px;
   height:12px;
@@ -66,7 +68,6 @@
   left:50%;
   transform:translate(-50%,-50%) rotate(45deg);
   background-color:#555555;
-  box-shadow:0 1px 8px rgba(0,0,0,0.5);
 }
 
 #livechat-userinput{
@@ -80,8 +81,9 @@
 
 #livechat-container{
   scroll-behavior: smooth;
-  min-height: 90%;
-  max-height: 90%;
+  min-height: 85%;
+  max-height: 85%;
+  margin-top:5%;
   overflow: scroll;
 }
 
