@@ -14,11 +14,11 @@
             <article *ngIf="msg.hand !== true;" class="text-msg">
                   <p class="tooltipHover">
                     <span class="tooltipTop">
-                      <p>Verwijder</p>
+                      <p>{{msg.user.function}}</p>
                           <i></i>
                     </span>
                   <span *ngIf="msg.user" class="go-to-profile tag is-dark msg-user {{ msg.user?.function}}" [routerLink]="'/profile/' + msg.user.uid">{{ msg.user?.displayName || msg.user?.uid }}  </span>
-                  
+
 
                   <!-- <span class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}  </span> -->
 
