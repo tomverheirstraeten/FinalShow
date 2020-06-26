@@ -22,10 +22,14 @@
 
 .tooltipHover{
   cursor: pointer;
+  position: relative;
+  &:hover .tooltipTop{
+    display:block;
+  }
 }
 
 .tooltipTop {
-  min-width:50px; 
+  min-width:50px;
   top:-20px;
   left:50%;
   transform:translate(-50%, -100%);
@@ -42,9 +46,7 @@
   display:none;
 }
 
-.tooltipHover:hover + .tooltipTop {
-  display:block;
-}
+
 
 .tooltipTop i {
   position:absolute;
