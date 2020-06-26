@@ -153,7 +153,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
-          console.log(allUsers)
+
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < allUsers.length; i++) { // display all of the users
             if (allUsers[i] !== undefined) {
