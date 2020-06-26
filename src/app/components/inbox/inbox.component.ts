@@ -54,38 +54,38 @@ export class InboxComponent implements OnInit, OnDestroy {
   // }
 
 
-  async checkIfSeen(chat) {
-    let checkIfSeen;
+  // async checkIfSeen(chat) {
+  //   let checkIfSeen;
 
-    for (const message of chat['messages']) {
-      if (message.uid !== this.auth.userId && !message.seen) {
+  //   for (const message of chat['messages']) {
+  //     if (message.uid !== this.auth.userId && !message.seen) {
 
-        checkIfSeen = true;
-      }
-    }
-    return checkIfSeen;
-  }
+  //       checkIfSeen = true;
+  //     }
+  //   }
+  //   return checkIfSeen;
+  // }
 
 
-  async getOtherUserName(chat, chats, userId) {
-   this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
-      for (const user of res) {
-        if (userId === chat.uid2) {
-          if (user['uid'] === chat.uid) {
-            this.displayNameOtherUser = user['displayName'];
+  // async getOtherUserName(chat, chats, userId) {
+  //  this.otherUsernameSub =  this.userService.getUsers().pipe(first()).subscribe(async res => {
+  //     for (const user of res) {
+  //       if (userId === chat.uid2) {
+  //         if (user['uid'] === chat.uid) {
+  //           this.displayNameOtherUser = user['displayName'];
 
-            chat.displayName = this.displayNameOtherUser;
-          }
-        } else {
-          if (user['uid'] === chat.uid2) {
-            this.displayNameOtherUser = user['displayName'];
-            chat.displayName = this.displayNameOtherUser;
-          }
-        }
-        this.myChats = chats;
-      }
-    });
-  }
+  //           chat.displayName = this.displayNameOtherUser;
+  //         }
+  //       } else {
+  //         if (user['uid'] === chat.uid2) {
+  //           this.displayNameOtherUser = user['displayName'];
+  //           chat.displayName = this.displayNameOtherUser;
+  //         }
+  //       }
+  //       this.myChats = chats;
+  //     }
+  //   });
+  // }
 
 
 
@@ -97,7 +97,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
   goToChat(chat) {
-    return this.router.navigate([`chats/${chat.id}`]);
+    // return this.router.navigate([`chats/${chat.id}`]);
   }
 
 
