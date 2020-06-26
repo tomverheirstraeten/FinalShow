@@ -238,14 +238,16 @@
     height: calc(100% - 60px);
     padding: 1em 1em 1em 0;
     justify-content: flex-end;
-    background-color: white;
   }
   .backgroundImageNetwork{
       grid-column: 1/ span 12;
       grid-row: 2/ span 6;
+<<<<<<< HEAD
       background-image: url('../../../../assets/images/background.png');
       z-index: 0;
       cursor: pointer;
+=======
+>>>>>>> parent of e0c92e9... Merge branch 'master' of https://github.com/tomverheirstraeten/FinalShow
   }
   .chat{
     direction: rtl;

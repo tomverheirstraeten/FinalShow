@@ -21,11 +21,11 @@
           <img [src]="'assets/mannekes/' +user2['character']+ '.png'" *ngIf="chat.uid2 != user.uid">
         </div>
         <div *ngIf="chat.uid != user.uid">
-          <h2 [routerLink]="'/profile/' + user1['uid']" class="go-to-profile">{{user1['displayName']}}</h2>
+          <h2>{{user1['displayName']}}</h2>
           <p>{{capitalize(user['function'])}}</p>
         </div>
         <div *ngIf="chat.uid2 != user.uid">
-          <h2 [routerLink]="'/profile/' + user2['uid']" class="go-to-profile">{{user2['displayName']}}</h2>
+          <h2>{{user2['displayName']}}</h2>
           <p>{{capitalize(user2['function'])}}</p>
         </div>
       </div>
