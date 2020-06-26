@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   firebaseConfig: { // echte database
     apiKey: 'AIzaSyABvAb09DZzUPPNXyQNuk0-tDaRdoOAqzs',
     authDomain: 'finalshow.firebaseapp.com',
@@ -15,27 +14,7 @@ export const environment = {
     messagingSenderId: '853852160934',
     appId: '1:853852160934:web:fc998d0dc3e790c0270567'
   },
-  // firebaseConfig: { // prototype
-  //   apiKey: "AIzaSyDil2Zauz3WGZAvCKvuXXQhmiRCcdK1JPw",
-  //   authDomain: "prototype-interactionroom.firebaseapp.com",
-  //   databaseURL: "https://prototype-interactionroom.firebaseio.com",
-  //   projectId: "prototype-interactionroom",
-  //   storageBucket: "prototype-interactionroom.appspot.com",
-  //   messagingSenderId: "684938562186",
-  //   appId: "1:684938562186:web:60a3c13cbfbe01baa37b73"
-  // },
-  // firebaseConfig :{// Andres db
-  //   apiKey: "AIzaSyDkgAwyClmcH_RsB3ODGNH6Vy30RGQcNK0",
-  //   authDomain: "chat-b0dc5.firebaseapp.com",
-  //   databaseURL: "https://chat-b0dc5.firebaseio.com",
-  //   projectId: "chat-b0dc5",
-  //   storageBucket: "chat-b0dc5.appspot.com",
-  //   messagingSenderId: "944554094446",
-  //   appId: "1:944554094446:web:dd18bfe41555c1e0039b7f"
-  // },
-=======
-=======
->>>>>>> parent of a870a8d... Merge branch 'master' of https://github.com/tomverheirstraeten/FinalShow
+
   // firebaseConfig: { // echte database
   //   apiKey: 'AIzaSyABvAb09DZzUPPNXyQNuk0-tDaRdoOAqzs',
   //   authDomain: 'finalshow.firebaseapp.com',
@@ -45,16 +24,16 @@ export const environment = {
   //   messagingSenderId: '853852160934',
   //   appId: '1:853852160934:web:fc998d0dc3e790c0270567'
   // },
-  firebaseConfig: { // prototype
-    apiKey: "AIzaSyDil2Zauz3WGZAvCKvuXXQhmiRCcdK1JPw",
-    authDomain: "prototype-interactionroom.firebaseapp.com",
-    databaseURL: "https://prototype-interactionroom.firebaseio.com",
-    projectId: "prototype-interactionroom",
-    storageBucket: "prototype-interactionroom.appspot.com",
-    messagingSenderId: "684938562186",
-    appId: "1:684938562186:web:60a3c13cbfbe01baa37b73"
-  },
->>>>>>> parent of a870a8d... Merge branch 'master' of https://github.com/tomverheirstraeten/FinalShow
+  // firebaseConfig: { // prototype
+  //   apiKey: "AIzaSyDil2Zauz3WGZAvCKvuXXQhmiRCcdK1JPw",
+  //   authDomain: "prototype-interactionroom.firebaseapp.com",
+  //   databaseURL: "https://prototype-interactionroom.firebaseio.com",
+  //   projectId: "prototype-interactionroom",
+  //   storageBucket: "prototype-interactionroom.appspot.com",
+  //   messagingSenderId: "684938562186",
+  //   appId: "1:684938562186:web:60a3c13cbfbe01baa37b73"
+  // },
+
   credentials: {
     username: 'admin',
     password: 'ehbfinalshowadminpanel'
