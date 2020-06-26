@@ -8,9 +8,9 @@ import {
 import {
   AuthService
 } from 'src/app/services/auth.service';
-import {
-  ChatService
-} from 'src/app/services/chat.service';
+// import {
+//   ChatService
+// } from 'src/app/services/chat.service';
 import {
   UsersService
 } from 'src/app/services/users.service';
@@ -20,7 +20,7 @@ import {
 import * as _ from 'lodash';
 import {
   Router
-} from '@angular/router'
+} from '@angular/router';
 import {
   LoginComponent
 } from '../login/login.component';
@@ -50,7 +50,7 @@ export class ConversationsComponent implements OnInit, OnDestroy {
 
   getOtherUserNameSub: Subscription;
   getUserSub: Subscription;
-  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
+  constructor(public auth: AuthService, public userService: UsersService, public router: Router) {
 
   }
   ngOnDestroy() {
@@ -78,22 +78,22 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     this.getUsers();
   }
   updateMessageSeen(chatid) {
-    this.cs.updateMessageSeenConversation(chatid);
+    // this.cs.updateMessageSeenConversation(chatid);
   }
 
   async getmyChats() {
     const user = await this.auth.getUser();
     if (user) {
       const userId = user.uid;
-      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
-        const chats = [];
-        for (const chat of res) {
-          if (chat['uid'] === userId || chat['uid2'] === userId) {
-            // chats.push(chat);
-            this.getOtherUserName(chat, chats, userId);
-          }
-        }
-      })
+      // this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
+      //   const chats = [];
+      //   for (const chat of res) {
+      //     if (chat['uid'] === userId || chat['uid2'] === userId) {
+      //       // chats.push(chat);
+      //       this.getOtherUserName(chat, chats, userId);
+      //     }
+      //   }
+      // })
     }
   }
 

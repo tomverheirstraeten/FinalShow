@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { ChatService } from 'src/app/services/chat.service';
+// import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -63,7 +63,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userSubscribe;
 
   constructor(public auth: AuthService,
-    public cs: ChatService,
     public userService: UsersService,
     public route: Router,
     public interactionService: InteractionService,
@@ -154,10 +153,11 @@ export class NetworkComponent implements OnInit, OnDestroy {
           // console.log(allUsers);
 
           let drawnUsers = []; // this makes sure we draw every user only once every frame
-
+          console.log(allUsers)
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < allUsers.length; i++) { // display all of the users
             if (allUsers[i] !== undefined) {
+
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
                 if (allUsers[i].name !== 'undefined') {
