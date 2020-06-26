@@ -22,8 +22,8 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   liveChatSub: Subscription;
 
   // livestreamID = "ALqUn9fy9fWieiwvEFOk";
-  // livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
-  livestreamID = 'w496ZugdV52nd8HPPixA';
+  livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
+  // livestreamID = 'w496ZugdV52nd8HPPixA';
 
   constructor(private route: ActivatedRoute,
     public auth: AuthService,
