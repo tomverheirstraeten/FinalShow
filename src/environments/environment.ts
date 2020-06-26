@@ -37,6 +37,11 @@ export const environment = {
   credentials: {
     username: 'admin',
     password: 'ehbfinalshowadminpanel'
+  },
+  livestreamID: {
+    id: 'w496ZugdV52nd8HPPixA', //sarah
+    // id: 'ALqUn9fy9fWieiwvEFOk' , //andres
+    // id: 'xWsddAUZ7AFFUOVJ9Muv', //echte db
   }
 };
 

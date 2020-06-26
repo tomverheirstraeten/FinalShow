@@ -6,23 +6,23 @@
     </div>
 
     <div class="searchbutton">
-<img src="assets/images/search.svg" alt="">
+      <img src="assets/images/search.svg" alt="">
     </div>
 
   </div>
   <div class="conv-rooms" *ngIf="!closer">
     <div id="childForScroll">
     <h1>Vorige Gesprekken</h1>
- <div class="conversation" *ngFor="let chats of filteredChats" (click)='goToChat(chats)'>
-  <div *ngIf="chats.messages.length">
- <img [src]="'assets/man.svg'" alt="">
+ <div class="conversation" *ngFor="let chats of myChats" (click)='goToChat(chats.id)'>
+  <div *ngIf="chats.data.messages.length">
+    <img [src]="'assets/mannekes/'+chats.character +'.png'" alt="" class={{chats.data.function}}>
  <div class="namestatus">
    <p>{{ chats.displayName }}</p>
    <p>
-     {{ chats.function | titlecase }}
+     {{ chats.data.function | titlecase }}
    </p>
   </div>
-    <span *ngIf="chats.seen" class="last-message"></span>
+    <span *ngIf="chats.data.seen" class="last-message"></span>
 
 
 

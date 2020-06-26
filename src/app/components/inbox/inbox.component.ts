@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-// import { ChatService } from 'src/app/services/chat.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+import { pipe } from 'rxjs';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-inbox',
@@ -18,15 +20,22 @@ export class InboxComponent implements OnInit, OnDestroy {
   allChatSub;
   otherUsernameSub;
   seen;
-
+  user;
 
   status: any[] = [];
-  constructor(public auth: AuthService, public userService: UsersService, public router: Router) {
+  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router,public as: AdminService) {
 
   }
 
   ngOnInit() {
-    // this.getmyChats();
+    this.checkIfUser();
+
+  }
+  async checkIfUser() {
+    this.user = await this.auth.getUser();
+    if (this.user) {
+      //this.getmyChats();
+    }
   }
   ngOnDestroy() {
     if(this.allChatSub !== undefined){
@@ -38,20 +47,29 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
   // async getmyChats() {
-  //   const user = await this.auth.getUser();
-  //   if (user) {
-  //     const userId = user.uid;
-  //     this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
-  //       const chats = [];
+  //   if (this.user) {
+  //     const chats = [];
+  //     this.myChats = [];
+  //     const userId = this.user.uid;
+  //     this.cs.getChatsForUser(userId).subscribe((res) => {
   //       for (const chat of res) {
-  //         if (chat['uid'] === userId || chat['uid2'] === userId) {
-  //           chats.push(chat);
-  //           this.getOtherUserName(chat, chats, userId);
-  //         }
+  //         chats.push(chat);
+  //         this.getOtherUserName(chat, chats, userId);
+  //       }
+  //     });
+  //     this.cs.getChatsForUser2(userId).subscribe((res) => {
+
+  //       for (const chat of res) {
+  //         chats.push(chat);
+  //         this.getOtherUserName(chat, chats, userId);
+
   //       }
   //     });
   //   }
   // }
+
+
+
 
 
   // async checkIfSeen(chat) {

@@ -5,7 +5,9 @@
   position: absolute;
   top: 60px;
   left: 0;
-  z-index: 1;
+  z-index: 999;
+
+  overflow: hidden;
 
 }
 
@@ -21,7 +23,6 @@
 
 .conversations {
   background-color: #F0F0F0;
-
 }
 
 .display-none{
@@ -104,7 +105,6 @@
     width: 20%;
     box-shadow: 0px 0.5em 0.5em 0px #7b7b7b4d;
     max-height: 50vh;
-    overflow: scroll;
     overflow-x: hidden;
     margin-left: 71.55%;
   }

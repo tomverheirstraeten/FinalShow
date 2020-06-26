@@ -74,6 +74,37 @@ export class ChatService {
         })
       );
   }
+
+  getChatsForUser(uid) {
+    return this.afs.collection('chats', ref => ref
+      .where('uid', '==', uid))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return {id, data};
+          });
+        })
+      );
+  }
+
+  getChatsForUser2(uid){
+    return this.afs.collection('chats', ref => ref
+      .where('uid2', '==', uid))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return {id, data};
+          });
+        })
+      );
+  }
+
   getUniqueChats(chatId) {
     return this.afs.collection < any > ('chats/').doc(chatId).valueChanges();
 
@@ -100,7 +131,15 @@ export class ChatService {
     if (uid === uid2) {
       // return false;
     } else {
+
       const docRef = await this.afs.collection('chats').add(data);
+      await this.afs.collection('users').doc(uid).update({
+        messages: firestore.FieldValue.arrayUnion(docRef.id)
+      });
+      await this.afs.collection('users').doc(uid2).update({
+        messages: firestore.FieldValue.arrayUnion(docRef.id)
+      });
+
       return this.router.navigate(['chats', docRef.id]);
     }
   }
@@ -124,7 +163,7 @@ export class ChatService {
     if (uid) {
       const ref = this.afs.collection('chats').doc(chatId);
       return ref.update({
-        messages: firestore.FieldValue.arrayUnion(data)
+        messages: firestore.FieldValue.arrayUnion(uid)
       });
     }
   }

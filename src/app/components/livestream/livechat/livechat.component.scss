@@ -1,6 +1,6 @@
 @import '~src/styles.scss';
 //Kleuren balkjes functies
-.docent, .student, .bedrijf, .alumni{
+.docent, .student, .bedrijf, .alumni {
   padding-left: 0.5em;
 }
 
@@ -20,6 +20,56 @@
   border-left: 5px solid $green;
 }
 
+.tooltipHover{
+  cursor: pointer;
+  position: relative;
+  &:hover .tooltipTop{
+    display:block;
+  }
+}
+
+.tooltipTop {
+  min-width:60px;
+  top:-5px;
+  left:15%;
+  transform:translate(-50%, -100%);
+  padding:6px 14px;
+  color:#EEEEEE;
+  background-color:#555555;
+  font-weight:normal;
+  font-size:13px;
+  border-radius:8px;
+  position:absolute;
+  z-index:99999999;
+  box-sizing:border-box;
+  display:none;
+  p{
+    color:white;
+  }
+}
+
+
+
+.tooltipTop i {
+  position:absolute;
+  top:100%;
+  left:30%;
+  margin-left:-12px;
+  width:24px;
+  height:12px;
+  overflow:hidden;
+}
+
+.tooltipTop i::after {
+  content:'';
+  position:absolute;
+  width:12px;
+  height:12px;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(45deg);
+  background-color:#555555;
+}
+
 #livechat-userinput{
   height: 10%;
 }
@@ -31,8 +81,9 @@
 
 #livechat-container{
   scroll-behavior: smooth;
-  min-height: 90%;
-  max-height: 90%;
+  min-height: 85%;
+  max-height: 85%;
+  margin-top:5%;
   overflow: scroll;
 }
 

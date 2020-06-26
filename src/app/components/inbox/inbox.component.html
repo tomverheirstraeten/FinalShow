@@ -1,23 +1,25 @@
 <ng-container *ngIf="auth.user$ | async as user">
   <div class="inbox-container">
-    <div class="conversation profileBtn" routerLink='/profile' [routerLinkActive]="['display-none']">
+    <div class="conversation profileBtn" routerLink='/editprofile' [routerLinkActive]="['display-none']">
       <img src="assets/edit.svg" alt="" id="editImg">
       <p>Bewerk profiel</p>
     </div>
-    <div class="conversations" *ngFor="let chats of myChats" (click)='goToChat(chats)'>
-      <div *ngIf="chats.messages.length" class="conversation">
-        <img [src]="'assets/man.svg'" alt="">
+    <!-- <div class="conversations" *ngFor="let chats of myChats" (click)='goToChat(chats.id)'>
+      <div *ngIf="chats.data.messages.length" class="conversation">
+
+        <img [src]="'assets/mannekes/'+chats.character +'.png'" alt="" class={{chats.data.function}}>
         <div class="message-container">
           <div class="namestatus">
             <p>{{ chats.displayName | titlecase }}</p>
             <p>
-              <!-- {{ chats.function}} Student -->
+              {{ chats.function }}
             </p>
           </div>
-
-          <span class="last-message">negeer mij ni...</span>
+          <span class="last-message">
+            {{ chats.data.messages[chats.data.messages.length - 1].content }}
+          </span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </ng-container>

@@ -1,3 +1,4 @@
+@import '~src/styles.scss';
 .conversation-room-chat-title {
   font-weight: bold;
   font-size: 18pt;
@@ -17,6 +18,10 @@
   .container.conversations{
     width: 90%;
   }
+  .legende{
+    bottom: 1em;
+    left: 5%;
+  }
 }
 
 
@@ -26,11 +31,49 @@
     width: 32.64%;
     left: 8.41%;
   }
+  .legende{
+    top: 140px;
+    left: 8.41%;
+  }
+  
 }
+
 
 app-notification{
   width: 100vw;
   position: absolute;
   top: 60px;
   height: 60px;
+}
+
+.docent, .student, .bedrijf, .alumni, .bezoeker{
+  padding-left: 0.5em;
+  margin-bottom: 0.5em;;
+}
+
+.docent{
+  border-left: 5px solid $pink;
+}
+
+.student{
+  border-left: 5px solid $blue;
+}
+
+.alumni{
+  border-left: 5px solid $red;
+}
+
+.bedrijf{
+  border-left: 5px solid $green;
+}
+.bezoeker{
+  border-left: 5px solid $yellow;
+}
+.legende{
+  position: absolute;
+
+  p{
+    text-align: left;
+    display: block;
+  }
 }

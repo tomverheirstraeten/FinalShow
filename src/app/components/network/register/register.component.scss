@@ -166,7 +166,7 @@ button.google-btn {
       display: flex;
       input {
         &:checked+label {
-          background-color: $blue;
+          background-color: $red;
           opacity: 1;
         }
 
