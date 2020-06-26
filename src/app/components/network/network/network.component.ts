@@ -228,16 +228,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
 
       // outer boundaries
-      if (this.myY < 0) {
-        this.myY = 0;
-      } else if (this.myY > 2000) {
-        this.myY = 2000;
+      if (this.myY < -1000) {
+        this.myY = -1000;
+      } else if (this.myY > 1000) {
+        this.myY = 1000;
       }
 
-      if (this.myX < 0) {
-        this.myX = 0;
-      } else if (this.myX > 2000) {
-        this.myX = 2000;
+      if (this.myX < -1000) {
+        this.myX = -1000;
+      } else if (this.myX > 1000) {
+        this.myX = 1000;
       }
 
       this.myX += speed * dirX;
@@ -299,17 +299,17 @@ export class NetworkComponent implements OnInit, OnDestroy {
 
   displayGroups(sketch) {
     // web room
-    this.displayGroup(sketch, 1500, 900, 170, 'Web');
+    this.displayGroup(sketch, 500, -100, 170, 'Web');
     // motion room
-    this.displayGroup(sketch, 400, 1300, 180, 'Motion');
+    this.displayGroup(sketch, -600, 300, 180, 'Motion');
     // alternate reality room
-    this.displayGroup(sketch, 1800, 1500, 150, 'AR');
+    this.displayGroup(sketch, 800, 500, 150, 'AR');
     // mobile room
-    this.displayGroup(sketch, 600, 700, 170, 'Mobile');
+    this.displayGroup(sketch, -400, -300, 170, 'Mobile');
     // experience room
-    this.displayGroup(sketch, 1000, 150, 220, 'Digital Making');
+    this.displayGroup(sketch, 100, -850, 220, 'Digital Making');
     // general room
-    this.displayGroup(sketch, 200, 200, 250, 'General');
+    this.displayGroup(sketch, -800, -800, 250, 'General');
   }
 
   displayGroup(sketch, x: number, y: number, r: number, name: string) {
