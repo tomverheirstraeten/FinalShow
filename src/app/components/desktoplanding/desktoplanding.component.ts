@@ -41,6 +41,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
     fablabY: -0.009189906120300283,
     entryY: -0.4470003843307495
   };
+  textmesh = null;
   ngOnDestroy() {
     cancelAnimationFrame(this.animationFrame);
   }
@@ -55,7 +56,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
 
     // LOAD GLTF AND ADD EVERYTHING TO SCENE
-    this.gltfLoader.load('assets/3Dmodels/campus2.gltf', (gltf) => {
+    this.gltfLoader.load('assets/3Dmodels/campus.gltf', (gltf) => {
       this.loaded = true;
       this.scene.add(gltf.scene);
 
@@ -148,6 +149,8 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
 
         } else if (mesh.name === 'terrain') {
           mesh.layers.disable(0)
+        } else if (mesh.name === 'zzzzText') {
+          this.textmesh = mesh
         }
       }
       for (const speech of this.speechmeshes) {
@@ -375,6 +378,7 @@ export class DesktopLandingComponent implements OnInit, OnDestroy {
       this.el.nativeElement.style.cursor = "default"
     }
     this.logomesh.rotation.y += 0.005;
+    this.textmesh.rotation.z += 0.009;
     this.renderer.render(this.scene, this.camera);
 
   }
