@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs'
 import { first, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { ChatService } from 'src/app/services/chat.service';
+// import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
   public allUsers: any = [];
   public allUserData: any = [];
 
-  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, private router: Router) {
+  constructor(public auth: AuthService, public userService: UsersService, private router: Router) {
     this.getUsers();
   }
   ngOnInit() {
@@ -76,22 +76,22 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
 
     let chatId;
     // tslint:disable-next-line: no-unused-expression
-    this.userSub = this.cs.getAllChats().pipe(take(1)).subscribe(async (chats) => {
-      // console.log('chats', chats);
-      if (!chats.length) {
-        // console.log('No rooms');
-        this.cs.create(uid2);
-      } else {
-        let exist = '';
-        for (const chat of chats) {
-          if (chat['uid'] === userId && chat['uid2'] === uid2 || chat['uid'] === uid2 && chat['uid2'] === userId) {
-            exist = 'true';
-            chatId = chat.id;
-          }
-        }
-        await this.checkIfExist(exist, chatId, uid2);
-      }
-    });
+    // this.userSub = this.cs.getAllChats().pipe(take(1)).subscribe(async (chats) => {
+    //   // console.log('chats', chats);
+    //   if (!chats.length) {
+    //     // console.log('No rooms');
+    //     this.cs.create(uid2);
+    //   } else {
+    //     let exist = '';
+    //     for (const chat of chats) {
+    //       if (chat['uid'] === userId && chat['uid2'] === uid2 || chat['uid'] === uid2 && chat['uid2'] === userId) {
+    //         exist = 'true';
+    //         chatId = chat.id;
+    //       }
+    //     }
+    //     await this.checkIfExist(exist, chatId, uid2);
+    //   }
+    // });
 
   }
 
@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit, OnChanges, OnDestroy {
       // console.log('Redirect to room');
       this.router.navigate(['chats', chatId]);
     } else {
-      this.cs.create(uid2);
+      // this.cs.create(uid2);
       // console.log('create new !!!');
     }
   }

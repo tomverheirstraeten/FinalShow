@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, AfterContentInit, HostListener, Injec
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ChatService } from 'src/app/services/chat.service';
+// import { ChatService } from 'src/app/services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { DOCUMENT } from '@angular/common';
@@ -39,7 +39,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   chatSub: Subscription;
   getChatSub: Subscription;
   constructor(
-    public cs: ChatService,
+    // public cs: ChatService,
     private route: ActivatedRoute,
     public auth: AuthService,
     public userService: UsersService,
@@ -62,8 +62,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.chatId = this.route.snapshot.paramMap.get('id');
     this.getAllChats();
-    const source = this.cs.get(this.chatId);
-    this.chat$ = this.cs.joinUsers(source);
+    // const source = this.cs.get(this.chatId);
+    // this.chat$ = this.cs.joinUsers(source);
      // .pipe(tap(v => this.scrollBottom(v)));
     this.getUsername(this.chatId);
   }
@@ -92,11 +92,11 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteMessage(){
-    this.cs.updateMessage(this.currentChat, this.currentMsg, this.currentI);
+    // this.cs.updateMessage(this.currentChat, this.currentMsg, this.currentI);
   }
 
   updateMessageSeen(chat){
-    this.cs.updateMessageSeen(chat);
+    // this.cs.updateMessageSeen(chat);
   }
 
   toggleDeleteWindow(messages, msg){
@@ -111,15 +111,15 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   clickedDelete(chat, msg, i){
     msg.deleteWindow = false;
-    this.cs.updateMessage(chat, msg, i);
+    // this.cs.updateMessage(chat, msg, i);
   }
 
   getAllChats() {
-    this.chatSub = this.cs.getUniqueChats(this.chatId).subscribe((chats) => {
-      this.allChats = chats;
-      this.scrollBottom();
-      setTimeout(this.showLastSeen, 500);
-    })
+    // this.chatSub = this.cs.getUniqueChats(this.chatId).subscribe((chats) => {
+    //   this.allChats = chats;
+    //   this.scrollBottom();
+    //   setTimeout(this.showLastSeen, 500);
+    // })
   }
 
   capitalize(string) {
@@ -150,13 +150,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.newMsg) {
       return alert('you need to enter something');
     }
-    this.cs.sendMessage(chatId, this.newMsg);
+    // this.cs.sendMessage(chatId, this.newMsg);
     this.newMsg = '';
     this.scrollBottom();
   }
 
   submitHand(chat) {
-    this.cs.sendMessageHand(chat.id);
+    // this.cs.sendMessageHand(chat.id);
     // this.updateMessageSeen(chat);
     this.newMsg = '';
     this.scrollBottom();

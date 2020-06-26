@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { ChatService } from 'src/app/services/chat.service';
+// import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -63,7 +63,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userSubscribe;
 
   constructor(public auth: AuthService,
-    public cs: ChatService,
     public userService: UsersService,
     public route: Router,
     public interactionService: InteractionService,
@@ -158,6 +157,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < allUsers.length; i++) { // display all of the users
             if (allUsers[i] !== undefined) {
+
               s.stroke(s.color(0, 0, 255));
               if (this.username !== allUsers[i].name && !drawnUsers.includes(allUsers[i].name)) {
                 if (allUsers[i].name !== 'undefined') {
@@ -323,7 +323,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     sketch.textAlign('center');
     sketch.strokeWeight(0);
     sketch.textSize(25);
-    sketch.text(name, x, y - r / 3.5);
+    sketch.text(name, x, y - r / 8);
     sketch.noFill();
 
     // image
@@ -353,7 +353,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     }
 
     sketch.imageMode('center');
-    sketch.image(image, x, y, r / 3, r / 3);
+    sketch.image(image, x, y + r / 8, r / 3, r / 3);
 
     // check the distance
     this.checkDistance(sketch, this.myX, this.myY, x, y, name, r / 2);

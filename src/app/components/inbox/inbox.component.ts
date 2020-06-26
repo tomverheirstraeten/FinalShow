@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { ChatService } from 'src/app/services/chat.service';
+// import { ChatService } from 'src/app/services/chat.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 
@@ -21,12 +21,12 @@ export class InboxComponent implements OnInit, OnDestroy {
 
 
   status: any[] = [];
-  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router) {
+  constructor(public auth: AuthService, public userService: UsersService, public router: Router) {
 
   }
 
   ngOnInit() {
-    this.getmyChats();
+    // this.getmyChats();
   }
   ngOnDestroy() {
     if(this.allChatSub !== undefined){
@@ -37,21 +37,21 @@ export class InboxComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getmyChats() {
-    const user = await this.auth.getUser();
-    if (user) {
-      const userId = user.uid;
-      this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
-        const chats = [];
-        for (const chat of res) {
-          if (chat['uid'] === userId || chat['uid2'] === userId) {
-            chats.push(chat);
-            this.getOtherUserName(chat, chats, userId);
-          }
-        }
-      });
-    }
-  }
+  // async getmyChats() {
+  //   const user = await this.auth.getUser();
+  //   if (user) {
+  //     const userId = user.uid;
+  //     this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
+  //       const chats = [];
+  //       for (const chat of res) {
+  //         if (chat['uid'] === userId || chat['uid2'] === userId) {
+  //           chats.push(chat);
+  //           this.getOtherUserName(chat, chats, userId);
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
 
 
   async checkIfSeen(chat) {
