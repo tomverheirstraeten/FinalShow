@@ -161,12 +161,14 @@ button.google-btn {
   display: flex;
   flex-direction: row;
   overflow: scroll;
+  -ms-overflow-style: none;
+
   .slide-content {
     width: 20%;
       display: flex;
       input {
         &:checked+label {
-          background-color: $blue;
+          background-color: $red;
           opacity: 1;
         }
 

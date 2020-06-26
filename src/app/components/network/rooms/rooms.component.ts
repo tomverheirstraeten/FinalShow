@@ -30,10 +30,10 @@ roomsSub: Subscription;
     }
   }
   getRooms(){
-    this.roomsSub = this.cs.getRooms().subscribe((rooms) => {
-      this.allRooms = rooms;
+    // this.roomsSub = this.cs.getRooms().subscribe((rooms) => {
+    //   this.allRooms = rooms;
 
-    })
+    // })
   }
 
 
