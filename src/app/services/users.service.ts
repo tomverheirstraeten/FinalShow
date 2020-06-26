@@ -13,9 +13,6 @@ constructor(public afs: AngularFirestore, public db: AngularFireDatabase) {
 getUsers(){
   return this.afs.collection("users").valueChanges();
 }
-getUser(uid){
-  return this.afs.collection("users").doc(uid).valueChanges();
-}
 getUsersStatus(){
   return this.db.list("/status").valueChanges();
 }
