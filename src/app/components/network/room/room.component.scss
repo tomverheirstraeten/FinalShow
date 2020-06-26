@@ -212,7 +212,7 @@
   .deletedMsg{
     margin-right: 35px;
   }
-  
+
   .form.messagebar {
     width: 100%;
     padding-left: 1em;
@@ -242,12 +242,10 @@
   .backgroundImageNetwork{
       grid-column: 1/ span 12;
       grid-row: 2/ span 6;
-<<<<<<< HEAD
+
       background-image: url('../../../../assets/images/background.png');
       z-index: 0;
       cursor: pointer;
-=======
->>>>>>> parent of e0c92e9... Merge branch 'master' of https://github.com/tomverheirstraeten/FinalShow
   }
   .chat{
     direction: rtl;
@@ -263,19 +261,19 @@
     display: block;
     width: 5px;
     }
-    
+
     .chat::-webkit-scrollbar-track {
     background: transparent;
     }
-    
+
     .chat::-webkit-scrollbar-thumb {
     background-color:$red;
     }
-    
+
     .chat::-webkit-scrollbar-track-piece:end {
     margin-bottom: 10%;
     }
-    
+
     .chat::-webkit-scrollbar-track-piece:start {
     margin-top: 10%;
     }

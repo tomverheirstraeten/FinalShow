@@ -13,11 +13,14 @@
           <div id="livechat-scroll" class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
             <article *ngIf="msg.hand !== true;" class="text-msg">
                   <p>
-<<<<<<< HEAD
+
                   <span *ngIf="msg.user" class="go-to-profile tag is-dark msg-user {{ msg.user?.function}}" [routerLink]="'/profile/' + msg.user.uid">{{ msg.user?.displayName || msg.user?.uid }}  </span>
-=======
+
                   <span class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}  </span>
->>>>>>> parent of e0c92e9... Merge branch 'master' of https://github.com/tomverheirstraeten/FinalShow
+
+
+                  <span class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}  </span>
+
                   {{ msg.content }}
                   </p>
             </article>
