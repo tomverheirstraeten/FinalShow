@@ -1,8 +1,9 @@
 <app-header class="red" title="Netwerk"></app-header>
   <app-notification [notif]=room></app-notification>
 
-<div >
+<div (click)='closeSearch()'>
   <div class="container">
+
     <div class="legende">
       <p class="student">student</p>
       <p class="bedrijf">bedrijf</p>
@@ -38,9 +39,9 @@
            <div class="bar1"></div>
            <div class="bar2"></div>
          </div> -->
-    <!-- <div class="container conversations">
+    <div class="container conversations">
       <app-conversations (close)=closer></app-conversations>
-    </div> -->
+    </div>
 
     <!-- </div> -->
 

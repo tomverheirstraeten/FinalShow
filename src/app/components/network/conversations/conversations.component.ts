@@ -8,9 +8,9 @@ import {
 import {
   AuthService
 } from 'src/app/services/auth.service';
-// import {
-//   ChatService
-// } from 'src/app/services/chat.service';
+import {
+  ChatService
+} from 'src/app/services/chat.service';
 import {
   UsersService
 } from 'src/app/services/users.service';
@@ -20,13 +20,14 @@ import {
 import * as _ from 'lodash';
 import {
   Router
-} from '@angular/router';
+} from '@angular/router'
 import {
   LoginComponent
 } from '../login/login.component';
 import {
   Subscription
 } from 'rxjs';
+import { AdminService } from 'src/app/services/admin.service';
 @Component({
   selector: 'app-conversations',
   templateUrl: './conversations.component.html',
@@ -50,7 +51,8 @@ export class ConversationsComponent implements OnInit, OnDestroy {
 
   getOtherUserNameSub: Subscription;
   getUserSub: Subscription;
-  constructor(public auth: AuthService, public userService: UsersService, public router: Router) {
+
+  constructor(public auth: AuthService, public cs: ChatService, public userService: UsersService, public router: Router, public as: AdminService) {
 
   }
   ngOnDestroy() {
@@ -66,11 +68,6 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     if (this.getUserSub !== undefined) {
       this.getUserSub.unsubscribe();
     }
-
-
-
-
-
   }
 
   ngOnInit() {
@@ -78,22 +75,27 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     this.getUsers();
   }
   updateMessageSeen(chatid) {
-    // this.cs.updateMessageSeenConversation(chatid);
+    this.cs.updateMessageSeenConversation(chatid);
   }
 
   async getmyChats() {
     const user = await this.auth.getUser();
     if (user) {
+      const chats = [];
+      this.myChats = [];
       const userId = user.uid;
-      // this.allChatSub = await this.cs.getAllChats().subscribe((res) => {
-      //   const chats = [];
-      //   for (const chat of res) {
-      //     if (chat['uid'] === userId || chat['uid2'] === userId) {
-      //       // chats.push(chat);
-      //       this.getOtherUserName(chat, chats, userId);
-      //     }
-      //   }
-      // })
+      this.cs.getChatsForUser(userId).subscribe((res) => {
+        for (const chat of res) {
+          chats.push(chat);
+          this.getOtherUserName(chat, chats, userId);
+        }
+      });
+      this.cs.getChatsForUser2(userId).subscribe((res) => {
+        for (const chat of res) {
+          chats.push(chat);
+          this.getOtherUserName(chat, chats, userId);
+        }
+      });
     }
   }
 
@@ -113,51 +115,20 @@ export class ConversationsComponent implements OnInit, OnDestroy {
 
 
   async getOtherUserName(chat, chats, userId) {
-    this.getOtherUserNameSub = this.userService.getUsers().pipe(first()).subscribe(async res => {
-      for (const user of res) {
-        if (userId === chat.uid2) {
-          if (user['uid'] === chat.uid) {
-            this.displayNameOtherUser = user['displayName'];
-            this.functionOtherUser = user['function'];
-            chat.displayName = this.displayNameOtherUser;
-            chat.function = this.functionOtherUser;
-
-
-            await this.checkIfSeen(chat).then(res => {
-
-              if (res) {
-
-              }
-              chat.seen = res;
-              chats.push(chat);
-            });
-
-
-
-          }
-        } else {
-          if (user['uid'] === chat.uid2) {
-            this.displayNameOtherUser = user['displayName'];
-            this.functionOtherUser = user['function'];
-            chat.displayName = this.displayNameOtherUser;
-            chat.function = this.functionOtherUser;
-
-            await this.checkIfSeen(chat).then(res => {
-              if (res) {
-
-              }
-              chat.seen = res;
-              chats.push(chat);
-            });
-
-          }
-        }
-        this.myChats = chats;
-        this.filteredChats = chats;
-
-
-      }
-    });
+    if(chat.data.uid === userId){
+      this.as.getUserByID(chat.data.uid2).subscribe(user => {
+        console.log(user);
+        chat.character = user['character'];
+        chat.displayName = user['displayName'];
+      })
+    } else{
+      this.as.getUserByID(chat.data.uid).subscribe(user => {
+        chat.character = user['character'];
+        chat.displayName = user['displayName'];
+        console.log(user);
+      });
+    }
+    this.myChats = chats;
   }
 
 
@@ -221,8 +192,8 @@ export class ConversationsComponent implements OnInit, OnDestroy {
     })
   }
 
-  goToChat(chat) {
-    this.updateMessageSeen(chat.id);
-    return this.router.navigate([`chats/${chat.id}`]);
+  goToChat(chatId) {
+    this.updateMessageSeen(chatId);
+    return this.router.navigate([`chats/${chatId}`]);
   }
 }

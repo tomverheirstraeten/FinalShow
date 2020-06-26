@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: 'google-register', component: GoogleregisterComponent },
   { path: 'network', component: NetworkComponent },
   { path: 'faq', component: FaqComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'editprofile', component: ProfileComponent },
   { path: 'timetable/:event', component: EventComponent },
   { path: 'chats/:id', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminhomeComponent },

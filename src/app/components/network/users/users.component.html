@@ -4,7 +4,7 @@
       <div *ngIf="user.status == 'online'" class="dot green"></div>
       <div *ngIf="user.status == 'offline'" class="dot grey"></div>
       <div *ngIf="user.status == 'away'" class="dot orange"></div>
-      <img [src]="user.photoURL || 'assets/man.svg' " alt="">
+      <img [src]="'assets/mannekes/'+user.character +'.png'" alt="" class={{user.function}}>
       <p>{{ user.displayName }}</p>
     </div>
   </div>

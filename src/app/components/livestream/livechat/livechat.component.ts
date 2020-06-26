@@ -6,6 +6,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from 'src/app/app.component';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-livechat',
   templateUrl: './livechat.component.html',
@@ -23,7 +24,7 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
 
   // livestreamID = "ALqUn9fy9fWieiwvEFOk";
   // livestreamID = "xWsddAUZ7AFFUOVJ9Muv";
-  livestreamID = 'w496ZugdV52nd8HPPixA';
+  livestreamID = environment.livestreamID.id;
 
   constructor(private route: ActivatedRoute,
     public auth: AuthService,
