@@ -6,7 +6,7 @@
       <img src="assets/images/back.svg" *ngIf="back === 'true'" (click)="goBack()" routerLinkActive="router-link-active"
         alt="">
     </div>
-    <div class="card flex column" (click) = 'toggleInbox = !toggleInbox'>
+    <div class="card flex column" routerLink='/editprofile'>
       <section class="flex row">
         <div class="body">
           <h1>Final Show</h1>
@@ -25,4 +25,3 @@
     </div>
   </section>
 </div>
-<app-inbox [hidden] = 'toggleInbox'></app-inbox>

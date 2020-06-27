@@ -1,8 +1,5 @@
 @import '~src/styles.scss';
 
-.header { 
-    background-color: #F3C1C1;
-}
 
 .pagina {
     //height: 100vh;
@@ -31,18 +28,21 @@
         width:  100%;
         overflow: scroll;
         margin: auto;
+        -ms-overflow-style: none; // Ie & edge
+        scrollbar-width: none; // fire-fox
+      }
+      .slider-wrapper::-webkit-scrollbar { // chrome, safari & opera
+        display: none;
       }
       #characters {
         width: 500% !important;
         display: flex;
         flex-direction: row;
-        overflow: scroll;
         .slide-content {
-          width: 10%;
             display: flex;
             input {
               &:checked+label {
-                background-color: $blue;
+                background-color: $pink;
                 opacity: 1;
               }
       
@@ -59,15 +59,11 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              padding: 1em;
-              img {
-                width: 50px;
-                      }
             }
         }
       }
       button.active {
-        border: 1px solid #F9D48A;
+        border: 1px solid $pink
       }
       
       button {
@@ -103,8 +99,23 @@
     width: 90%;
     margin: 80px auto 0 auto;
     }
+    .slide-content{
+      width: 150px;
+      margin-left: 1em;
+      label{
+        padding: 0;
+      }
+    }
+
 }
+
 @media only screen and (min-width: 769px) {
+  .slide-content{
+    width: 3.5%;
+  }
+  .container-grid{
+    background-color: rgba(243, 193, 193, 0.4);
+  }
     .pagina{
         grid-column: 3 / span 8;
         grid-row: 4/ span 3;
@@ -112,16 +123,90 @@
         -ms-overflow-style: none;
         max-height: 100%;
         box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
-        padding: 0 1em 1em 1em;
+        padding: 1em;
+        direction: rtl;
+        background-color: $white;
+    }
+    .profilecontainer{
+      direction: ltr;
     }
     .pagina::-webkit-scrollbar{
         display:none;
+    }
+    .pagina::-webkit-scrollbar {
+      display: block;
+      width: 5px;
+    }
+
+    .pagina::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .pagina::-webkit-scrollbar-thumb {
+      background-color: $pink;
+    }
+
+    .pagina::-webkit-scrollbar-track-piece:end {
+      margin-bottom: 10%;
+    }
+
+    .pagina::-webkit-scrollbar-track-piece:start {
+      margin-top: 10%;
     }
 }
 
 #profileData {
     display: block;
 }
-.profilecontainer {
-    margin-top: 60px;
+.input-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+  text-align: left;
+
+  label {
+    margin-bottom: 1em;
+    font-size: 0.7em;
+  }
+
+  h2 {
+    text-align: left;
+  }
+
+  textarea {
+    margin-bottom: 1em;
+  }
+
+  input,
+  textarea,
+  select {
+    box-sizing: border-box;
+    border: none;
+    width: 100%;
+    padding: 1em;
+    border-radius: 0px;
+    border: 1px solid #DBDBDB;
+
+    &:focus {
+      border-color: $pink;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, .16);
+    }
+  }
+  .carousselMannekes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+      div{ //arrows
+        width: 100px;
+        margin-left: 1em;
+      }
+      .arrowPink{
+        width: 35px;
+      }
+      #right{
+        transform: rotate(180deg);
+      }
+  }
+
 }

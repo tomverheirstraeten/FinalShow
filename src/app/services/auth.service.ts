@@ -214,20 +214,18 @@ return this.afAuth.authState.pipe(
     }
   }
 
-    // Email & password register
-    async EmailPasswordRegister(formVal, id, character) {
+  // Email & password register
+  async EmailPasswordRegister(formVal, id, character) {
 
-      const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password).catch(await function(error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      // this.errorMessage = error.message;
-      // ...
+    const credentials = await this.afAuth.createUserWithEmailAndPassword(formVal.email, formVal.password);
 
-      this.errorMessage = error.message;
-      console.log(this.errorMessage);
-    });
-    return this.updateUserDataEmail(credentials,formVal, id, character);
+    try {
+      return this.updateUserDataEmail(credentials,formVal, id, character);
+    } catch (error) {
+      console.log(error);
     }
+
+  }
 
       // Update user data with email
   private updateUserDataEmail(credentials, formVal, id, character) {

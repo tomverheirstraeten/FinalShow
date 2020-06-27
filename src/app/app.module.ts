@@ -35,7 +35,6 @@ import { AdminusersComponent } from './components/admin/adminusers/adminusers.co
 import { AdminroomComponent } from './components/admin/adminroom/adminroom.component';
 import { AdminnotificationsComponent } from './components/admin/adminnotifications/adminnotifications.component';
 import { AdminlivestreamComponent } from './components/admin/adminlivestream/adminlivestream.component';
-import { InboxComponent } from './components/inbox/inbox.component';
 import { DesktopeventComponent } from './components/desktopevent/desktopevent.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
@@ -76,7 +75,6 @@ import { ProfileViewComponent } from './profile-view/profile-view.component';
       AdminroomComponent,
       AdminnotificationsComponent,
       AdminlivestreamComponent,
-      InboxComponent,
       DesktopeventComponent,
       RedirectComponent,
       FourOfourComponent,

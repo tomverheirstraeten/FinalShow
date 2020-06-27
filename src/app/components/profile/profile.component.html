@@ -7,12 +7,9 @@
       <form [formGroup]="updateProfileForm" #registerform='ngForm' novalidate
         (ngSubmit)="updateProfile(updateProfileForm.value)">
         <div class="input-form">
-          <label for="Character">Character</label>
-          <section class="flex row space-between">
-            <div (click)='  goleft()'>Naar Links</div>
-            <div (click)='  goright()'>Naar Rechts</div>
-          </section>
-          <div class="input-form">     
+          <label for="Name" >Avatar</label>
+          <div class="input-form carousselMannekes"> 
+            <div (click)='  goleft()' class="arrowPink"><img src="assets/pinkArrow.svg"></div>    
             <section class="slider-wrapper">
             <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
               <div class="slide-content" >
@@ -156,7 +153,9 @@
                 </label>
               </div>
             </article>
-          </section></div>
+          </section>
+          <div (click)='  goright()' id="right" class="arrowPink"><img src="assets/pinkArrow.svg"></div>
+        </div>
       <div class="input-form">
         <label for="Name" >Name*</label>
         <input placeholder="Name" type='text' #name id="name" formControlName="name" required value="{{user['displayName']}}">
