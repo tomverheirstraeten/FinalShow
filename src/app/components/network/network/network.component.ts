@@ -244,14 +244,16 @@ export class NetworkComponent implements OnInit, OnDestroy {
       this.myY += speed * dirY;
 
       // save the data of the current user to the realtime database
-      this.database.ref('users/' + this.username).set({
-        x: this.myX,
-        y: this.myY,
-        role: this.myRole,
-        bio: this.myBio,
-        id: this.myId,
-        character: this.myCharacter
-      });
+      if (this.username !== undefined) {
+        this.database.ref('users/' + this.username).set({
+          x: this.myX,
+          y: this.myY,
+          role: this.myRole,
+          bio: this.myBio,
+          id: this.myId,
+          character: this.myCharacter
+        });
+      }
     }
 
     this.drawUser(sketch, this.myX, this.myY, this.username, this.myRole, this.myCharacter, this.myAva);
