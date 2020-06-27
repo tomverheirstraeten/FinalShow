@@ -1,21 +1,44 @@
-  
-#profileViewWrapper{
-    height:100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
+@media only screen and (min-width: 769px) {
+    .container-grid{
+        #wrap{
+        grid-column: 4/span 6;
+        grid-row: 4/span 3;
+        background: white;
+        box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
+        }
+    }
+    .docent{
+        background-color: rgba(243, 193, 193, 0.4);
+      }
+      
+    .student{
+        background-color: rgba(79, 205, 196, 0.4);
+      }
+      
+    .alumni{
+        background-color: rgba(255, 107, 107, 0.4);
+      }
+      
+    .bedrijf{
+        background-color: rgba(149, 209, 123, 0.4);
+      }
+    .bezoeker{
+        background-color: rgba(249, 212, 138, 0.4);
+      }
+    #img{
+        padding: 1em 1em 0 1em;
+        width: 100%;
+        overflow: hidden;
 
-img{
-    height: 200px;
-}
-
-h4{
-    margin-top: 20px;
-}
-
-#profileViewWrapper div{
-    box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
-    padding: 100px 300px;
+    }
+    img{
+        height: 30vh;
+        float: right;
+    }
+    #info{
+        margin: 1em;
+        h4{
+            margin: 1em 0;
+        }
+    }
 }

@@ -1,8 +1,11 @@
 <app-header title="Profiel" back='true'></app-header>
 
-<div class="wrapper" id="profileViewWrapper">
-    <div>
+<div class="{{currentUser['function']}} container-grid">
+    <div id="wrap">
+        <div id="img">
         <img [src]="'assets/mannekes/' +currentUser['character']+ '.png'">
+        </div>
+        <div id="info">
         <h4>Naam</h4>
         <p>{{currentUser['displayName']}}</p>
     
@@ -13,6 +16,7 @@
         <p>{{currentUser['bio']}}</p>
     
         <h4>Website</h4>
-        <p>{{currentUser['website']}}</p>
+        <a href = "{{currentUser['website']}}">{{currentUser['website']}}</a>
+    </div>
     </div>
 </div>
