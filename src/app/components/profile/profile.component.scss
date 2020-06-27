@@ -39,7 +39,6 @@
         display: flex;
         flex-direction: row;
         .slide-content {
-          width: 3.5%;
             display: flex;
             input {
               &:checked+label {
@@ -60,10 +59,6 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              padding: 1em;
-              img {
-                width: 50px;
-                      }
             }
         }
       }
@@ -104,9 +99,20 @@
     width: 90%;
     margin: 80px auto 0 auto;
     }
+    .slide-content{
+      width: 150px;
+      margin-left: 1em;
+      label{
+        padding: 0;
+      }
+    }
+
 }
 
 @media only screen and (min-width: 769px) {
+  .slide-content{
+    width: 3.5%;
+  }
   .container-grid{
     background-color: rgba(243, 193, 193, 0.4);
   }
@@ -191,7 +197,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-      div{
+      div{ //arrows
         width: 35px;
       }
       #right{
