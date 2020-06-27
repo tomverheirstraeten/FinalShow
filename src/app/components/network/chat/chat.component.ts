@@ -38,6 +38,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   chatSub: Subscription;
   getChatSub: Subscription;
+  user1Sub: Subscription;
+  user2Sub: Subscription;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -127,11 +129,11 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getUsername(chatId){
-    this.getChatSub =   this.as.getChat(chatId).subscribe(val => {
-      this.as.getUserByID(val['uid']).subscribe(user1 => {
+    this.getChatSub = this.as.getChat(chatId).subscribe(val => {
+      this.user1Sub = this.as.getUserByID(val['uid']).subscribe(user1 => {
         this.user1 = user1;
       });
-      this.as.getUserByID(val['uid2']).subscribe(user2 => {
+      this.user2Sub = this.as.getUserByID(val['uid2']).subscribe(user2 => {
         this.user2 = user2;
       })
     });
@@ -192,10 +194,14 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.chatSub !== undefined){
       this.chatSub.unsubscribe();
       }
-      if(this.getChatSub !== undefined){
-        this.getChatSub.unsubscribe();
-        }
-
-
+    if(this.getChatSub !== undefined){
+      this.getChatSub.unsubscribe();
+    }
+    if(this.user1Sub !== undefined){
+      this.user1Sub.unsubscribe();
+    }
+    if(this.user2Sub !== undefined){
+      this.user2Sub.unsubscribe();
+    }
   }
 }

@@ -31,15 +31,14 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     public userService: UsersService,
     public roomService: RoomsService) {
      }
+
   ngOnDestroy() {
     if(this.allChatsSub !== undefined){
       this.allChatsSub.unsubscribe();
       }
-      if(this.liveChatSub !== undefined){
+    if(this.liveChatSub !== undefined){
         this.liveChatSub.unsubscribe();
-        }
-
-
+    }
   }
 
   ngOnChanges() {
@@ -80,9 +79,6 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.scrollBottom();
   }
 
-
-
-
   submit(chatId) {
     console.log(this.newMsg)
     if (!this.newMsg) {
@@ -96,7 +92,6 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   trackByCreated(i, msg) {
     return msg.createdAt;
   }
-
 
   private scrollBottom() {
     const chatElem = document.getElementById('livechat-container');

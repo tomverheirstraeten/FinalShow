@@ -9,7 +9,7 @@
     <h1 class="subtititle">{{event['name']}}</h1>
     <p>{{event['desc']}}</p>
     <div *ngIf="event['nominees']">
-      <h2 class="subtititle">credits to:</h2>
+      <h2 class="subtititle">Genomineerden:</h2>
       <ul class="nominees" *ngFor="let nominee of  event['nominees']">
         <li><span class="bold">{{nominee['course']}}</span> {{nominee['desc']}}</li>
       </ul>
