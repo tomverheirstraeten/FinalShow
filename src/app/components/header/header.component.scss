@@ -71,6 +71,9 @@
 .bedrijf {
   background:$green;
 }
+.ouders, .bezoeker{
+  background: $yellow;
+}
 
 // header
 
@@ -103,5 +106,8 @@
 
   :host-context(.green) .header {
     background: $green;
+  }
+  :host-context(.pink) .header {
+    background: $pink;
   }
 }
