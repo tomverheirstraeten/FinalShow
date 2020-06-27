@@ -9,7 +9,7 @@
         <div class="input-form">
           <label for="Name" >Avatar</label>
           <div class="input-form carousselMannekes"> 
-            <div (click)='  goleft()'><img src="assets/pinkArrow.svg"></div>    
+            <div (click)='  goleft()' class="arrowPink"><img src="assets/pinkArrow.svg"></div>    
             <section class="slider-wrapper">
             <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
               <div class="slide-content" >
@@ -154,7 +154,7 @@
               </div>
             </article>
           </section>
-          <div (click)='  goright()' id="right"><img src="assets/pinkArrow.svg"></div>
+          <div (click)='  goright()' id="right" class="arrowPink"><img src="assets/pinkArrow.svg"></div>
         </div>
       <div class="input-form">
         <label for="Name" >Name*</label>

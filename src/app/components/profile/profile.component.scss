@@ -198,6 +198,10 @@
     justify-content: space-between;
     align-items: center;
       div{ //arrows
+        width: 100px;
+        margin-left: 1em;
+      }
+      .arrowPink{
         width: 35px;
       }
       #right{
