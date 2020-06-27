@@ -1,11 +1,11 @@
 <app-header title="Profiel" class="pink" back='true'></app-header>
 
-<div class="{{currentUser['function']}} container-grid">
+<div class="desktop{{currentUser['function']}} container-grid">
     <div id="wrap">
         <div id="img">
         <img [src]="'assets/mannekes/' +currentUser['character']+ '.png'">
         </div>
-        <div id="info">
+        <div id="info" class="mobile{{currentUser['function']}}">
         <h4>Naam</h4>
         <p>{{currentUser['displayName']}}</p>
     
@@ -17,19 +17,6 @@
     
         <h4>Website</h4>
         <a href = "http://{{currentUser['website']}}">{{currentUser['website']}}</a>
-    </div>
-    <div id="info" class= "{{currentUser['function']}}">
-      <h4>Naam</h4>
-      <p>{{currentUser['displayName']}}</p>
-
-      <h4>Rol</h4>
-      <p>{{currentUser['function']}}</p>
-
-      <h4>Bio</h4>
-      <p>{{currentUser['bio']}}</p>
-
-      <h4>Website</h4>
-      <a href="{{currentUser['website']}}">{{currentUser['website']}}</a>
     </div>
   </div>
 </div>

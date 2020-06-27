@@ -9,29 +9,6 @@
       box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
     }
   }
-
-  .docent {
-    background-color: $pink;
-  }
-
-  .student {
-    background-color: $blue;
-  }
-
-  .alumni {
-    background-color: $red;
-  }
-
-  .bedrijf {
-    background-color: $green;
-  }
-
-  .bezoeker, .ouders {
-    background-color: $yellow;
-  }
-
-
-
   #img {
     padding: 1em 1em 0 1em;
     width: 100%;
@@ -51,6 +28,26 @@
       margin: 1em 0;
     }
   }
+  .desktopdocent {
+    background-color: rgba(243, 193, 193, 0.4);
+  }
+
+  .desktopstudent {
+    background-color: rgba(79, 205, 196, 0.4);
+  }
+
+  .desktopalumni {
+    background-color: rgba(255, 107, 107, 0.4);
+  }
+
+  .desktopbedrijf {
+    background-color: rgba(149, 209, 123, 0.4);
+  }
+
+  .desktopbezoeker {
+    background-color: rgba(249, 212, 138, 0.4);
+  }
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -106,7 +103,26 @@
       font-weight: 200;
     }
   }
+  .mobiledocent {
+    background-color: $pink;
+  }
 
+  .mobilestudent {
+    background-color: $blue;
+  }
+
+  .mobilealumni {
+    background-color: $red;
+  }
+
+  .mobilebedrijf {
+    background-color: $green;
+  }
+
+  .mobilebezoeker {
+    background-color: $yellow;
+  }
+  
 }
 a {
   text-decoration: underline;
