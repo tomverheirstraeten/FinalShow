@@ -72,8 +72,29 @@ export class RoomsService {
     const data = {
       uid: user['uid'],
       userName: user['displayName'],
-      userFunction :user['function'],
+      userFunction: user['function'],
       content,
+      createdAt: Date.now(),
+      deleted: false
+    };
+
+    if (user['uid']) {
+      const ref = this.afs.collection('rooms').doc(chatId);
+      return ref.update({
+        messages: firestore.FieldValue.arrayUnion(data)
+      });
+    }
+  }
+
+  async sendMessageHand(chatId) {
+    const user = await this.auth.getUser();
+
+    const data = {
+      uid: user['uid'],
+      userName: user['displayName'],
+      userFunction: user['function'],
+      content: '',
+      hand: true,
       createdAt: Date.now(),
       deleted: false
     };
@@ -139,28 +160,6 @@ export class RoomsService {
       })
     );
     }
-
-  async sendMessageHand(chatId) {
-    console.log(chatId)
-    const {
-      uid
-    } = await this.auth.getUser();
-    const data = {
-      uid,
-      content: '',
-      createdAt: Date.now(),
-      deleted: false,
-      hand: true,
-      seen: false
-    };
-
-    if (uid) {
-      const ref = this.afs.collection('rooms').doc(chatId);
-      return ref.update({
-        messages: firestore.FieldValue.arrayUnion(data)
-      });
-    }
-  }
 
   async updateMessage(chat, msg, i) {
     const {
