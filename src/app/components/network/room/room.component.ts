@@ -64,6 +64,7 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
 
   getChat(id){
     this.chatsSub =  this.roomService.get(id).subscribe(res => {
+      console.log(res);
       this.chat = res;
       this.scrollBottom();
      })
@@ -162,4 +163,3 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
 
 }
 
- 
