@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -12,7 +12,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
 })
 export class RoomComponent implements OnInit, OnChanges, OnDestroy {
 
-  chat$: Observable<any>;
+  chat;
   newMsg: string;
 
   mobile = false;
@@ -20,6 +20,7 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
   currentGroup;
   currentMsg;
   currentI;
+  chatsSub: Subscription;
 
   showMobileDeleteWindow = false;
 
@@ -41,13 +42,14 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
     // this.scrollBottom();
 
     setTimeout(() => {
-      console.log('loaded');
       this.scrollBottom();
     }, 500);
 
   }
   ngOnDestroy(){
-
+    if(this.chatsSub !== undefined){
+      this.chatsSub.unsubscribe();
+      }
   }
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     this.scrollBottom();
@@ -55,14 +57,20 @@ export class RoomComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     const chatId = this.route.snapshot.paramMap.get('id');
-    const source = this.roomService.get(chatId);
-    this.chat$ = this.roomService.joinUsers(source); // .pipe(tap(v => this.scrollBottom(v)));
+    this.chat = this.getChat(chatId);
+    //this.chat$ = this.roomService.joinUsers(source); // .pipe(tap(v => this.scrollBottom(v)));
     this.scrollBottom();
+  }
+
+  getChat(id){
+    this.chatsSub =  this.roomService.get(id).subscribe(res => {
+      this.chat = res;
+      this.scrollBottom();
+     })
   }
 
   holdHandler(e, chat, msg, i){
     if(e == 500){
-      console.log('longpressed');
       this.currentGroup = chat;
       this.currentMsg = msg;
       this.currentI = i;
