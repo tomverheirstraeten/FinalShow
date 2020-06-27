@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { Location } from '@angular/common';
+import { InteractionService } from 'src/app/services/interaction.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,12 +31,17 @@ export class ProfileComponent implements OnInit {
 
   currentUser;
 
+  realtimeDB;
+  oldUsername;
 
   constructor(
     private _location: Location,
     private auth: AuthService,
     private router: Router,
-    private adminservice: AdminService) { }
+    private adminservice: AdminService,
+    public interactionService: InteractionService) {
+      this.realtimeDB = interactionService.getDatabase();
+     }
 
 
   ngOnInit(): void {
@@ -45,8 +51,9 @@ export class ProfileComponent implements OnInit {
   async getUser() {
     const currentUser = await this.auth.getUser();
     if (currentUser) {
-      console.log(currentUser);
+      // console.log(currentUser);
       this.user = currentUser;
+      this.oldUsername = currentUser.displayName;
       this.fillInUserData(currentUser);
     } else {
       this.goToLogin();
@@ -54,15 +61,17 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile(formVal) {
-    console.log(this.id, this.character, formVal.name, formVal.bio, formVal.functie, formVal.website);
+    // console.log(this.id, this.character, formVal.name, formVal.bio, formVal.functie, formVal.website);
     if (this.updateProfileForm.valid) {
     this.adminservice.updateProfile(this.id, this.character, formVal.name, formVal.bio, formVal.functie, formVal.website);
+
+    this.realtimeDB.ref('users/' + this.oldUsername).remove();
     }
   }
 
   setActiveCharacter(newCharacter) {
     this.character = newCharacter;
-    console.log(this.character);
+    // console.log(this.character);
     const clickedAvatar: HTMLInputElement = document.getElementById(newCharacter) as HTMLInputElement;
     clickedAvatar.checked = true;
   }
@@ -105,7 +114,7 @@ export class ProfileComponent implements OnInit {
 
   signOut() {
     this.auth.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
 
