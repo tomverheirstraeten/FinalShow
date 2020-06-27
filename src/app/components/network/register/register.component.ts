@@ -31,6 +31,8 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   id;
   character;
 
+  error;
+
   mobile = false;
 
   registerEmailForm = new FormGroup({
@@ -99,9 +101,12 @@ export class RegisterComponent implements OnInit, OnChanges, OnDestroy {
   goToLivestream() {
     this.route.navigate(['/livestream']);
   }
+
   EmailPasswordRegister(formVal) {
     if (this.registerEmailForm.valid) {
-      this.auth.EmailPasswordRegister(formVal, this.id, this.character);
+      this.auth.EmailPasswordRegister(formVal, this.id, this.character).catch(error => {
+        this.error = error.message;
+      });
     }
   }
 
