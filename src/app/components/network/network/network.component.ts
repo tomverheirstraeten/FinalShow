@@ -63,11 +63,11 @@ export class NetworkComponent implements OnInit, OnDestroy {
   userSubscribe;
 
   constructor(public auth: AuthService,
-    public userService: UsersService,
-    public route: Router,
-    public interactionService: InteractionService,
-    public roomsService: RoomsService, ns: NotificationService) {
-    this.database = interactionService.getDatabase();
+              public userService: UsersService,
+              public route: Router,
+              public interactionService: InteractionService,
+              public roomsService: RoomsService, ns: NotificationService) {
+              this.database = interactionService.getDatabase();
   }
 
   ngOnDestroy() {

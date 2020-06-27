@@ -18,22 +18,20 @@ export class AdminlivestreamComponent implements OnInit, OnDestroy {
     if (sessionStorage.getItem('password') != environment.credentials.password) {
       this.router.navigate(['admin'])
     }
-   this.liveStreamUrlSub =  this.service.getStreamUrl().subscribe(data => {
+    this.liveStreamUrlSub = this.service.getStreamUrl().subscribe(data => {
       this.currentUrl = data['url'];
     });
   }
   ngOnDestroy(): void {
     if(this.liveStreamUrlSub !== undefined){
-      this.liveStreamUrlSub
+      this.liveStreamUrlSub.unsubscribe();
     }
-
   }
 
   updateUrl(){
     let url = document.getElementById('url') as HTMLInputElement;
     let urlVal = url.value;
     this.service.updateStreamUrl(urlVal);
-
     url.value = null;
   }
 
