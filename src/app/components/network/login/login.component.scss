@@ -1,15 +1,17 @@
 @import '~src/styles.scss';
+
 #login {
   width: 100%;
 
+
   .login-wrapper {
     // margin-top: 100px;
-
+    overflow-x: hidden;
 
     h2 {
       text-align: left;
       // margin: 1em 0;
-      font-size: 20px;
+      font-size: 1.5em;
     }
 
     p {
@@ -17,13 +19,14 @@
       margin: 1em 0;
       line-height: 18px;
       margin-bottom: 2em;
-      font-size: 13px;
+      font-size: 0.9em;
     }
   }
 
 
   #LoginForm {
     text-align: left;
+
 
     .input-form {
       display: flex;
@@ -33,7 +36,7 @@
       label {
         text-align: left;
         margin-bottom: 1em;
-        font-size: 0.7em;
+        font-size: 1em;
       }
 
       input {
@@ -68,13 +71,14 @@ button {
   border: none;
 }
 
-button.active{
+button.active {
   // border: 1px solid #F9D48A;
 }
-button.google-btn{
-display: flex;
-justify-content: center;
-align-items: center;
+
+button.google-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .google-btn .google-icon-wrapper {
@@ -113,17 +117,28 @@ align-items: center;
 
 //desktop
 @media only screen and (min-width: 769px) {
-  .login-wrapper {
-      grid-column: 8/ span 4;
-      grid-row: 4/ span 3;
-      margin: 0;
-      padding: 1em;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
-      background: #fff;
-      overflow: hidden;
-      overflow: Scroll;
-      -ms-overflow-style: none;
+
+  #login {
+    // background-color: #FF6B6B;
+    // background-image: url(../../../../assets/images/brussel.png);
   }
+
+
+  .login-wrapper {
+
+    grid-column: 8/ span 4;
+    grid-row: 4/ span 3;
+    margin: 0;
+    padding: 2.5em;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
+    background: #fff;
+    // overflow: hidden;
+    overflow: Scroll;
+    -ms-overflow-style: none;
+
+
+  }
+
   .login-wrapper::-webkit-scrollbar {
     display: none;
   }
@@ -133,14 +148,15 @@ align-items: center;
 //mobile
 @media only screen and (max-width: 769px) {
   .login-wrapper {
-    margin-top: 100px;
+    margin-top: 4em;
+    margin-bottom: 2em;
 
-      h2{
+    .registerImage {
+      display: none;
+    }
+
+    h2 {
       margin: 1em 0;
     }
   }
 }
-
-
-
-
