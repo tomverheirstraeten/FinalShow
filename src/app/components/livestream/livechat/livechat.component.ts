@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./livechat.component.scss']
 })
 export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  chat$: Observable<any>;
+  chat;
   newMsg: any;
   myScrollContainer: any;
   disableScrollDown = true;
@@ -31,21 +31,21 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     public userService: UsersService,
     public roomService: RoomsService) {
      }
-
   ngOnDestroy() {
     if(this.allChatsSub !== undefined){
       this.allChatsSub.unsubscribe();
       }
-    if(this.liveChatSub !== undefined){
+      if(this.liveChatSub !== undefined){
         this.liveChatSub.unsubscribe();
-    }
+        }
+
+
   }
 
   ngOnChanges() {
     this.scrollBottom();
   }
   ngAfterViewInit() {
-    console.log('afterView');
     this.scrollBottom();
   }
 
@@ -53,22 +53,19 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     // this.scrollBottom();
 
     setTimeout(() => {
-      console.log('loaded');
       this.scrollBottom();
     }, 500);
   }
 
   ngOnInit() {
     this.getAllChats();
-    this.liveChatSub = this.roomService.get(this.livestreamID).subscribe(res => {
-      this.scrollBottom();
-    })
-    const source = this.roomService.get(this.livestreamID)
-    this.chat$ = this.roomService.joinUsers(source);
+    //const source = this.roomService.get(this.livestreamID)
+    //this.chat$ = this.roomService.joinUsers(source);
   }
 
   getAllChats() {
    this.allChatsSub =  this.roomService.get(this.livestreamID).subscribe(res => {
+     this.chat = res;
       this.scrollBottom();
     })
   }
@@ -79,8 +76,10 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.scrollBottom();
   }
 
+
+
+
   submit(chatId) {
-    console.log(this.newMsg)
     if (!this.newMsg) {
       return alert('you need to enter something');
     }
@@ -93,9 +92,9 @@ export class LivechatComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     return msg.createdAt;
   }
 
+
   private scrollBottom() {
     const chatElem = document.getElementById('livechat-container');
-    console.log(chatElem);
     if (chatElem) {
       setTimeout(() => {
         console.log('scroll');

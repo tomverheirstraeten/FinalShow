@@ -67,16 +67,18 @@ export class RoomsService {
 
 
   async sendMessage(chatId, content) {
-    const { uid } = await this.auth.getUser();
+    const user = await this.auth.getUser();
 
     const data = {
-      uid,
+      uid: user['uid'],
+      userName: user['displayName'],
+      userFunction :user['function'],
       content,
       createdAt: Date.now(),
       deleted: false
     };
 
-    if (uid) {
+    if (user['uid']) {
       const ref = this.afs.collection('rooms').doc(chatId);
       return ref.update({
         messages: firestore.FieldValue.arrayUnion(data)

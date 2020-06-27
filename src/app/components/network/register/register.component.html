@@ -14,7 +14,7 @@
 <!-- <input placeholder="Username" type='text' #username>
  <button class="button" (click)="auth.AnonymousSignIn(username.value)">Login with Username</button>
   <span class="txt-light">or</span> -->
-<app-header class="red"></app-header>
+<app-header class="red" title="register"></app-header>
 <section id="RegisterForm" class="container-grid">
 
   <div class="registerImage">
@@ -23,25 +23,16 @@
 
   <article class="container register-wrapper">
     <h2>Registreren</h2>
-
-
     <article>
-
-
-      <section class="register-email">
+      <section class="register-email" >
         <form [formGroup]="registerEmailForm" #registerform='ngForm' novalidate
           (ngSubmit)="EmailPasswordRegister(registerEmailForm.value)">
           <div class="input-form">
-            <label for="Character">Character</label>
-            <section class="flex row space-between">
-              <div (click)='  goleft()' class="pointer"><img src="../../../../assets/images/left-arrow.svg" alt="left"
-                  width="30px">
-              </div>
-              <div (click)='  goright()' class="pointer"><img src="../../../../assets/images/right-arrow.svg"
-                  alt="right" width="30px"></div>
-            </section>
-            <section class="slider-wrapper">
-              <article id="characters" [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
+            <label for="Name" >Avatar</label>
+            <div id="carousselMannekes"> 
+              <div (click)='  goleft()' class="arrowAvatar"><img src="assets/images/back.svg"></div>
+          <section class="slider-wrapper">
+            <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
 
 
                 <div class="slide-content">
@@ -178,14 +169,16 @@
                   </label>
                 </div>
 
-                <div class="slide-content">
-                  <input type="radio" id="char21" name="char" hidden>
-                  <label for="char21" (click)='setActiveCharacter("robot1")'>
-                    <img src="assets/mannekes/robot1.png" alt="">
-                  </label>
-                </div>
-              </article>
-            </section>
+              <div class="slide-content">
+                <input type="radio" id="char21" name="char" hidden>
+                <label for="char21" (click)='setActiveCharacter("robot1")'>
+                  <img src="assets/mannekes/robot1.png" alt="">
+                </label>
+              </div>
+            </article>
+          </section>
+          <div (click)='  goright()' id="right" class="arrowAvatar"><img src="assets/images/back.svg"></div>
+          </div>
           </div>
           <div class="input-form">
             <label for="Name">Name*</label>
@@ -227,7 +220,7 @@
             class='alert alert-danger'>Select a function.</div>
           <div class="input-form">
             <label for="Bio">Bio</label>
-            <textarea placeholder="Bio" type='text' #bio formControlName="bio"></textarea>
+            <textarea placeholder="ben je naar iets op zoek? stage, werknemers, informatie,... of gewoon aan het rondkijken? Heb je specifieke interesses? Vertel het hier!" type='text' #bio formControlName="bio"></textarea>
 
           </div>
           <div class="input-form">

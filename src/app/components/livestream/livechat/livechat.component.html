@@ -1,4 +1,3 @@
-<ng-container *ngIf="chat$ | async as chat">
 <div class="container ">
     <div class="messages" id="livechat-container">
     <article class="wrapper flex row flex-start">
@@ -10,14 +9,14 @@
 
       <article class="">
         <div class="chat right">
-          <div id="livechat-scroll" class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+          <div id="livechat-scroll" class="msg animated zoomInUp" *ngFor="let msg of chat['messages']">
             <article *ngIf="msg.hand !== true;" class="text-msg">
                   <p class="tooltipHover">
                     <span class="tooltipTop">
-                      <p>{{msg.user.function}}</p>
+                      <p>{{msg.userFunction}}</p>
                           <i></i>
                     </span>
-                  <span *ngIf="msg.user" class="go-to-profile tag is-dark msg-user {{ msg.user?.function}}" [routerLink]="'/profile/' + msg.user.uid">{{ msg.user?.displayName || msg.user?.uid }}  </span>
+                  <span class="go-to-profile tag is-dark msg-user {{ msg.userFunction}}" [routerLink]="'/profile/' + msg.uid">{{ msg.userName || msg.uid }}  </span>
 
 
                   <!-- <span class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}  </span> -->
@@ -33,7 +32,7 @@
                  <article>
                       <p>
                        <span
-                         class="tag is-dark msg-user {{ msg.user?.function}}">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                         class="tag is-dark msg-user {{ msg.userFunction}}">{{ msg.userName || msg.uid }}</span>
                      👏</p>
                  </article>
                </div>
@@ -63,8 +62,4 @@
 
 
 </div>
-<script>
-
-  </script>
-</ng-container>
 
