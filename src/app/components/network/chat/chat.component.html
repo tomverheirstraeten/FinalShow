@@ -3,182 +3,190 @@
   <ng-container *ngIf=" auth.user$ | async as user">
     <app-header class="red" back='false' title="Privéchat" class="desktopHeader"></app-header>
     <div class="container-grid">
-    <app-header class="red" back='true' title="Privéchat" class="mobileHeader"></app-header>
+      <app-header class="red" back='true' title="Privéchat" class="mobileHeader"></app-header>
 
-    <!-- <div class="top">
+      <!-- <div class="top">
       <p><a class="tag" routerLink="/network">Back</a></p>
     </div> -->
 
-    <article class="wrapper flex row flex-start container">
-      <!-- <section class="left users flex row w-30">
+      <article class="wrapper flex row flex-start container">
+        <!-- <section class="left users flex row w-30">
         <aside>
           <app-users class="rooms"></app-users>
         </aside>
       </section> -->
-      <div class="chat-title-header">
-        <div class="group-icon" *ngIf="user1 && user2">
-          <img [src]="'assets/mannekes/' +user1['character']+ '.png'" *ngIf="chat.uid != user.uid">
-          <img [src]="'assets/mannekes/' +user2['character']+ '.png'" *ngIf="chat.uid2 != user.uid">
+        <div class="chat-title-header">
+          <div class="group-icon" *ngIf="user1 && user2">
+            <img [src]="'assets/mannekes/' +user1['character']+ '.png'" *ngIf="chat.uid != user.uid">
+            <img [src]="'assets/mannekes/' +user2['character']+ '.png'" *ngIf="chat.uid2 != user.uid">
+          </div>
+          <div *ngIf="chat.uid != user.uid">
+            <h2 [routerLink]="'/profile/' + user1['uid']" class="go-to-profile">{{user1['displayName']}}</h2>
+            <p>{{capitalize(user['function'])}}</p>
+          </div>
+          <div *ngIf="chat.uid2 != user.uid">
+            <h2 [routerLink]="'/profile/' + user2['uid']" class="go-to-profile">{{user2['displayName']}}</h2>
+            <p>{{capitalize(user2['function'])}}</p>
+          </div>
         </div>
-        <div *ngIf="chat.uid != user.uid">
-          <h2 [routerLink]="'/profile/' + user1['uid']" class="go-to-profile">{{user1['displayName']}}</h2>
-          <p>{{capitalize(user['function'])}}</p>
-        </div>
-        <div *ngIf="chat.uid2 != user.uid">
-          <h2 [routerLink]="'/profile/' + user2['uid']" class="go-to-profile">{{user2['displayName']}}</h2>
-          <p>{{capitalize(user2['function'])}}</p>
-        </div>
-      </div>
-      <article class="flex column w-100 inner-wrap">
-        <div #chatBox class="chat right "   id="chat">
-          <div id="childForScroll">
-          <div class="msg animated zoomInUp" *ngFor="let msg of allChats.messages; let i=index; trackBy: trackByCreated">
-            <!-- My MESSAGE DELETED -->
-            <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
-              class="flex center row right deleted message-content">
-              <article>
-                <div>
-                  <div class="flex space-between">
-                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
-                    <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                  </div>
-                  <p>{{ msg.content }}</p>
-                  <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
+        <article class="flex column w-100 inner-wrap">
+          <div #chatBox class="chat right " id="chat">
+            <div id="childForScroll">
+              <div class="msg animated zoomInUp"
+                *ngFor="let msg of allChats.messages; let i=index; trackBy: trackByCreated">
+                <!-- My MESSAGE DELETED -->
+                <div *ngIf="msg.uid === user.uid && msg.deleted === true && msg.hand !== true;"
+                  class="flex center row right deleted message-content">
+                  <article>
+                    <div>
+                      <div class="flex space-between">
+                        <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
+                        <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                      </div>
+                      <p>{{ msg.content }}</p>
+                      <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
+                    </div>
+                  </article>
                 </div>
-              </article>
-            </div>
-            <!-- My MESSAGE  -->
-            <div *ngIf="msg.uid === user.uid && msg.deleted === false && msg.hand !== true;" class="flex center row right message-content">
-              <article>
-                <div>
-                  <div class="flex space-between">
-                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
-                    <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                  </div>
-                  <p *ngIf="!mobile">{{ msg.content }}</p>
-                  <p *ngIf="mobile" appHoldable (holdTime)="holdHandler($event, chat, msg, i)" class="holdable">{{ msg.content }}</p>
-                  <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
-                </div>
-                <!-- <div class="user flex column">
+                <!-- My MESSAGE  -->
+                <div *ngIf="msg.uid === user.uid && msg.deleted === false && msg.hand !== true;"
+                  class="flex center row right message-content">
+                  <article>
+                    <div>
+                      <div class="flex space-between">
+                        <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
+                        <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                      </div>
+                      <p *ngIf="!mobile">{{ msg.content }}</p>
+                      <p *ngIf="mobile" appHoldable (holdTime)="holdHandler($event, chat, msg, i)" class="holdable">
+                        {{ msg.content }}</p>
+                      <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
+                    </div>
+                    <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
                     </div> -->
-              </article>
-              <img *ngIf="!mobile" src="assets/dots.svg" class="deleteDots" (click)="toggleDeleteWindow(chat.messages, msg)">
-              <div *ngIf="msg.deleteWindow" class="deleteWindow" (click)="clickedDelete(chat, msg, i)">
-                  <img src="assets/delete.svg">
-                  <span id="deleteText">Verwijder</span>
-              </div>
-              <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
+                  </article>
+                  <img *ngIf="!mobile" src="assets/dots.svg" class="deleteDots"
+                    (click)="toggleDeleteWindow(chat.messages, msg)">
+                  <div *ngIf="msg.deleteWindow" class="deleteWindow" (click)="clickedDelete(chat, msg, i)">
+                    <img src="assets/delete.svg">
+                    <span id="deleteText">Verwijder</span>
+                  </div>
+                  <!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button delete is-danger is-small"
                 (click)="cs.updateMessage(chat, msg, i)"> &#9249;</button> -->
-            </div>
-            <!-- My MESSAGE empty  -->
-            <div *ngIf="msg.uid === user.uid && msg.hand === true;" class="flex center row right  hand message-content">
-              <article>
-                <div>
-                  <div class="flex space-between">
-                    <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
-                    <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                  </div>
-                  <p>👏</p>
-                  <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
                 </div>
-                <!-- <div class="user flex column">
+                <!-- My MESSAGE empty  -->
+                <div *ngIf="msg.uid === user.uid && msg.hand === true;"
+                  class="flex center row right  hand message-content">
+                  <article>
+                    <div>
+                      <div class="flex space-between">
+                        <span class="tag is-dark">{{returnDate(msg.createdAt)}}</span>
+                        <span class="tag is-dark txt-right">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                      </div>
+                      <p>👏</p>
+                      <img src="assets/eye.svg" *ngIf="msg.seen" class="seen">
+                    </div>
+                    <!-- <div class="user flex column">
                       <img [src]="'assets/man.svg'" width="50px">
                     </div> -->
-              </article>
+                  </article>
 
-            </div>
-
-
-
-
-
-
-
-
-            <!-- OTHER MESSAGE DELETED -->
-            <div *ngIf="msg.uid !== user.uid && msg.deleted === true && msg.hand !== true;"
-              class="flex center row left deleted message-content">
-              <article>
-                <div>
-                  <div class="flex space-between">
-                    <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                    <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
-                  </div>
-                  <p>{{ msg.content }}</p>
                 </div>
-              </article>
-            </div>
 
 
 
-            <!-- OTHER MESSAGE -->
-            <div *ngIf="msg.uid !== user.uid && msg.deleted === false && msg.hand !== true;" class="flex center row left  message-content">
-              <article>
-                <!-- <div class="user  flex column">
+
+
+
+
+
+                <!-- OTHER MESSAGE DELETED -->
+                <div *ngIf="msg.uid !== user.uid && msg.deleted === true && msg.hand !== true;"
+                  class="flex center row left deleted message-content">
+                  <article>
+                    <div>
+                      <div class="flex space-between">
+                        <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                        <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
+                      </div>
+                      <p>{{ msg.content }}</p>
+                    </div>
+                  </article>
+                </div>
+
+
+
+                <!-- OTHER MESSAGE -->
+                <div *ngIf="msg.uid !== user.uid && msg.deleted === false && msg.hand !== true;"
+                  class="flex center row left  message-content">
+                  <article>
+                    <!-- <div class="user  flex column">
                   <img [src]="'assets/man.svg'" width="50px">
                 </div> -->
-                <div>
-                  <div class="flex space-between">
-                    <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                    <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
-                  </div>
-                  <p>{{ msg.content }}</p>
+                    <div>
+                      <div class="flex space-between">
+                        <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                        <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
+                      </div>
+                      <p>{{ msg.content }}</p>
+                    </div>
+
+                  </article>
                 </div>
 
-              </article>
-            </div>
 
-
-              <!-- OTHER MESSAGE EM  -->
-              <div *ngIf="msg.uid !== user.uid && msg.hand === true;" class="flex center row left hand message-content">
-                <article>
-                  <div>
-                    <div class="flex space-between">
-                      <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
-                      <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
+                <!-- OTHER MESSAGE EM  -->
+                <div *ngIf="msg.uid !== user.uid && msg.hand === true;"
+                  class="flex center row left hand message-content">
+                  <article>
+                    <div>
+                      <div class="flex space-between">
+                        <span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span>
+                        <span class="tag is-dark" style="text-align: right;">{{returnDate(msg.createdAt)}}</span>
+                      </div>
+                      <p>👏</p>
                     </div>
-                    <p>👏</p>
-                  </div>
-                  <!-- <div class="user flex column">
+                    <!-- <div class="user flex column">
                         <img [src]="'assets/man.svg'" width="50px">
                       </div> -->
-                </article>
+                  </article>
+
+                </div>
 
               </div>
-
+            </div>
           </div>
-        </div>
-        </div>
 
 
-        <div class="form messagebar">
-          <section class="textBar flex row ">
-            <a class="flex align-center clap" (click)="submitHand(chat)">👏</a>
-            <input class="input form-control"  [(ngModel)]="newMsg" maxlength="100" placeholder="Typ een chatbericht..."
-              (keydown.enter)="submit(chat.id)" data-emojiable="true" (focus)='updateMessageSeen(chat)'>
-            <button (click)="submit(chat.id)" class="send" [disabled]="!newMsg"><img
-                src="assets/images/send.svg"></button>
-          </section>
-        </div>
+          <div class="form messagebar">
+            <section class="textBar flex row ">
+              <a class="flex align-center clap" (click)="submitHand(chat)">👏</a>
+              <input class="input form-control" [(ngModel)]="newMsg" maxlength="100"
+                placeholder="Typ een chatbericht..." (keydown.enter)="submit(chat.id)" data-emojiable="true"
+                (focus)='updateMessageSeen(chat)'>
+              <button (click)="submit(chat.id)" class="send" [disabled]="!newMsg"><img
+                  src="assets/images/send.svg"></button>
+            </section>
+          </div>
 
-        <div class="mobileDeleteWindow" *ngIf="showMobileDeleteWindow">
-          <div class="mobileDelete" (click)="deleteMessage()">
-            <img src="assets/delete.svg">
-            <p>Verwijder</p>
+          <div class="mobileDeleteWindow" *ngIf="showMobileDeleteWindow">
+            <div class="mobileDelete" (click)="deleteMessage()">
+              <img src="assets/delete.svg">
+              <p>Verwijder</p>
+            </div>
+            <div class="line">
+            </div>
+            <div class="mobileCancel" (click)="cancelDelete()">
+              <img src="assets/close.svg">
+              <p>Annuleer</p>
+            </div>
           </div>
-          <div class="line">
-          </div>
-          <div class="mobileCancel" (click)="cancelDelete()">
-            <img src="assets/close.svg">
-            <p>Annuleer</p>
-          </div>
-        </div>
+
+        </article>
 
       </article>
-
-    </article>
-    <div routerLink= "/network" class="backgroundImageNetwork"></div>
-  </div>
+      <div routerLink="/network" class="backgroundImageNetwork"></div>
+    </div>
   </ng-container>
 </ng-container>

@@ -1,51 +1,60 @@
-
-<section id='login' class ='container-grid'>
+<section id='login' class='container-grid'>
+  <div class="registerImage" *ngIf="!mobile">
+    <img src="../../../../assets/register.gif">
+  </div>
   <app-header class="red"></app-header>
   <article class="container login-wrapper">
+
     <h2>Je bent nog niet ingelogd.</h2>
     <p>Om met andere mensen te kunnen chatten hebben we even je tijd nodig om te registreren of in te loggen. Andere
       gebruikers zullen uw profiel kunnen bekijken zodat ze u kunnen contacteren. Uw opgeslagen gegevens worden meteen
       na het evenement vernietigd.</p>
 
 
-      <article class="login-container">
-        <div id="LoginForm">
-          <article >
-            <form class="flex column login-form" [formGroup]="loginEmailForm" novalidate #loginForm="ngForm" (ngSubmit)="EmailPasswordSignIn(loginEmailForm.value)">
-              <section class="flex column">
-                <div class="input-form flex column">
-                  <label for="Email">Email *</label>
-                  <input placeholder="Email" type='email' #emailLogin id="email"  formControlName="email">
-                  <div *ngIf="loginEmailForm.get('email').hasError('required') && loginForm.submitted" class='alert alert-danger'>Email is required</div>
-                  <div *ngIf="loginEmailForm.get('email').hasError('email') && loginForm.submitted" class='alert alert-danger'>Please enter valid email.</div>
-                </div>
-                <div class="input-form flex column">
-                  <label for="Password">Password *</label>
-                  <input placeholder="Password" type='password' id="password" autocomplete="on" #passwordLogin formControlName="password" ng-required="true">
-                  <div *ngIf="loginEmailForm.get('password').hasError('required') && loginForm.submitted" class='alert alert-danger'>Password is required</div>
-                  <div *ngIf="loginEmailForm.get('password').hasError('minlength') && loginForm.submitted" class='alert alert-danger'>Your password must be at least 8 characters long</div>
-                </div>
-                <div >{{errorMessages}}</div>
-                <div class="input-form flex column">
-                  <button class="submit active" type="submit">LOG IN</button>
-                </div>
-              </section>
-            </form>
-            <section>
-              <button class="google-btn" (click)="auth.googleSignIn(id)">
-                <div class="google-icon-wrapper">
-                  <img class="google-icon-svg"
-                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-                </div>
-                LOG IN MET GOOGLE
-              </button>
+    <article class="login-container">
+      <div id="LoginForm">
+        <article>
+          <form class="flex column login-form" [formGroup]="loginEmailForm" novalidate #loginForm="ngForm"
+            (ngSubmit)="EmailPasswordSignIn(loginEmailForm.value)">
+            <section class="flex column">
+              <div class="input-form flex column">
+                <label for="Email">Email *</label>
+                <input placeholder="Email" type='email' #emailLogin id="email" formControlName="email">
+                <div *ngIf="loginEmailForm.get('email').hasError('required') && loginForm.submitted"
+                  class='alert alert-danger'>Email is required</div>
+                <div *ngIf="loginEmailForm.get('email').hasError('email') && loginForm.submitted"
+                  class='alert alert-danger'>Please enter valid email.</div>
+              </div>
+              <div class="input-form flex column">
+                <label for="Password">Password *</label>
+                <input placeholder="Password" type='password' id="password" autocomplete="on" #passwordLogin
+                  formControlName="password" ng-required="true">
+                <div *ngIf="loginEmailForm.get('password').hasError('required') && loginForm.submitted"
+                  class='alert alert-danger'>Password is required</div>
+                <div *ngIf="loginEmailForm.get('password').hasError('minlength') && loginForm.submitted"
+                  class='alert alert-danger'>Your password must be at least 8 characters long</div>
+              </div>
+              <div>{{errorMessages}}</div>
+              <div class="input-form flex column">
+                <button class="submit active" type="submit">LOG IN</button>
+              </div>
             </section>
-          </article>
-        </div>
+          </form>
+          <section>
+            <button class="google-btn" (click)="auth.googleSignIn(id)">
+              <div class="google-icon-wrapper">
+                <img class="google-icon-svg"
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+              </div>
+              LOG IN MET GOOGLE
+            </button>
+          </section>
         </article>
+      </div>
+    </article>
 
     <p>Nog geen account?</p>
     <button *ngIf="id === 'livestream'" [routerLink]="['/register',id]" type="button" class="">REGISTREER</button>
-    <button *ngIf="id !== 'livestream'"[routerLink]="['/register']" type="button" class="">REGISTREER</button>
+    <button *ngIf="id !== 'livestream'" [routerLink]="['/register']" type="button" class="">REGISTREER</button>
   </article>
 </section>
