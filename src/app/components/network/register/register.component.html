@@ -23,20 +23,14 @@
 
   <article class="container register-wrapper">
     <h2>Registreren</h2>
-
-
     <article>
-
-
       <section class="register-email" >
         <form [formGroup]="registerEmailForm" #registerform='ngForm' novalidate
           (ngSubmit)="EmailPasswordRegister(registerEmailForm.value)">
           <div class="input-form">
-            <label for="Character">Character</label>
-            <section class="flex row space-between">
-              <div (click)='  goleft()' class="pointer">Naar Links</div>
-              <div (click)='  goright()' class="pointer">Naar Rechts</div>
-            </section>
+            <label for="Name" >Avatar</label>
+            <div id="carousselMannekes"> 
+              <div (click)='  goleft()' class="arrowAvatar"><img src="assets/images/back.svg"></div>
           <section class="slider-wrapper">
             <article id="characters"  [ngStyle]="{'width': 100*2 + '%', 'margin-left' : positionStyle}">
 
@@ -183,6 +177,8 @@
               </div>
             </article>
           </section>
+          <div (click)='  goright()' id="right" class="arrowAvatar"><img src="assets/images/back.svg"></div>
+          </div>
           </div>
           <div class="input-form">
             <label for="Name">Name*</label>

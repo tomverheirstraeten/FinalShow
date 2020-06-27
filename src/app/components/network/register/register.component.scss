@@ -153,14 +153,18 @@ button.google-btn {
 
 .slider-wrapper{
   width:  100%;
-  overflow: hidden;
+  overflow: scroll;
   margin: auto;
+  -ms-overflow-style: none; // Ie & edge
+  scrollbar-width: none; // fire-fox
+}
+.slider-wrapper::-webkit-scrollbar { // chrome, safari & opera
+  display: none;
 }
 #characters {
   width: 500% !important;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
   .slide-content {
     width: 20%;
       display: flex;
@@ -183,7 +187,7 @@ button.google-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 3em;
+        padding: 0.5em;
         img {
           width: 100px;
                 }
@@ -222,4 +226,22 @@ button.google-btn {
 
 .error{
   color: red;
+}
+
+#carousselMannekes{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+    div{ //arrows
+      width: 100px;
+      margin-left: 1em;
+    }
+    .arrowAvatar{
+      width: 35px;
+    }
+    #right{
+      transform: rotate(180deg);
+    }
 }
