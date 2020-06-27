@@ -27,6 +27,7 @@ import { RedirectComponent } from './components/redirect/redirect.component';
 import { FourOfourComponent } from './components/four-ofour/four-ofour.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { GoogleregisterComponent } from './components/network/googleregister/googleregister.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
 
 
 
@@ -56,7 +57,8 @@ const routes: Routes = [
   { path: 'admin/users', component: AdminusersComponent },
   { path: 'admin/notifications', component: AdminnotificationsComponent },
   { path: 'admin/livestream', component: AdminlivestreamComponent },
-  { path: '404', component: FourOfourComponent }
+  { path: '404', component: FourOfourComponent },
+  { path: 'profile/:id', component: ProfileViewComponent}
   // { path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard] },
   // { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuard] },
 ];

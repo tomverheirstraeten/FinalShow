@@ -1,0 +1,18 @@
+<app-header title="Profiel" back='true'></app-header>
+
+<div class="wrapper" id="profileViewWrapper">
+    <div>
+        <img [src]="'assets/mannekes/' +currentUser['character']+ '.png'">
+        <h4>Naam</h4>
+        <p>{{currentUser['displayName']}}</p>
+    
+        <h4>Rol</h4>
+        <p>{{currentUser['function']}}</p>
+    
+        <h4>Bio</h4>
+        <p>{{currentUser['bio']}}</p>
+    
+        <h4>Website</h4>
+        <p>{{currentUser['website']}}</p>
+    </div>
+</div>

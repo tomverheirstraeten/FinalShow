@@ -43,6 +43,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HoldableDirective } from './holdable.directive';
 import { ProfileComponent } from './components/profile/profile.component';
 import { GoogleregisterComponent } from './components/network/googleregister/googleregister.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
 
 
 
@@ -81,7 +82,8 @@ import { GoogleregisterComponent } from './components/network/googleregister/goo
       FourOfourComponent,
       HoldableDirective,
       ProfileComponent,
-      GoogleregisterComponent
+      GoogleregisterComponent,
+      ProfileViewComponent
    ],
    imports: [
       BrowserModule,
