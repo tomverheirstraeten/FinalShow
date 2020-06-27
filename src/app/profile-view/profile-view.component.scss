@@ -1,46 +1,128 @@
 @media only screen and (min-width: 769px) {
-    .container-grid{
-        #wrap{
-        grid-column: 4/span 6;
-        grid-row: 4/span 3;
-        background: white;
-        box-shadow: 0px 3px 6px rgba(0,0,0,0.09);
-        }
+  .container-grid {
+    #wrap {
+      grid-column: 4/span 6;
+      grid-row: 4/span 3;
+      background: white;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09);
     }
-    .docent{
-        background-color: rgba(243, 193, 193, 0.4);
-      }
-      
-    .student{
-        background-color: rgba(79, 205, 196, 0.4);
-      }
-      
-    .alumni{
-        background-color: rgba(255, 107, 107, 0.4);
-      }
-      
-    .bedrijf{
-        background-color: rgba(149, 209, 123, 0.4);
-      }
-    .bezoeker{
-        background-color: rgba(249, 212, 138, 0.4);
-      }
-    #img{
-        padding: 1em 1em 0 1em;
-        width: 100%;
-        overflow: hidden;
+  }
+
+  .docent {
+    background-color: rgba(243, 193, 193, 0.4);
+  }
+
+  .student {
+    background-color: rgba(79, 205, 196, 0.4);
+  }
+
+  .alumni {
+    background-color: rgba(255, 107, 107, 0.4);
+  }
+
+  .bedrijf {
+    background-color: rgba(149, 209, 123, 0.4);
+  }
+
+  .bezoeker {
+    background-color: rgba(249, 212, 138, 0.4);
+  }
+
+  .docent {
+    border-left: 5px solid $pink;
+  }
+
+  .student {
+    border-left: 5px solid $blue;
+  }
+
+  .alumni {
+    border-left: 5px solid $red;
+  }
+
+  .bedrijf {
+    border-left: 5px solid $green;
+  }
+
+  .bezoeker {
+    border-left: 5px solid $yellow;
+  }
+
+  #img {
+    padding: 1em 1em 0 1em;
+    width: 100%;
+    overflow: hidden;
+
+  }
+
+  img {
+    height: 30vh;
+    float: right;
+  }
+
+  #info {
+    margin: 1em;
+
+    h4 {
+      margin: 1em 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #img {
+    height: 45vh;
+    // overflow: hidden;
+    // display: flex;
+    // justify-content: right;
+
+    img {
+      width: 50%;
+      // margin-top: 5em;
+      // top: 4em;
+      // right: -2.5em;
+      float: right;
+      top: 80px;
+
+      position: relative;
+    }
+
+
+  }
+
+  #info {
+    height: 55vh;
+    margin: auto;
+    padding: 1em;
+
+    h4 {
+      display: none;
+    }
+
+
+    p:first-of-type {
+
+      font-size: 1.8em;
 
     }
-    img{
-        height: 30vh;
-        float: right;
+
+    p:nth-of-type(2) {
+      font-weight: 200;
+      margin-bottom: 1em;
+      // font-style: italic;
+      opacity: 0.7;
+      font-size: 1.2em;
     }
-    #info{
-        margin: 1em;
-        h4{
-            margin: 1em 0;
-        }
+
+    p:nth-of-type(3) {
+      font-weight: 200;
     }
+
+    p:nth-of-type(4) {
+      font-weight: 200;
+    }
+  }
+
 }
 a {
   text-decoration: underline;
